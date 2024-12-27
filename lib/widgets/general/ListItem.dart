@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/colors.dart';
-import 'package:hivemind_app/widgets/circleIcon.dart';
+import 'package:hivemind_app/widgets/general/CircleIcon.dart';
 
 class ListItem extends StatelessWidget {
   const ListItem(
@@ -25,7 +25,10 @@ class ListItem extends StatelessWidget {
         style: Theme.of(context).textTheme.labelMedium,
       ),
       subtitle: data.containsKey("Beekeeper name")
-          ? Text(data["Beekeeper name"])
+          ? Text(
+              data["Beekeeper name"],
+              style: Theme.of(context).textTheme.bodyMedium,
+            )
           : null,
       trailing: IconButton(
         onPressed: onPress,

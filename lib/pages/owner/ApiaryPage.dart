@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
+import 'package:hivemind_app/widgets/general/CenterTitle.dart';
+import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
 import 'package:hivemind_app/widgets/owner/HivesTab.dart';
+import 'package:hivemind_app/widgets/owner/TasksTab.dart';
 
 class ApiaryPage extends StatefulWidget {
   const ApiaryPage({super.key});
@@ -40,9 +43,7 @@ class _ApiaryPageState extends State<ApiaryPage> {
           if (selectedControl == 0)
             HivesTab()
           else if (selectedControl == 1)
-            Center(
-              child: Image.asset("assets/icons/apiary_icon.png"),
-            )
+            TasksTab()
         ],
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
+import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
-import 'package:hivemind_app/widgets/listItem.dart';
 
 List<Map<String, String>> apiaries = [
   {"label": "Apiary #1", "Beekeeper name": "Yehya"},
