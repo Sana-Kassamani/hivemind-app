@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/pages/apiariesPage.dart';
-import 'package:hivemind_app/pages/apiaryPageOwner.dart';
+import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
+import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 
 void main() {

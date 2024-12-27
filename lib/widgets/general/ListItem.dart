@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/colors.dart';
-import 'package:hivemind_app/widgets/CircleIcon.dart';
+import 'package:hivemind_app/widgets/circleIcon.dart';
 
 class ListItem extends StatelessWidget {
   const ListItem(

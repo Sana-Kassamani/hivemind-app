@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
-import 'package:hivemind_app/widgets/CenterTitle.dart';
-import 'package:hivemind_app/widgets/HivesList.dart';
-import 'package:hivemind_app/widgets/SegmentedTab.dart';
-import 'package:hivemind_app/widgets/hivesTabOwner.dart';
+import 'package:hivemind_app/widgets/owner/HivesTab.dart';
 
 class ApiaryPage extends StatefulWidget {
   const ApiaryPage({super.key});

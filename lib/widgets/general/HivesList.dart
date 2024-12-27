@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/widgets/ListItem.dart';
 
 class HivesList extends StatefulWidget {
   const HivesList({super.key});

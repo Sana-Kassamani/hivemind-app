@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/widgets/FilledBtn.dart';
-import 'package:hivemind_app/widgets/HivesList.dart';
-import 'package:hivemind_app/widgets/ListItem.dart';
-import 'package:hivemind_app/widgets/LocationCard.dart';
+import 'package:hivemind_app/widgets/general/FilledBtn.dart';
+import 'package:hivemind_app/widgets/general/HivesList.dart';
+import 'package:hivemind_app/widgets/general/LocationCard.dart';
 
 class HivesTab extends StatefulWidget {
   const HivesTab({super.key});
