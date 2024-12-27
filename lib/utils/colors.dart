@@ -20,4 +20,5 @@ class ColorManager {
   static final ICON_BG = ColorManager.convertColor(hexString: "FEF6D6");
   static final SCAFFOLD_BG = ColorManager.convertColor(hexString: "EEEEEE");
   static final CARD_BG = ColorManager.convertColor(hexString: "FFFFFF");
+  static final SUBTITLE_COLOR = ColorManager.convertColor(hexString: "B3B3B3");
 }
