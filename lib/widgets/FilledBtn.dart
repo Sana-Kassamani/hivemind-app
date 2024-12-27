@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class FilledBtn extends StatelessWidget {
-  const FilledBtn({super.key});
-
+  const FilledBtn({super.key, this.icon, required this.text});
+  final icon;
+  final text;
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 24),
       child: FilledButton.icon(
         onPressed: () {},
-        icon: Icon(Icons.add),
-        label: Text("Add a New Apiary"),
+        icon: icon,
+        label: Text(text),
         style: ButtonStyle(
             padding: WidgetStatePropertyAll(
                 EdgeInsets.only(left: 54, top: 10, right: 54, bottom: 10))),
