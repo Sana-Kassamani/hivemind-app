@@ -87,7 +87,7 @@ class ThemeManager {
       collapsedBackgroundColor: ColorManager.CARD_BG,
       iconColor: ColorManager.COLOR_SECONDARY,
       collapsedIconColor: ColorManager.COLOR_SECONDARY,
-      tilePadding: EdgeInsets.all(10),
+      tilePadding: EdgeInsets.fromLTRB(10, 5, 10, 5),
       collapsedShape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
