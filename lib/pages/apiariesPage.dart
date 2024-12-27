@@ -40,8 +40,10 @@ class _ApiariesPageState extends State<ApiariesPage> {
               ],
             ),
           ),
-          FilledBtn(),
-          addVerticalSpace(24),
+          FilledBtn(
+            text: "Add a New Apiary",
+            icon: Icon(Icons.add),
+          ),
           Navbar()
         ],
       ),
