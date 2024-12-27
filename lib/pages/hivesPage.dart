@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/CenterTitle.dart';
+import 'package:hivemind_app/widgets/FilledBtn.dart';
 import 'package:hivemind_app/widgets/HivesList.dart';
 import 'package:hivemind_app/widgets/LocationCard.dart';
 import 'package:hivemind_app/widgets/SegmentedTab.dart';
@@ -48,7 +49,11 @@ class _HivesPageState extends State<HivesPage> {
           else if (selectedControl == 1)
             Center(
               child: Image.asset("assets/icons/apiary_icon.png"),
-            )
+            ),
+          FilledBtn(
+            text: "Add a New Hive",
+            icon: Icon(Icons.add),
+          )
         ],
       ),
     );
