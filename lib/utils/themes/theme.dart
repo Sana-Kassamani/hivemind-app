@@ -82,5 +82,17 @@ class ThemeManager {
         borderRadius: BorderRadius.circular(20),
       ),
     ),
+    expansionTileTheme: ExpansionTileThemeData(
+      backgroundColor: ColorManager.CARD_BG,
+      collapsedBackgroundColor: ColorManager.CARD_BG,
+      iconColor: ColorManager.COLOR_SECONDARY,
+      collapsedIconColor: ColorManager.COLOR_SECONDARY,
+      tilePadding: EdgeInsets.all(10),
+      collapsedShape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      childrenPadding: EdgeInsets.all(20),
+      expandedAlignment: Alignment.centerLeft,
+    ),
   );
 }
