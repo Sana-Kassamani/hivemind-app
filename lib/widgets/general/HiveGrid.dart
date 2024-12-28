@@ -55,27 +55,27 @@ class _HiveGridState extends State<HiveGrid> {
       "circleColor": ColorManager.FRAME_BG,
       "imagePath": "assets/icons/frame_icon.png",
     },
-    {
-      "title": "Varroa mites",
-      "content": "Diseases",
-      "iconColor": ColorManager.DISEASES_COLOR,
-      "circleColor": ColorManager.DISEASES_BG,
-      "imagePath": "assets/icons/diseases_icon.png",
-    },
+    // {
+    //   "title": "Varroa mites",
+    //   "content": "Diseases",
+    //   "iconColor": ColorManager.DISEASES_COLOR,
+    //   "circleColor": ColorManager.DISEASES_BG,
+    //   "imagePath": "assets/icons/diseases_icon.png",
+    // },
   ];
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
       child: GridView.builder(
-        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
         itemCount: details.length,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.7,
           // mainAxisExtent: 100,
-          childAspectRatio: 1,
+          childAspectRatio: 1.5,
           crossAxisSpacing: 12,
-          mainAxisSpacing: 24,
+          mainAxisSpacing: 20,
         ),
         itemBuilder: (context, index) {
           return HiveDetailsCard(
