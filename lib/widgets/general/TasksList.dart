@@ -7,6 +7,7 @@ class TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const isOwner = false;
     const List<Map<String, String>> tasks = [
       {
         "title": "Task #1",
@@ -43,7 +44,9 @@ class TasksList extends StatelessWidget {
         child: ListView.separated(
           itemCount: tasks.length,
           itemBuilder: (context, index) {
-            return TaskExpansionTile(task: tasks[index]);
+            return isOwner
+                ? TaskExpansionTileOwner(task: tasks[index])
+                : TaskExpansionTileBeekeeper(task: tasks[index]);
           },
           separatorBuilder: (context, index) => addVerticalSpace(10),
         ),
