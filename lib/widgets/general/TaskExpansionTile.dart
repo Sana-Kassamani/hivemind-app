@@ -94,7 +94,47 @@ class TaskExpansionTileBeekeeper extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
-        // ExpandedTileBeekeeper(task: task),
+        ExpandedTileBeekeeper(task: task),
+      ],
+    );
+  }
+}
+
+class ExpandedTileBeekeeper extends StatefulWidget {
+  const ExpandedTileBeekeeper({super.key, required this.task});
+
+  final task;
+
+  @override
+  State<ExpandedTileBeekeeper> createState() => _ExpandedTileBeekeeperState();
+}
+
+class _ExpandedTileBeekeeperState extends State<ExpandedTileBeekeeper> {
+  String comment = "";
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 20,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Status: ${widget.task["status"]!}",
+            style: Theme.of(context).textTheme.labelMedium),
+        Text(
+          widget.task["content"]!,
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
+        TextField(
+          style: Theme.of(context).textTheme.labelSmall,
+          decoration: InputDecoration(
+            label:
+                Text("Comment", style: Theme.of(context).textTheme.labelSmall),
+          ),
+          onChanged: (value) {
+            setState(() {
+              comment = value;
+            });
+          },
+        ),
       ],
     );
   }
