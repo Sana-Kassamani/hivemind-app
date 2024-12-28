@@ -33,7 +33,7 @@ class _ApiaryPageBeekeeperState extends State<ApiaryPageBeekeeper> {
           HivesList()
         ],
       ),
-      bottomNavigationBar: NavbarBeekeeper(),
+      // bottomNavigationBar: NavbarBeekeeper(),
     );
   }
 }

@@ -22,9 +22,10 @@ class _AlertsPageState extends State<AlertsPage> {
         children: [
           addVerticalSpace(24),
           ClearTextBtn(context, "Mark All as Read", () {}),
+          AlertsList()
         ],
       ),
-      bottomNavigationBar: Navbar(),
+      // bottomNavigationBar: NavbarOwner(),
     );
   }
 }
