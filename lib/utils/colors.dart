@@ -21,6 +21,7 @@ class ColorManager {
   static final SCAFFOLD_BG = ColorManager.convertColor(hexString: "EEEEEE");
   static final CARD_BG = ColorManager.convertColor(hexString: "FFFFFF");
   static final SUBTITLE_COLOR = ColorManager.convertColor(hexString: "B3B3B3");
+  static final INPUT_COLOR = ColorManager.convertColor(hexString: "494747");
   static final TEMP_COLOR = ColorManager.convertColor(hexString: "FF59AF");
   static final TEMP_BG = ColorManager.convertColor(hexString: "FFEDF6");
   static final HUMIDITY_COLOR = ColorManager.convertColor(hexString: "4CACEF");

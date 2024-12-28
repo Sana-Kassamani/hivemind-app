@@ -55,6 +55,12 @@ class ThemeManager {
         fontWeight: FontWeight.w600,
       ),
       bodyMedium: TextStyle(
+        color: ColorManager.INPUT_COLOR,
+        fontSize: 14,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w500,
+      ),
+      bodySmall: TextStyle(
         color: ColorManager.SUBTITLE_COLOR,
         fontSize: 12,
         fontFamily: 'Comme',

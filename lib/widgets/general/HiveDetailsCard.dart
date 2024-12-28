@@ -34,7 +34,7 @@ Widget HiveDetailsCard(
             title,
             style: Theme.of(context)
                 .textTheme
-                .bodyMedium
+                .bodySmall
                 ?.copyWith(overflow: TextOverflow.ellipsis),
           )
         ],
@@ -65,7 +65,7 @@ Widget DateCard(context, title, date) {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
               date,
