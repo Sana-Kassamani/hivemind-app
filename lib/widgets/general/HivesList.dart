@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/main.dart';
+import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
+import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 
 class HivesList extends StatefulWidget {
@@ -9,6 +12,7 @@ class HivesList extends StatefulWidget {
 }
 
 class _HivesListState extends State<HivesList> {
+  final isOwner = ISOWNER;
   final List<Map<String, String>> hives = [
     {"label": "Hive #1"},
     {"label": "Hive #2"},
@@ -24,7 +28,13 @@ class _HivesListState extends State<HivesList> {
             return ListItem(
               data: hives[index],
               icon: "assets/icons/hive_icon.png",
-              onPress: () {},
+              onPress: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            isOwner ? HivePageOwner() : HivePageBeekeeper()));
+              },
             );
           }),
     );

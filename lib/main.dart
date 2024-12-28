@@ -10,6 +10,7 @@ import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 
+const ISOWNER = false;
 void main() {
   final theme = ThemeManager();
   runApp(

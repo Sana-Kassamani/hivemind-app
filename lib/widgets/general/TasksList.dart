@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/TaskExpansionTile.dart';
 
@@ -7,7 +8,7 @@ class TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const isOwner = false;
+    const isOwner = ISOWNER;
     const List<Map<String, String>> tasks = [
       {
         "title": "Task #1",
