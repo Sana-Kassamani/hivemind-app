@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 
-class TaskExpansionTile extends StatelessWidget {
-  const TaskExpansionTile({super.key, required this.task});
+class TaskExpansionTileOwner extends StatelessWidget {
+  const TaskExpansionTileOwner({super.key, required this.task});
 
   final task;
   @override
@@ -23,14 +23,14 @@ class TaskExpansionTile extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
-        ExpanededTile(task: task),
+        ExpandedTileOwner(task: task),
       ],
     );
   }
 }
 
-class ExpanededTile extends StatelessWidget {
-  const ExpanededTile({super.key, required this.task});
+class ExpandedTileOwner extends StatelessWidget {
+  const ExpandedTileOwner({super.key, required this.task});
   final task;
   @override
   Widget build(BuildContext context) {
@@ -63,5 +63,39 @@ class ExpanededTile extends StatelessWidget {
               ),
             ],
           );
+  }
+}
+
+class TaskExpansionTileBeekeeper extends StatelessWidget {
+  const TaskExpansionTileBeekeeper({super.key, required this.task});
+
+  final task;
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      expandedAlignment: Alignment.centerLeft,
+      leading: IconButton(
+        onPressed: () {},
+        icon: Icon(
+          Icons.circle_outlined,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+        selectedIcon: Icon(
+          Icons.check_circle,
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      title: Text(
+        task["title"]!,
+        style: Theme.of(context).textTheme.labelMedium,
+      ),
+      subtitle: Text(
+        task["date"]!,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      children: [
+        // ExpandedTileBeekeeper(task: task),
+      ],
+    );
   }
 }
