@@ -28,7 +28,12 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text("Hives"),
       ),
       body: Column(

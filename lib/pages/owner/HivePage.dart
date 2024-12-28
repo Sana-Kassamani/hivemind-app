@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/CenterTitle.dart';
+import 'package:hivemind_app/widgets/general/DatesRow.dart';
 import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
+import 'package:hivemind_app/widgets/general/HiveDetailsTab.dart';
 import 'package:hivemind_app/widgets/general/HiveGrid.dart';
 import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
 
-class HivePage extends StatefulWidget {
-  const HivePage({super.key});
+class HivePageOwner extends StatefulWidget {
+  const HivePageOwner({super.key});
 
   @override
-  State<HivePage> createState() => _HivePageState();
+  State<HivePageOwner> createState() => _HivePageOwnerState();
 }
 
-class _HivePageState extends State<HivePage> {
+class _HivePageOwnerState extends State<HivePageOwner> {
   int? selectedControl = 0; // track the selected control value
 
   // update the selectedControl
@@ -25,26 +27,32 @@ class _HivePageState extends State<HivePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Icon(Icons.arrow_back),
-          title: Text("My Apiaries"),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: Column(
-          children: [
-            addVerticalSpace(24),
-            CenterTitle(titleText: "Hive 1 Label"),
-            addVerticalSpace(24),
-            SegmentedTab(
-              selectedControl: selectedControl,
-              onValueChanged: onSegmentChanged,
-              tabs: ["General", "History"],
-            ),
-            addVerticalSpace(24),
-            if (selectedControl == 0)
-              HiveGrid()
-            else if (selectedControl == 1)
-              Center()
-          ],
-        ));
+        title: Text("My Apiaries"),
+      ),
+      body: Column(
+        children: [
+          addVerticalSpace(24),
+          CenterTitle(titleText: "Hive 1 Label"),
+          addVerticalSpace(24),
+          SegmentedTab(
+            selectedControl: selectedControl,
+            onValueChanged: onSegmentChanged,
+            tabs: ["General", "History"],
+          ),
+          addVerticalSpace(24),
+          if (selectedControl == 0)
+            HiveDetailsTab()
+          else if (selectedControl == 1)
+            Center(),
+        ],
+      ),
+    );
   }
 }

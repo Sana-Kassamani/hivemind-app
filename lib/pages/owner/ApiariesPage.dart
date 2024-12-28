@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/pages/Owner/ApiaryPage.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
@@ -35,7 +36,12 @@ class _ApiariesPageState extends State<ApiariesPage> {
                   ListItem(
                     data: apiaries[i],
                     icon: "assets/icons/apiary_icon.png",
-                    onPress: () {},
+                    onPress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ApiaryPageOwner()));
+                    },
                   )
               ],
             ),
@@ -46,7 +52,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
           ),
         ],
       ),
-      bottomNavigationBar: Navbar(),
+      // bottomNavigationBar: NavbarOwner(),
     );
   }
 }
