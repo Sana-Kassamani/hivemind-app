@@ -49,6 +49,29 @@ Widget DiseasesCard({context}) {
       iconColor: ColorManager.DISEASES_COLOR,
       circleColor: ColorManager.DISEASES_BG,
       imagePath: "assets/icons/diseases_icon.png",
-      title: "Varroa mites",
+      title: "Varroa mites \n hyuj \n uuio",
       content: "Diseases");
+}
+
+Widget DateCard(context, title, date) {
+  return Card(
+    color: ColorManager.CARD_BG,
+    child: Container(
+      width: (MediaQuery.of(context).size.width - 70) / 2,
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 13),
+      child: Column(
+          spacing: 10,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            Text(
+              date,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ]),
+    ),
+  );
 }
