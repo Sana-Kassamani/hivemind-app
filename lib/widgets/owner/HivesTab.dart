@@ -22,6 +22,7 @@ class _HivesTabState extends State<HivesTab> {
           FilledBtn(
             text: "Add a New Hive",
             icon: Icon(Icons.add),
+            onPress: () {},
           )
         ],
       ),

@@ -21,6 +21,7 @@ class _TasksTabState extends State<TasksTab> {
           FilledBtn(
             text: "Add a New Task",
             icon: Icon(Icons.add),
+            onPress: () {},
           )
         ],
       ),
