@@ -36,6 +36,26 @@ class _SettingsListState extends State<SettingsList> {
                   });
                 }),
           ),
+          addVerticalSpace(10),
+          ListTile(
+            leading: Icon(
+              Icons.volume_up,
+              size: 30,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            title: Text(
+              "Alerts",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            trailing: Switch(
+              value: isSoundOn,
+              onChanged: (value) {
+                setState(() {
+                  isSoundOn = value;
+                });
+              },
+            ),
+          ),
         ],
       ),
     );
