@@ -61,6 +61,13 @@ flutter:
     - assets/icons/apiary_icon.png
     - assets/icons/bee_icon.png
     - assets/icons/hive_icon.png
+    - assets/icons/temperature_icon.png
+    - assets/icons/honey_icon.png
+    - assets/icons/diseases_icon.png
+    - assets/icons/frame_icon.png
+    - assets/icons/humidity_icon.png
+    - assets/icons/mass_icon.png
+    - assets/icons/weather_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
