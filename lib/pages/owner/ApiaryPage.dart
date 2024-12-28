@@ -5,14 +5,14 @@ import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
 import 'package:hivemind_app/widgets/owner/HivesTab.dart';
 import 'package:hivemind_app/widgets/owner/TasksTab.dart';
 
-class ApiaryPage extends StatefulWidget {
-  const ApiaryPage({super.key});
+class ApiaryPageOwner extends StatefulWidget {
+  const ApiaryPageOwner({super.key});
 
   @override
-  State<ApiaryPage> createState() => _ApiaryPageState();
+  State<ApiaryPageOwner> createState() => _ApiaryPageOwnerState();
 }
 
-class _ApiaryPageState extends State<ApiaryPage> {
+class _ApiaryPageOwnerState extends State<ApiaryPageOwner> {
   int? selectedControl = 0; // track the selected control value
 
   // update the selectedControl
