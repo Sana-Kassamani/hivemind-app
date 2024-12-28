@@ -44,9 +44,9 @@ class _ApiariesPageState extends State<ApiariesPage> {
             text: "Add a New Apiary",
             icon: Icon(Icons.add),
           ),
-          Navbar()
         ],
       ),
+      bottomNavigationBar: Navbar(),
     );
   }
 }

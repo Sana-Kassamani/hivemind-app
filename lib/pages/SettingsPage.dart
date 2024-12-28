@@ -21,9 +21,9 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           addVerticalSpace(24),
           SettingsList(),
-          Navbar(),
         ],
       ),
+      bottomNavigationBar: Navbar(),
     );
     ;
   }
