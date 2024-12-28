@@ -16,7 +16,7 @@ class _TasksTabState extends State<TasksTab> {
     return Expanded(
       child: Column(
         children: [
-          ClearTextBtn(),
+          ClearTextBtn(context, "Clear Completed", () {}),
           TasksList(),
           FilledBtn(
             text: "Add a New Task",
