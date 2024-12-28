@@ -15,7 +15,7 @@ class SegmentedTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.labelMedium;
     final double width = (tabs.isNotEmpty
-        ? (MediaQuery.of(context).size.width * 0.8) / tabs.length
+        ? (MediaQuery.of(context).size.width * 0.5) / tabs.length
         : 0);
     return Center(
       child: CupertinoSlidingSegmentedControl(
