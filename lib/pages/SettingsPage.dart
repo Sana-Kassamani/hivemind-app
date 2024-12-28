@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
+import 'package:hivemind_app/widgets/general/SettingsList.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -19,6 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Column(
         children: [
           addVerticalSpace(24),
+          SettingsList(),
           Navbar(),
         ],
       ),
