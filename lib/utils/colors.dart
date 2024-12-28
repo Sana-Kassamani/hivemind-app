@@ -21,4 +21,18 @@ class ColorManager {
   static final SCAFFOLD_BG = ColorManager.convertColor(hexString: "EEEEEE");
   static final CARD_BG = ColorManager.convertColor(hexString: "FFFFFF");
   static final SUBTITLE_COLOR = ColorManager.convertColor(hexString: "B3B3B3");
+  static final TEMP_COLOR = ColorManager.convertColor(hexString: "FF59AF");
+  static final TEMP_BG = ColorManager.convertColor(hexString: "FFEDF6");
+  static final HUMIDITY_COLOR = ColorManager.convertColor(hexString: "4CACEF");
+  static final HUMIDITY_BG = ColorManager.convertColor(hexString: "E4F0F8");
+  static final MASS_COLOR = ColorManager.convertColor(hexString: "55AE8F");
+  static final MASS_BG = ColorManager.convertColor(hexString: "D7F4EB");
+  static final WEATHER_COLOR = ColorManager.convertColor(hexString: "FFC901");
+  static final WEATHER_BG = ColorManager.convertColor(hexString: "FFF6DB");
+  static final HONEY_COLOR = ColorManager.convertColor(hexString: "EBA937");
+  static final HONEY_BG = ColorManager.convertColor(hexString: "FFE6BA");
+  static final FRAME_COLOR = ColorManager.convertColor(hexString: "B95745");
+  static final FRAME_BG = ColorManager.convertColor(hexString: "EECCC4");
+  static final DISEASES_COLOR = ColorManager.convertColor(hexString: "000000");
+  static final DISEASES_BG = ColorManager.convertColor(hexString: "B3B3B3");
 }
