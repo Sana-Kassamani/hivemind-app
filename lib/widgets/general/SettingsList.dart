@@ -56,6 +56,18 @@ class _SettingsListState extends State<SettingsList> {
               },
             ),
           ),
+          addVerticalSpace(10),
+          ListTile(
+            leading: Icon(
+              Icons.logout,
+              size: 30,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            title: Text(
+              "Logout",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
         ],
       ),
     );
