@@ -50,3 +50,15 @@ class ListIcon extends CircleIcon {
     required super.imagePath,
   });
 }
+
+class CardIcon extends CircleIcon {
+  const CardIcon({
+    super.key,
+    required super.circleColor,
+    required super.iconColor,
+    super.circleRadius = 20.0,
+    super.circleSize = 30.0,
+    super.iconSize = 24.0,
+    required super.imagePath,
+  });
+}
