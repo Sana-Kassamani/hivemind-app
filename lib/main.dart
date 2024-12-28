@@ -10,7 +10,7 @@ import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 
-const ISOWNER = false;
+const ISOWNER = true;
 void main() {
   final theme = ThemeManager();
   runApp(
@@ -30,20 +30,21 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  // final List<Widget> _screens = [
-  //   ApiariesPage(),
-  //   Center(
-  //     child: Text("DashBoard"),
-  //   ),
-  //   AlertsPage(),
-  //   SettingsPage(),
-  // ];
-  final List<Widget> _screens = [
-    ApiaryPageBeekeeper(),
-    TasksPage(),
-    AlertsPage(),
-    SettingsPage(),
-  ];
+  final List<Widget> _screens = ISOWNER
+      ? [
+          ApiariesPage(),
+          Center(
+            child: Text("DashBoard"),
+          ),
+          AlertsPage(),
+          SettingsPage(),
+        ]
+      : [
+          ApiaryPageBeekeeper(),
+          TasksPage(),
+          AlertsPage(),
+          SettingsPage(),
+        ];
 
   void _onItemSelected(int index) {
     setState(() {
@@ -55,10 +56,15 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screens[_selectedIndex], // Display the selected screen.
-      bottomNavigationBar: NavbarBeekeeper(
-        selectedIndex: _selectedIndex,
-        onItemSelected: _onItemSelected,
-      ),
+      bottomNavigationBar: ISOWNER
+          ? NavbarOwner(
+              selectedIndex: _selectedIndex,
+              onItemSelected: _onItemSelected,
+            )
+          : NavbarBeekeeper(
+              selectedIndex: _selectedIndex,
+              onItemSelected: _onItemSelected,
+            ),
     );
   }
 }
