@@ -15,7 +15,7 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: Colors.white,
+      tileColor: ColorManager.CARD_BG,
       leading: CircleAvatar(
         backgroundColor: ColorManager.ICON_BG,
         child: imageBox(
@@ -23,11 +23,6 @@ class ListItem extends StatelessWidget {
           ColorManager.COLOR_PRIMARY,
         ),
       ),
-      // ListIcon(
-      //   circleColor: ColorManager.ICON_BG,
-      //   iconColor: ColorManager.COLOR_PRIMARY,
-      //   imagePath: icon,
-      // ),
       title: Text(
         data["label"],
         style: Theme.of(context).textTheme.labelMedium,
@@ -46,3 +41,28 @@ class ListItem extends StatelessWidget {
     );
   }
 }
+
+Widget AlertListItem(context, notification) => ListTile(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      tileColor: ColorManager.CARD_BG,
+      leading: CircleAvatar(
+        backgroundColor: ColorManager.ICON_BG,
+        child: iconBox(
+          Icons.notifications_on_outlined,
+          ColorManager.COLOR_PRIMARY,
+        ),
+      ),
+      title: Text(
+        notification["title"],
+        style: Theme.of(context).textTheme.labelMedium,
+      ),
+      subtitle: Text(
+        notification["message"],
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+      isThreeLine: true,
+      trailing: Text(
+        notification["time"],
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    );
