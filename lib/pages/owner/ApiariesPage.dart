@@ -34,7 +34,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
                 for (int i = 0; i < apiaries.length; i++)
                   ListItem(
                     data: apiaries[i],
-                    icon: "assest/icons/apiary_icon.png",
+                    icon: "assets/icons/apiary_icon.png",
                     onPress: () {},
                   )
               ],

@@ -38,6 +38,7 @@ class _ApiaryPageState extends State<ApiaryPage> {
           SegmentedTab(
             selectedControl: selectedControl,
             onValueChanged: onSegmentChanged,
+            tabs: ["Hives", "Tasks"],
           ),
           addVerticalSpace(24),
           if (selectedControl == 0)
