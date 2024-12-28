@@ -44,7 +44,7 @@ class ThemeManager {
       ),
       labelSmall: TextStyle(
         color: ColorManager.COLOR_SECONDARY,
-        fontSize: 11,
+        fontSize: 14,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w500,
       ),
