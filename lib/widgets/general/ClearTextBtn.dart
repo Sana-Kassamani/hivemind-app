@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ClearTextBtn extends StatelessWidget {
-  const ClearTextBtn({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
+Widget ClearTextBtn(context, text, onPress) => Align(
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: EdgeInsets.only(left: 30, bottom: 10),
@@ -14,14 +9,12 @@ class ClearTextBtn extends StatelessWidget {
               padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
               minimumSize: WidgetStatePropertyAll(Size.zero),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-          onPressed: () {},
+          onPressed: onPress,
           child: Text(
-            "Clear Completed",
+            text,
             style: Theme.of(context).textTheme.labelMedium,
             textAlign: TextAlign.left,
           ),
         ),
       ),
     );
-  }
-}
