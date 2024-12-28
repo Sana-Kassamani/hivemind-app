@@ -4,6 +4,7 @@ import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
+import 'package:hivemind_app/widgets/owner/AddDialogue.dart';
 
 List<Map<String, String>> apiaries = [
   {"label": "Apiary #1", "Beekeeper name": "Yehya"},
@@ -20,6 +21,14 @@ class ApiariesPage extends StatefulWidget {
 }
 
 class _ApiariesPageState extends State<ApiariesPage> {
+  void _showDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AddDialogue(context, "New Apiary", "form");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +58,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
           FilledBtn(
             text: "Add a New Apiary",
             icon: Icon(Icons.add),
+            onPress: _showDialog,
           ),
         ],
       ),
