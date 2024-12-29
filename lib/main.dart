@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
 import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
-import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
 import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
-import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
-import 'package:hivemind_app/pages/owner/HivePage.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
+import 'package:provider/provider.dart';
 
 const ISOWNER = true;
 void main() {
   final theme = ThemeManager();
   runApp(
-    MaterialApp(
-      title: 'My app', // used by the OS task switcher
-      home: MainScreen(),
-      theme: theme.lightTheme,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Apiaries()),
+      ],
+      child: MaterialApp(
+        title: 'My app', // used by the OS task switcher
+        home: MainScreen(),
+        theme: theme.lightTheme,
+      ),
     ),
   );
 }
