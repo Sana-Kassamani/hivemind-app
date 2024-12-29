@@ -10,14 +10,23 @@ class Apiaries extends ChangeNotifier {
       Hive("004", "Hive 3", 7, false, "0 harvests", []),
       Hive("005", "Hive 4", 8, false, "0 harvests", []),
     ]),
+
+    //----------------------------------------
+
     Apiary("002", "Apiary 2", "Barouk Cedars", "Hatem", [
       Hive("001", "hive Label 1", 10, false, "0 harvests", []),
       Hive("002", "hive Label 2", 10, false, "0 harvests", []),
       Hive("003", "hive Label 3", 10, false, "0 harvests", []),
     ]),
+
+    //-----------------------------------------
+
     Apiary("003", "Apiary 3", "Barouk Cedars", "Seri", [
       Hive("001", "Hive #1", 12, false, "0 harvests", []),
     ]),
+
+    //-----------------------------------------
+
     Apiary("004", "Apiary 4", "Barouk Cedars", "Nour", []),
   ];
 
