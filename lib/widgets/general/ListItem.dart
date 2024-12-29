@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/providers/apiary.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/general/CircleIcon.dart';
@@ -24,12 +25,12 @@ class ListItem extends StatelessWidget {
         ),
       ),
       title: Text(
-        data["label"],
+        data.label,
         style: Theme.of(context).textTheme.labelMedium,
       ),
-      subtitle: data.containsKey("Beekeeper name")
+      subtitle: data is Apiary
           ? Text(
-              data["Beekeeper name"],
+              data.beekeeperName,
               style: Theme.of(context).textTheme.bodyMedium,
             )
           : null,
