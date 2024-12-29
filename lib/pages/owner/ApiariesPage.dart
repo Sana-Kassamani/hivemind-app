@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/pages/Owner/ApiaryPage.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/owner/AddDialogue.dart';
+import 'package:provider/provider.dart';
 
 List<Map<String, String>> apiaries = [
   {"label": "Apiary #1", "Beekeeper name": "Yehya"},
@@ -39,20 +41,27 @@ class _ApiariesPageState extends State<ApiariesPage> {
         children: [
           addVerticalSpace(24),
           Expanded(
-            child: ListView(
-              children: <Widget>[
-                for (int i = 0; i < apiaries.length; i++)
-                  ListItem(
-                    data: apiaries[i],
+            child: Consumer<Apiaries>(
+              builder: (BuildContext context, Apiaries value, Widget? child) {
+                return ListView.builder(
+                  itemCount: value.apiariesList.length,
+                  itemBuilder: (context, index) => ListItem(
+                    data: value.apiariesList[index],
                     icon: "assets/icons/apiary_icon.png",
                     onPress: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ApiaryPageOwner()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ApiaryPageOwner(),
+                          settings: RouteSettings(
+                            arguments: value.apiariesList[index].getId(),
+                          ),
+                        ),
+                      );
                     },
-                  )
-              ],
+                  ),
+                );
+              },
             ),
           ),
           FilledBtn(
