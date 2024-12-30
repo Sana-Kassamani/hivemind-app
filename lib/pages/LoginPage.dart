@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/colors.dart';
@@ -25,6 +26,8 @@ class _LoginPageState extends State<LoginPage> {
   var _password = "";
   @override
   Widget build(BuildContext context) {
+    final _inputTextStyle =
+        Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -50,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: _inputTextStyle,
                         decoration: InputDecoration(
                           label: Text("Username"),
                           border: _borderStyle,
@@ -67,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       addVerticalSpace(12),
                       TextFormField(
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: _inputTextStyle,
                         obscureText: true,
                         decoration: InputDecoration(
                           label: Text("Password"),
@@ -109,6 +112,11 @@ class _LoginPageState extends State<LoginPage> {
                                     await Provider.of<Auth>(context,
                                             listen: false)
                                         .login(_username, _password);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MainScreen()),
+                                    );
                                   } catch (error) {
                                     setState(() {
                                       errorMessage = error.toString();

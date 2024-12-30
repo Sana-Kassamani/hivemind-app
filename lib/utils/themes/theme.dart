@@ -104,7 +104,7 @@ class ThemeManager {
       ),
       bodyMedium: TextStyle(
         color: ColorManager.INPUT_COLOR,
-        fontSize: 16,
+        fontSize: 12,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w500,
       ),
