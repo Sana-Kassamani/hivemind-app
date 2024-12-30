@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/apiary.provider.dart';
 import 'package:hivemind_app/providers/hive.provider.dart';
+import 'package:http/http.dart' as http;
 
 class Apiaries extends ChangeNotifier {
   final List<Apiary> _apiaries = [
@@ -31,4 +34,14 @@ class Apiaries extends ChangeNotifier {
   ];
 
   List<Apiary> get apiariesList => _apiaries;
+
+  Future loadApiaries() async {
+    final response =
+        await http.get(Uri.parse("http://192.168.0.100:8080/apiaries"));
+    if (response.statusCode == 200) {
+      print(jsonDecode(response.body));
+    } else {
+      throw Exception("Get Failed");
+    }
+  }
 }
