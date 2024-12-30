@@ -96,6 +96,49 @@ class _LoginPageState extends State<LoginPage> {
                                   fontWeight: FontWeight.w400),
                         ),
                       ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FilledBtn(
+                              text: "Login",
+                              onPress: () {
+                                if (_globalKey.currentState!.validate()) {
+                                  _globalKey.currentState!.save();
+                                  print(_username);
+                                  print(_password);
+                                  Provider.of<Auth>(context, listen: false)
+                                      .login(_username, _password);
+                                }
+                              }),
+                          Row(
+                            spacing: 10,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Don't have an account?",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(fontWeight: FontWeight.w400),
+                              ),
+                              InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    "Sign Up",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                            color: Colors.amber[600],
+                                            fontWeight: FontWeight.w400),
+                                  ))
+                            ],
+                          )
+                        ],
+                      ),
+                      addVerticalSpace(20),
                     ],
                   ),
                 ),
