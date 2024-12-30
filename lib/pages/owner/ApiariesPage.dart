@@ -23,6 +23,17 @@ class ApiariesPage extends StatefulWidget {
 }
 
 class _ApiariesPageState extends State<ApiariesPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadApiaries();
+  }
+
+  loadApiaries() async {
+    await Apiaries().loadApiaries();
+  }
+
   void _showDialog() {
     showDialog(
         context: context,
