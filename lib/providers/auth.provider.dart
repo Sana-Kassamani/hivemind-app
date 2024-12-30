@@ -7,10 +7,14 @@ import 'package:http/http.dart' as http;
 class Auth extends ChangeNotifier {
   Future login(String username, String password) async {
     final data = <String, String>{"username": username, "password": password};
-    final response =
-        await request(route: "/auth", method: RequestMethods.post, data: data);
+    try {
+      final response = await request(
+          route: "/auth", method: RequestMethods.post, data: data);
 
-    print(jsonDecode(response)["user"]["userType"]);
-    print(jsonDecode(response)["token"]);
+      print(jsonDecode(response)["user"]["userType"]);
+      print(jsonDecode(response)["token"]);
+    } catch (error) {
+      rethrow;
+    }
   }
 }
