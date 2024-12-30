@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
+import 'package:hivemind_app/pages/LoginPage.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
 import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
 import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
+import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +18,11 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Apiaries()),
+        ChangeNotifierProvider(create: (context) => Auth())
       ],
       child: MaterialApp(
         title: 'My app', // used by the OS task switcher
-        home: MainScreen(),
+        home: LoginPage(),
         theme: theme.lightTheme,
       ),
     ),
