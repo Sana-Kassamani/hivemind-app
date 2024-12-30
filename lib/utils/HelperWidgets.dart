@@ -6,7 +6,7 @@ Widget addVerticalSpace(double height) {
   );
 }
 
-Widget imageBox(String imagePath, Color color) {
+Widget imageBox(String imagePath, Color? color) {
   return SizedBox(
     width: 24,
     height: 24,
