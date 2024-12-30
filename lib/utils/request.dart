@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:hivemind_app/utils/apiException.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,68 +10,74 @@ Future request(
     required RequestMethods method,
     Map<String, String>? data}) async {
   const baseURL = "http://192.168.0.100:8080";
+  var response;
 
-  //---------------------------------- GET ----------------------------------
-  if (method == RequestMethods.get) {
-    final response = await http.get(
-      Uri.parse("$baseURL$route"),
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-    return response.body;
-  }
+  try {
+    //---------------------------------- GET ----------------------------------
+    if (method == RequestMethods.get) {
+      response = await http.get(
+        Uri.parse("$baseURL$route"),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+    }
 
-  //---------------------------------- POST ----------------------------------
-  if (method == RequestMethods.post) {
-    final response = await http.post(
-      Uri.parse("$baseURL$route"),
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(data),
-    );
-    return response.body;
-  }
+    //---------------------------------- POST ----------------------------------
+    else if (method == RequestMethods.post) {
+      response = await http.post(
+        Uri.parse("$baseURL$route"),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+    }
 
-  //---------------------------------- PUT ----------------------------------
-  if (method == RequestMethods.put) {
-    final response = await http.put(
-      Uri.parse("$baseURL$route"),
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(data),
-    );
-    return response.body;
-  }
+    //---------------------------------- PUT ----------------------------------
+    else if (method == RequestMethods.put) {
+      response = await http.put(
+        Uri.parse("$baseURL$route"),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+    }
 
-  //---------------------------------- PATCH ----------------------------------
-  if (method == RequestMethods.patch) {
-    final response = await http.patch(
-      Uri.parse("$baseURL$route"),
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(data),
-    );
-    return response.body;
-  }
+    //---------------------------------- PATCH ----------------------------------
+    else if (method == RequestMethods.patch) {
+      response = await http.patch(
+        Uri.parse("$baseURL$route"),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+    }
 
-  //---------------------------------- DELETE ----------------------------------
-  if (method == RequestMethods.delete) {
-    final response = await http.delete(
-      Uri.parse("$baseURL$route"),
-      headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(data),
-    );
-    return response.body;
+    //---------------------------------- DELETE ----------------------------------
+    else if (method == RequestMethods.delete) {
+      response = await http.delete(
+        Uri.parse("$baseURL$route"),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: 'Basic your_api_token_here',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+    } else {
+      throw ApiException("Non valid req");
+    }
+    if (response.statusCode >= 200 && response.statusCode <= 299) {
+      return response.body;
+    }
+    throw (ApiException(jsonDecode(response.body)["message"]));
+  } catch (error) {
+    rethrow;
   }
 }
