@@ -42,6 +42,64 @@ class _LoginPageState extends State<LoginPage> {
                 style: Theme.of(context).textTheme.titleLarge,
                 textAlign: TextAlign.center,
               ),
+              addVerticalSpace(40),
+              Form(
+                key: _globalKey,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        decoration: InputDecoration(
+                          label: Text("Username"),
+                          border: _borderStyle,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Username field cannot be empty!";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _username = value!;
+                        },
+                      ),
+                      addVerticalSpace(12),
+                      TextFormField(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          label: Text("Password"),
+                          border: _borderStyle,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Password field cannot be empty!";
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _password = value!;
+                        },
+                      ),
+                      addVerticalSpace(10),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Forget Password?",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                                  color: Colors.amber[600],
+                                  fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
