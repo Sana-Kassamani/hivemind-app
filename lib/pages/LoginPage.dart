@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     ),
   );
   final _globalKey = GlobalKey<FormState>();
-
+  var errorMessage = "";
   var _username = "";
   var _password = "";
   @override
@@ -102,15 +102,39 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           FilledBtn(
                               text: "Login",
-                              onPress: () {
+                              onPress: () async {
                                 if (_globalKey.currentState!.validate()) {
                                   _globalKey.currentState!.save();
-                                  print(_username);
-                                  print(_password);
-                                  Provider.of<Auth>(context, listen: false)
-                                      .login(_username, _password);
+                                  try {
+                                    await Provider.of<Auth>(context,
+                                            listen: false)
+                                        .login(_username, _password);
+                                  } catch (error) {
+                                    setState(() {
+                                      errorMessage = error.toString();
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            'Login failed: ${error.toString()}'),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  } finally {
+                                    _globalKey.currentState!.reset();
+                                  }
                                 }
                               }),
+                          // errorMessage.isNotEmpty
+                          //     ? Text(
+                          //         errorMessage,
+                          //         style: Theme.of(context)
+                          //             .textTheme
+                          //             .labelLarge!
+                          //             .copyWith(color: Colors.red),
+                          //         textAlign: TextAlign.center,
+                          //       )
+                          //     : SizedBox.shrink(),
                           Row(
                             spacing: 10,
                             mainAxisAlignment: MainAxisAlignment.center,
