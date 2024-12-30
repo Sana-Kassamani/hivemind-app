@@ -3,12 +3,6 @@ import 'package:hivemind_app/utils/colors.dart';
 
 class ThemeManager {
   ThemeData lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: ColorManager.COLOR_PRIMARY,
-      primary: ColorManager.COLOR_PRIMARY,
-      onPrimary: ColorManager.COLOR_SECONDARY,
-      secondary: ColorManager.COLOR_SECONDARY,
-    ),
     scaffoldBackgroundColor: ColorManager.SCAFFOLD_BG,
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
@@ -20,53 +14,6 @@ class ThemeManager {
       backgroundColor: ColorManager.APPBAR_BG,
     ),
     iconTheme: IconThemeData(size: 24, color: ColorManager.COLOR_SECONDARY),
-    textTheme: TextTheme(
-      titleLarge: TextStyle(
-        fontSize: 24,
-        color: ColorManager.COLOR_SECONDARY,
-        fontFamily: 'Tomorrow',
-        fontWeight: FontWeight.w500,
-      ),
-      titleMedium: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-      ),
-      labelLarge: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-        fontSize: 16,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w700,
-      ),
-      labelMedium: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-        fontSize: 16,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w600,
-      ),
-      labelSmall: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-        fontSize: 14,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w500,
-      ),
-      bodyLarge: TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w600,
-      ),
-      bodyMedium: TextStyle(
-        color: ColorManager.INPUT_COLOR,
-        fontSize: 14,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w500,
-      ),
-      bodySmall: TextStyle(
-        color: ColorManager.SUBTITLE_COLOR,
-        fontSize: 12,
-        fontFamily: 'Comme',
-        fontWeight: FontWeight.w500,
-      ),
-    ),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(ColorManager.COLOR_PRIMARY),
@@ -106,6 +53,67 @@ class ThemeManager {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       childrenPadding: EdgeInsets.all(20),
       expandedAlignment: Alignment.centerLeft,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(
+        color: ColorManager.INPUT_COLOR,
+        fontSize: 16,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: ColorManager.COLOR_PRIMARY,
+      primary: ColorManager.COLOR_PRIMARY,
+      onPrimary: ColorManager.COLOR_SECONDARY,
+      secondary: ColorManager.COLOR_SECONDARY,
+    ),
+    textTheme: TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 24,
+        color: ColorManager.COLOR_SECONDARY,
+        fontFamily: 'Tomorrow',
+        fontWeight: FontWeight.w500,
+      ),
+      titleMedium: TextStyle(
+        color: ColorManager.COLOR_SECONDARY,
+      ),
+      labelLarge: TextStyle(
+        color: ColorManager.COLOR_SECONDARY,
+        fontSize: 16,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w700,
+      ),
+      labelMedium: TextStyle(
+        color: ColorManager.COLOR_SECONDARY,
+        fontSize: 16,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w600,
+      ),
+      labelSmall: TextStyle(
+        color: ColorManager.COLOR_SECONDARY,
+        fontSize: 14,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w500,
+      ),
+      bodyLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w600,
+      ),
+      bodyMedium: TextStyle(
+        color: ColorManager.INPUT_COLOR,
+        fontSize: 16,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w500,
+      ),
+      bodySmall: TextStyle(
+        color: ColorManager.SUBTITLE_COLOR,
+        fontSize: 12,
+        fontFamily: 'Comme',
+        fontWeight: FontWeight.w500,
+      ),
     ),
   );
 }
