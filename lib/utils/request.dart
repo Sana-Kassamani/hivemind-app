@@ -78,6 +78,7 @@ Future request(
     }
     throw (ApiException(jsonDecode(response.body)["message"]));
   } catch (error) {
+    print("Error : ${error.toString()}");
     rethrow;
   }
 }
