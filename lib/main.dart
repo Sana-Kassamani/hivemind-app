@@ -22,8 +22,12 @@ void main() {
       ],
       child: MaterialApp(
         title: 'My app', // used by the OS task switcher
-        home: LoginPage(),
+        // home: LoginPage(),
         theme: theme.lightTheme,
+        routes: {
+          '/': (context) => LoginPage(),
+          '/home': (context) => MainScreen(),
+        },
       ),
     ),
   );

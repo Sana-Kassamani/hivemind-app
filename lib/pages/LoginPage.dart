@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                                     await Provider.of<Auth>(context,
                                             listen: false)
                                         .login(_username, _password);
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => MainScreen()),
