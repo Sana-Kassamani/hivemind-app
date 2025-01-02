@@ -66,6 +66,31 @@ class _GoogleMapSearchPlacesApiState extends State<GoogleMapSearchPlacesApi> {
     }
   }
 
+  void getLocation(String place_id) async {
+    const String PLACES_API_KEY = "AIzaSyDdMDAiVG9qJjLqXBY1YrIVFNUgMU0H9Pw";
+    try {
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/details/json';
+      String request =
+          '$baseURL?fields=geometry&place_id=$place_id&key=$PLACES_API_KEY';
+      var response = await http.get(Uri.parse(request));
+      var data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        print(response.body.toString());
+        setState(() {
+          _lat = json.decode(response.body)["result"]['geometry']["location"]
+              ["lat"];
+          _lng = json.decode(response.body)["result"]['geometry']["location"]
+              ["lng"];
+        });
+      } else {
+        throw Exception('Failed to load location details');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +154,9 @@ class _GoogleMapSearchPlacesApiState extends State<GoogleMapSearchPlacesApi> {
             ),
           ),
           FilledButton(
-            onPressed: () {},
+            onPressed: () {
+              getLocation(placeId);
+            },
             child: Text("Get long lat"),
           ),
           Text("Lat : $_lat, Lng: $_lng"),
