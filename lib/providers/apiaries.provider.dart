@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/apiary.provider.dart';
 import 'package:hivemind_app/providers/hive.provider.dart';
+import 'package:hivemind_app/utils/enums/RequestMethods.dart';
+import 'package:hivemind_app/utils/request.dart';
 import 'package:http/http.dart' as http;
 
 class Apiaries extends ChangeNotifier {
@@ -36,12 +38,21 @@ class Apiaries extends ChangeNotifier {
   List<Apiary> get apiariesList => _apiaries;
 
   Future loadApiaries() async {
-    final response =
-        await http.get(Uri.parse("http://192.168.0.100:8080/apiaries"));
-    if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
-    } else {
-      throw Exception("Get Failed");
+    try {
+      final response =
+          await request(route: "/apiaries", method: RequestMethods.get);
+      print(jsonDecode(response).toString());
+    } catch (error) {
+      rethrow;
     }
   }
+
+  // void saveApiaries(apiaries) {
+  //   for(int i=0;i<apiaries.length;i++){
+  //     var apiary = apiaries[i];
+  //     final newApiary= Apiary(
+  //       apiary["_id"],
+  //       apiary["label"], location, beekeeperName, hives)
+  //   }
+  // }
 }
