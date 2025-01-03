@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hivemind_app/utils/parseDate.dart';
-import 'package:intl/intl.dart';
-
-class Task extends ChangeNotifier {
+class Task {
   final String id;
   final String title;
   final String content;
@@ -18,34 +14,7 @@ class Task extends ChangeNotifier {
     required this.comment,
     required this.date,
   });
-
-  List<Task> save({tasks}) {
-    List<Task> taskList = [];
-
-    for (int i = 0; i < tasks.length; i++) {
-      var task = tasks[i];
-
-      // parse date of task to Jan 01, 2000 format
-      String updatedDt = parseDate(date: task["date"]);
-
-      final newTask = Task(
-        id: task["_id"],
-        title: task["title"],
-        content: task["content"],
-        status: task["status"],
-        comment: task["comment"],
-        date: updatedDt,
-      );
-
-      taskList.add(newTask);
-      print("New task ${newTask.toString()}");
-    }
-
-    notifyListeners();
-    return taskList;
-  }
 }
-
 // @Schema()
 // export class Task {
 
