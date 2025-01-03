@@ -6,10 +6,10 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 class GoogleMapSearchPlacesApi extends StatefulWidget {
-  const GoogleMapSearchPlacesApi({Key? key}) : super(key: key);
+  const GoogleMapSearchPlacesApi({super.key});
 
   @override
-  _GoogleMapSearchPlacesApiState createState() =>
+  State<GoogleMapSearchPlacesApi> createState() =>
       _GoogleMapSearchPlacesApiState();
 }
 
@@ -23,6 +23,7 @@ class _GoogleMapSearchPlacesApiState extends State<GoogleMapSearchPlacesApi> {
   var _lat;
   var _lng;
   var weather;
+
   @override
   void initState() {
     super.initState();

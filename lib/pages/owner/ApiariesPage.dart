@@ -27,11 +27,6 @@ class _ApiariesPageState extends State<ApiariesPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    loadApiaries();
-  }
-
-  loadApiaries() async {
-    await Apiaries().loadApiaries();
   }
 
   void _showDialog() {
