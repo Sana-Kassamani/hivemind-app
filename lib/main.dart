@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/LoginPage.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
@@ -9,6 +10,9 @@ import 'package:hivemind_app/pages/placesPage.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/providers/iotDetails.provider.dart';
+import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +23,12 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Apiaries()),
         ChangeNotifierProvider(create: (context) => Auth()),
-        ChangeNotifierProvider(create: (context) => Beekeepers())
+        ChangeNotifierProvider(create: (context) => Apiaries()),
+        ChangeNotifierProvider(create: (context) => Beekeepers()),
+        ChangeNotifierProvider(create: (context) => Hives()),
+        ChangeNotifierProvider(create: (context) => IotDetails()),
+        ChangeNotifierProvider(create: (context) => Tasks()),
       ],
       child: MaterialApp(
         title: 'My app', // used by the OS task switcher
