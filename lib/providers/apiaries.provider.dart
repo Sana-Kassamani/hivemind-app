@@ -1,13 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/providers/apiary.provider.dart';
+import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
-import 'package:hivemind_app/providers/hive.provider.dart';
-import 'package:hivemind_app/providers/user.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/request.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class Apiaries extends ChangeNotifier {
@@ -21,12 +19,34 @@ class Apiaries extends ChangeNotifier {
       final response =
           await request(route: "/apiaries/owner", method: RequestMethods.get);
       print(jsonDecode(response)["apiaries"]);
-      setApiariesList(Provider.of<Apiary>(context, listen: false)
-          .save(context: context, apiaries: jsonDecode(response)["apiaries"]));
+      save(apiaries: jsonDecode(response)["apiaries"], context: context);
     } catch (error) {
       rethrow;
     }
   }
 
-  void saveApiaries({context, apiaries}) {}
+  void save({apiaries, context}) {
+    for (int i = 0; i < apiaries.length; i++) {
+      var apiary = apiaries[i];
+      print("here 1");
+      Provider.of<Hives>(context, listen: false).save(
+          context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
+      print("here 2");
+      Provider.of<Tasks>(context, listen: false)
+          .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
+      print("here 3");
+      String username = Provider.of<Beekeepers>(context, listen: false)
+          .findByAssignedApiary(id: apiary["_id"]);
+
+      final newApiary = Apiary(
+        id: apiary["_id"],
+        label: apiary["label"],
+        location: apiary["location"],
+        beekeeperName: username,
+      );
+      _apiaries.add(newApiary);
+    }
+
+    notifyListeners();
+  }
 }
