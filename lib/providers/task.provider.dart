@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Task extends ChangeNotifier {
-  final String _id;
+  final String id;
   final String title;
   final String content;
   final String status;
   final String comment;
   final String date;
 
-  Task(
-    this._id,
-    this.title,
-    this.content,
-    this.status,
-    this.comment,
-    this.date,
-  );
+  Task({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.status,
+    required this.comment,
+    required this.date,
+  });
 }
 
 // @Schema()

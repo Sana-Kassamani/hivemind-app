@@ -3,21 +3,21 @@ import 'package:hivemind_app/providers/hive.provider.dart';
 import 'package:hivemind_app/providers/task.provider.dart';
 
 class Apiary extends ChangeNotifier {
-  final String _id;
+  final String id;
   final String label;
   final String location;
   final String beekeeperName;
   List<Hive> hives = [];
   List<Task> tasks = [];
 
-  Apiary(
-    this._id,
-    this.label,
-    this.location,
-    this.beekeeperName,
-    this.hives,
-  );
-  String getId() => _id;
+  Apiary({
+    required this.id,
+    required this.label,
+    required this.location,
+    required this.beekeeperName,
+    required this.hives,
+  });
+  String getId() => id;
 }
 
 // export class Apiary {

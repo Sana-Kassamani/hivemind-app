@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Hive extends ChangeNotifier {
-  final String _id;
+  final String id;
   final String label;
   final int numberOfFrames;
   final bool harvestStatus;
   final List<String> diseases;
   String lastHarvestDate;
 
-  Hive(
-    this._id,
-    this.label,
-    this.numberOfFrames,
-    this.harvestStatus,
-    this.lastHarvestDate,
-    this.diseases,
-  );
+  Hive({
+    required this.id,
+    required this.label,
+    required this.numberOfFrames,
+    required this.harvestStatus,
+    required this.lastHarvestDate,
+    required this.diseases,
+  });
 }
 // @Schema()
 // export class Hive {
