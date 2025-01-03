@@ -13,9 +13,9 @@ class User extends ChangeNotifier {
     required this.userType,
     required this.settings,
   });
-  String getId() => id;
-  UserTypes getUserType() => userType;
-  UserSettings getSettings() => settings;
+  String get getId => id;
+  UserTypes get getUserType => userType;
+  UserSettings get getSettings => settings;
 }
 
 class UserSettings {
@@ -25,10 +25,10 @@ class UserSettings {
     required this.darkmode,
     required this.alertsOn,
   });
-  bool getIsDark() => darkmode;
-  bool getIsOnAlerts() => alertsOn;
-  void setDark(bool state) => darkmode = state;
-  void setAlertsSetting(bool state) => alertsOn = state;
+  bool get getIsDark => darkmode;
+  bool get getIsOnAlerts => alertsOn;
+  set setDark(bool state) => darkmode = state;
+  set setAlertsSetting(bool state) => alertsOn = state;
 }
 
 class Beekeeper {
@@ -39,7 +39,7 @@ class Beekeeper {
       {required this.id,
       required this.username,
       required this.assignedApiaryId});
-  String getId() => id;
-  String getUsername() => username;
-  String? getassignedApiaryId() => assignedApiaryId;
+  String get getId => id;
+  String get getUsername => username;
+  String? get getassignedApiaryId => assignedApiaryId;
 }
