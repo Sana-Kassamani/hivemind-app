@@ -22,5 +22,16 @@ class Beekeepers extends ChangeNotifier {
     }
   }
 
-  void saveBeekeepers(beekeepers) {}
+  void saveBeekeepers(beekeepers) {
+    for (int i = 0; i < beekeepers.length; i++) {
+      var beekeeper = beekeepers[i];
+      final newBeekeeper = Beekeeper(
+        id: beekeeper["_id"],
+        username: beekeeper["username"],
+        assignedApiaryId: beekeeper["assignedApiary"],
+      );
+      _beekeepersList.add(newBeekeeper);
+    }
+    notifyListeners();
+  }
 }
