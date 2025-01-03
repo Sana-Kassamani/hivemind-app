@@ -1,16 +1,38 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/main.dart';
-import 'package:hivemind_app/providers/user.provider.dart';
+import 'package:hivemind_app/models/user.model.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/utils/request.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
   late User user;
+
+  void save({loggedUser}) {
+    // set userType
+    var userType = loggedUser["userType"];
+    userType = UserTypes.isBeekeeper(userType)
+        ? UserTypes.Beekeeper
+        : (UserTypes.isOwner(userType) ? UserTypes.Owner : null);
+    if (userType == null) {
+      throw Exception("UserType not defined");
+    }
+
+    // set user settings
+    final settings = UserSettings(
+      darkmode: loggedUser["settings"]["darkMode"],
+      alertsOn: loggedUser["settings"]["allowNotifications"],
+    );
+
+    //set user
+    user = User(
+      id: loggedUser["_id"],
+      userType: userType,
+      settings: settings,
+    );
+  }
+
   Future login(String username, String password) async {
     final data = <String, String>{"username": username, "password": password};
     try {
@@ -26,29 +48,7 @@ class Auth extends ChangeNotifier {
       // Save the token value to persistent storage under the 'token' key.
       await prefs.setString('token', token);
 
-      var loggedUser = jsonDecode(response)["user"];
-
-      // set userType
-      var userType = loggedUser["userType"];
-      userType = UserTypes.isBeekeeper(userType)
-          ? UserTypes.Beekeeper
-          : (UserTypes.isOwner(userType) ? UserTypes.Owner : null);
-      if (userType == null) {
-        throw Exception("UserType not defined");
-      }
-
-      // set user settings
-      final settings = UserSettings(
-        darkmode: loggedUser["settings"]["darkMode"],
-        alertsOn: loggedUser["settings"]["allowNotifications"],
-      );
-
-      //set user
-      user = User(
-        id: loggedUser["_id"],
-        userType: userType,
-        settings: settings,
-      );
+      save(loggedUser: jsonDecode(response)["user"]);
     } catch (error) {
       rethrow;
     }
