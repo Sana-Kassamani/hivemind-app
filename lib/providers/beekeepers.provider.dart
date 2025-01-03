@@ -1,7 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/providers/user.provider.dart';
+import 'package:hivemind_app/models/user.model.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/request.dart';
 
@@ -23,6 +22,7 @@ class Beekeepers extends ChangeNotifier {
   }
 
   void save(beekeepers) {
+    print(beekeepers);
     for (int i = 0; i < beekeepers.length; i++) {
       var beekeeper = beekeepers[i];
       final newBeekeeper = Beekeeper(
@@ -39,6 +39,8 @@ class Beekeepers extends ChangeNotifier {
     try {
       Beekeeper beekeeper =
           beekeepersList.firstWhere((b) => b.getassignedApiaryId == id);
+
+      print("beekeeper found");
       return beekeeper.getUsername;
     } catch (error) {
       print("Beekeeper not found");
