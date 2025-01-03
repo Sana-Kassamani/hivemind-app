@@ -32,16 +32,16 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await Provider.of<Auth>(context, listen: false)
           .login(_username, _password);
-      if (Provider.of<Auth>(context, listen: false).user.getUserType() ==
+      if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Owner) {
-        await Provider.of<Beekeepers>(context, listen: false).loadBeekeepers();
-        await Provider.of<Apiaries>(context, listen: false).loadApiaries(
-            Provider.of<Beekeepers>(context, listen: false).beekeepersList);
+        await Provider.of<Beekeepers>(context, listen: false).load();
+        await Provider.of<Apiaries>(context, listen: false)
+            .loadApiaries(context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MainScreenOwner()),
         );
-      } else if (Provider.of<Auth>(context, listen: false).user.getUserType() ==
+      } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Beekeeper) {}
     } catch (error) {
       setState(() {
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _inputTextStyle =
+    final inputTextStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     return Scaffold(
       body: Center(
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextFormField(
-                        style: _inputTextStyle,
+                        style: inputTextStyle,
                         decoration: InputDecoration(
                           label: Text("Username"),
                           border: _borderStyle,
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       addVerticalSpace(12),
                       TextFormField(
-                        style: _inputTextStyle,
+                        style: inputTextStyle,
                         obscureText: true,
                         decoration: InputDecoration(
                           label: Text("Password"),
