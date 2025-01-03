@@ -27,7 +27,22 @@ class Apiaries extends ChangeNotifier {
 
   List<Hive> saveHives(hives) {
     List<Hive> hiveList = [];
-
+    for (int i = 0; i < hives.length; i++) {
+      var hive = hives[i];
+      List<String> diseases = [];
+      for (int j = 0; j < hive["diseases"].length; j++) {
+        diseases.add(hive["diseases"][j]);
+      }
+      final newHive = Hive(
+        id: hive["_id"],
+        label: hive["label"],
+        numberOfFrames: hive["nbOfFrames"],
+        harvestStatus: hive["harvestStatus"],
+        lastHarvestDate: hive["lastHarvestDate"],
+        diseases: diseases,
+      );
+      hiveList.add(newHive);
+    }
     notifyListeners();
     return hiveList;
   }
