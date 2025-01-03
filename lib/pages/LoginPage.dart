@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/main.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
+import 'package:hivemind_app/providers/beekeepers.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +27,37 @@ class _LoginPageState extends State<LoginPage> {
   var errorMessage = "";
   var _username = "";
   var _password = "";
+
+  void login(context) async {
+    try {
+      await Provider.of<Auth>(context, listen: false)
+          .login(_username, _password);
+      if (Provider.of<Auth>(context, listen: false).user.getUserType() ==
+          UserTypes.Owner) {
+        await Provider.of<Beekeepers>(context, listen: false).loadBeekeepers();
+        await Provider.of<Apiaries>(context, listen: false).loadApiaries(
+            Provider.of<Beekeepers>(context, listen: false).beekeepersList);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreenOwner()),
+        );
+      } else if (Provider.of<Auth>(context, listen: false).user.getUserType() ==
+          UserTypes.Beekeeper) {}
+    } catch (error) {
+      setState(() {
+        errorMessage = error.toString();
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Login failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      _globalKey.currentState!.reset();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _inputTextStyle =
@@ -108,30 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                               onPress: () async {
                                 if (_globalKey.currentState!.validate()) {
                                   _globalKey.currentState!.save();
-                                  try {
-                                    await Provider.of<Auth>(context,
-                                            listen: false)
-                                        .login(_username, _password);
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => MainScreen()),
-                                    );
-                                  } catch (error) {
-                                    setState(() {
-                                      errorMessage = error.toString();
-                                    });
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Login failed: ${error.toString()}'),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  } finally {
-                                    _globalKey.currentState!.reset();
-                                  }
                                 }
+                                login(context);
                               }),
                           // errorMessage.isNotEmpty
                           //     ? Text(
