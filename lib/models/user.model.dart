@@ -1,9 +1,6 @@
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 
-class User extends ChangeNotifier {
+class User {
   final String id;
   final UserTypes userType;
   final UserSettings settings;
