@@ -17,7 +17,7 @@ class _TasksTabState extends State<TasksTab> {
       child: Column(
         children: [
           ClearTextBtn(context, "Clear Completed", () {}),
-          TasksList(),
+          TasksListOwner(),
           FilledBtn(
             text: "Add a New Task",
             icon: Icon(Icons.add),

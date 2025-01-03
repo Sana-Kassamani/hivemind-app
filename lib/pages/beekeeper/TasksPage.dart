@@ -19,7 +19,7 @@ class _TasksPageState extends State<TasksPage> {
       body: Column(
         children: [
           addVerticalSpace(24),
-          TasksList(),
+          TasksListBeekeeper(),
         ],
       ),
     );
