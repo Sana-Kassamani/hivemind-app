@@ -78,6 +78,11 @@ class ThemeManager {
       titleMedium: TextStyle(
         color: ColorManager.COLOR_SECONDARY,
       ),
+      titleSmall: TextStyle(
+        fontSize: 18,
+        fontFamily: 'Tomorrow',
+        fontWeight: FontWeight.w400,
+      ),
       labelLarge: TextStyle(
         color: ColorManager.COLOR_SECONDARY,
         fontSize: 16,
@@ -98,7 +103,7 @@ class ThemeManager {
       ),
       bodyLarge: TextStyle(
         color: Colors.black,
-        fontSize: 20,
+        fontSize: 18,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w600,
       ),
