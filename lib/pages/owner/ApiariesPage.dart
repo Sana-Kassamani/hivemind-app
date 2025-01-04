@@ -4,6 +4,7 @@ import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
+import 'package:hivemind_app/widgets/general/empty.state.dart';
 import 'package:hivemind_app/widgets/owner/AddDialogue.dart';
 import 'package:provider/provider.dart';
 
@@ -35,24 +36,26 @@ class _ApiariesPageState extends State<ApiariesPage> {
           Expanded(
             child: Consumer<Apiaries>(
               builder: (BuildContext context, Apiaries value, Widget? child) {
-                return ListView.builder(
-                  itemCount: value.apiariesList.length,
-                  itemBuilder: (context, index) => ListItem(
-                    data: value.apiariesList[index],
-                    icon: "assets/icons/apiary_icon.png",
-                    onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ApiaryPageOwner(),
-                          settings: RouteSettings(
-                            arguments: value.apiariesList[index].getId(),
-                          ),
+                return value.apiariesList.isEmpty
+                    ? EmptyState(context: context)
+                    : ListView.builder(
+                        itemCount: value.apiariesList.length,
+                        itemBuilder: (context, index) => ListItem(
+                          data: value.apiariesList[index],
+                          icon: "assets/icons/apiary_icon.png",
+                          onPress: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ApiaryPageOwner(),
+                                settings: RouteSettings(
+                                  arguments: value.apiariesList[index].getId(),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
-                    },
-                  ),
-                );
               },
             ),
           ),
