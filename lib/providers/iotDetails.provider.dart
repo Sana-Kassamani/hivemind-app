@@ -13,7 +13,7 @@ class IotDetails extends ChangeNotifier {
       // parse date of iotDetail to Jan 01, 2000 format
       String updatedDt = parseDate(date: detail["date"]);
       print("Detail $i is $detail");
-      print("here 7");
+
       final newDetail = IotDetail(
         id: detail["_id"],
         humidity: detail["humidity"].toDouble(),
@@ -21,7 +21,6 @@ class IotDetails extends ChangeNotifier {
         mass: detail["mass"].toDouble(),
         date: updatedDt,
       );
-      print("here 8");
 
       _iotDetails[hiveId]!.add(newDetail);
       print("New task ${newDetail.toString()}");

@@ -14,7 +14,7 @@ class Apiaries extends ChangeNotifier {
   List<Apiary> get apiariesList => _apiaries;
   void setApiariesList(apiaries) => _apiaries = apiaries;
 
-  Future loadApiaries(context) async {
+  Future load(context) async {
     try {
       final response =
           await request(route: "/apiaries/owner", method: RequestMethods.get);
@@ -28,13 +28,10 @@ class Apiaries extends ChangeNotifier {
   void save({apiaries, context}) {
     for (int i = 0; i < apiaries.length; i++) {
       var apiary = apiaries[i];
-      print("here 1");
       Provider.of<Hives>(context, listen: false).save(
           context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
-      print("here 2");
       Provider.of<Tasks>(context, listen: false)
           .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
-      print("here 3");
       String username = Provider.of<Beekeepers>(context, listen: false)
           .findByAssignedApiary(id: apiary["_id"]);
 

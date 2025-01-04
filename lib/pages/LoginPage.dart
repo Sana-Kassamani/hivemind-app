@@ -31,12 +31,12 @@ class _LoginPageState extends State<LoginPage> {
   void login(context) async {
     try {
       await Provider.of<Auth>(context, listen: false)
-          .login(_username, _password);
+          .login(username: _username, password: _password);
       if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Owner) {
         await Provider.of<Beekeepers>(context, listen: false).load();
         await Provider.of<Apiaries>(context, listen: false)
-            .loadApiaries(context);
+            .load(context: context);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MainScreenOwner()),

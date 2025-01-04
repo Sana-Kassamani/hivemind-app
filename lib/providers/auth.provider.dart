@@ -33,7 +33,7 @@ class Auth extends ChangeNotifier {
     );
   }
 
-  Future login(String username, String password) async {
+  Future login({username, password}) async {
     final data = <String, String>{"username": username, "password": password};
     try {
       final response = await request(

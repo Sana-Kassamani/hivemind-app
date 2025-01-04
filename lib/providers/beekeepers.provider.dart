@@ -13,16 +13,13 @@ class Beekeepers extends ChangeNotifier {
     try {
       final response =
           await request(route: "/users/beekeepers", method: RequestMethods.get);
-      print(jsonDecode(response).toString());
-      print(jsonDecode(response)[0].toString());
-      save(jsonDecode(response));
+      save(beekeepers: jsonDecode(response));
     } catch (error) {
       rethrow;
     }
   }
 
-  void save(beekeepers) {
-    print(beekeepers);
+  void save({beekeepers}) {
     for (int i = 0; i < beekeepers.length; i++) {
       var beekeeper = beekeepers[i];
       final newBeekeeper = Beekeeper(
@@ -39,8 +36,6 @@ class Beekeepers extends ChangeNotifier {
     try {
       Beekeeper beekeeper =
           beekeepersList.firstWhere((b) => b.getassignedApiaryId == id);
-
-      print("beekeeper found");
       return beekeeper.getUsername;
     } catch (error) {
       print("Beekeeper not found");
