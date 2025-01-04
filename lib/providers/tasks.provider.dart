@@ -6,6 +6,12 @@ class Tasks extends ChangeNotifier {
   final Map<String, List<Task>> _tasks = {};
   Map<String, List<Task>> get tasks => _tasks;
 
+  List<Task> filterPendingTasks({apiaryId}) {
+    List<Task> list =
+        _tasks[apiaryId]!.where((task) => task.status == "Pending").toList();
+    return list;
+  }
+
   void save({apiaryId, tasks}) {
     _tasks[apiaryId] = [];
 
