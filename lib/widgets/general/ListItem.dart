@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/providers/apiary.provider.dart';
+import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
+import 'package:hivemind_app/utils/capitalize.dart';
 import 'package:hivemind_app/utils/colors.dart';
-import 'package:hivemind_app/widgets/general/CircleIcon.dart';
 
 class ListItem extends StatelessWidget {
   const ListItem(
@@ -30,7 +30,7 @@ class ListItem extends StatelessWidget {
       ),
       subtitle: data is Apiary
           ? Text(
-              data.beekeeperName,
+              capitalize(data.beekeeperName),
               style: Theme.of(context).textTheme.bodyMedium,
             )
           : null,
