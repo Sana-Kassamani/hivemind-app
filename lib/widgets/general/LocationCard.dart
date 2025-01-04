@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 class LocationCard extends StatelessWidget {
-  const LocationCard({super.key});
+  const LocationCard({super.key, required this.apiary});
+  final Apiary apiary;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class LocationCard extends StatelessWidget {
                 iconBox(Icons.location_on_outlined,
                     Theme.of(context).colorScheme.primary),
                 Text(
-                  "Barouk Cedars",
+                  apiary.getLocation(),
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium
