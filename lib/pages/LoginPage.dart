@@ -30,19 +30,26 @@ class _LoginPageState extends State<LoginPage> {
 
   void login(context) async {
     try {
-      await Provider.of<Auth>(context, listen: false)
+      final response = await Provider.of<Auth>(context, listen: false)
           .login(username: _username, password: _password);
       if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Owner) {
         await Provider.of<Beekeepers>(context, listen: false).load();
-        await Provider.of<Apiaries>(context, listen: false)
-            .load(context: context);
+        Provider.of<Apiaries>(context, listen: false).saveApiaries(
+            context: context, apiaries: response["user"]["apiaries"]);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MainScreenOwner()),
         );
       } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
-          UserTypes.Beekeeper) {}
+          UserTypes.Beekeeper) {
+        Provider.of<Apiaries>(context, listen: false).saveApiary(
+            context: context, apiary: response["user"]["assignedApiary"]);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreenBeekeeper()),
+        );
+      }
     } catch (error) {
       setState(() {
         errorMessage = error.toString();

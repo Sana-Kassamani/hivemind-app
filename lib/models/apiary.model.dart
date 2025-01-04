@@ -2,7 +2,7 @@ class Apiary {
   final String id;
   final String label;
   final String location;
-  final String beekeeperName;
+  final String? beekeeperName;
 
   Apiary({
     required this.id,
