@@ -6,6 +6,12 @@ import 'package:provider/provider.dart';
 
 class Hives extends ChangeNotifier {
   final Map<String, List<Hive>> _hives = {};
+  Map<String, List<Hive>> get hives => _hives;
+
+  Hive getById({apiaryId, hiveId}) {
+    Hive hive = _hives[apiaryId]!.firstWhere((a) => a.id == hiveId);
+    return hive;
+  }
 
   void save({apiaryId, context, hives}) {
     _hives[apiaryId] = [];
