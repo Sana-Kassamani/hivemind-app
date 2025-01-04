@@ -14,6 +14,10 @@ class Hive {
     required this.lastHarvestDate,
     required this.diseases,
   });
+
+  String get getId => id;
+  bool get getHarvestStatus => harvestStatus;
+  int get getNumberOfFrames => numberOfFrames;
 }
 // @Schema()
 // export class Hive {
