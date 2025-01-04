@@ -4,6 +4,7 @@ import 'package:hivemind_app/utils/parseDate.dart';
 
 class Tasks extends ChangeNotifier {
   final Map<String, List<Task>> _tasks = {};
+  Map<String, List<Task>> get tasks => _tasks;
 
   void save({apiaryId, tasks}) {
     _tasks[apiaryId] = [];
