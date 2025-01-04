@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
+import 'package:hivemind_app/widgets/general/empty.state.dart';
 
 class AlertsList extends StatefulWidget {
   const AlertsList({super.key});
@@ -42,13 +43,15 @@ class _AlertsListState extends State<AlertsList> {
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 30, right: 30),
-        child: ListView.separated(
-          itemCount: alerts.length,
-          itemBuilder: (context, index) {
-            return AlertListItem(context, alerts[index]);
-          },
-          separatorBuilder: (context, index) => addVerticalSpace(10),
-        ),
+        child: alerts.isEmpty
+            ? EmptyState(context: context)
+            : ListView.separated(
+                itemCount: alerts.length,
+                itemBuilder: (context, index) {
+                  return AlertListItem(context, alerts[index]);
+                },
+                separatorBuilder: (context, index) => addVerticalSpace(10),
+              ),
       ),
     );
   }
