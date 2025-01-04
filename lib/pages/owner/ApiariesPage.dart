@@ -4,16 +4,8 @@ import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
-import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/owner/AddDialogue.dart';
 import 'package:provider/provider.dart';
-
-List<Map<String, String>> apiaries = [
-  {"label": "Apiary #1", "Beekeeper name": "Yehya"},
-  {"label": "Apiary #2", "Beekeeper name": "Hatem"},
-  {"label": "Apiary #3", "Beekeeper name": "Seri"},
-  {"label": "Apiary #4", "Beekeeper name": "Nour"},
-];
 
 class ApiariesPage extends StatefulWidget {
   const ApiariesPage({super.key});
@@ -23,12 +15,6 @@ class ApiariesPage extends StatefulWidget {
 }
 
 class _ApiariesPageState extends State<ApiariesPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   void _showDialog() {
     showDialog(
         context: context,
