@@ -10,9 +10,10 @@ import 'package:provider/provider.dart';
 
 class Apiaries extends ChangeNotifier {
   List<Apiary> _apiaries = [];
-  late Apiary apiary;
+  late Apiary? _apiary;
 
   List<Apiary> get apiariesList => _apiaries;
+  Apiary? get apiary => _apiary;
   void setApiariesList(apiaries) => _apiaries = apiaries;
 
   // Future loadApiary({context, apiaryId}) async {
@@ -37,6 +38,10 @@ class Apiaries extends ChangeNotifier {
   //     rethrow;
   //   }
   // }
+  Apiary getById({apiaryId}) {
+    Apiary apiary = _apiaries.firstWhere((a) => a.id == apiaryId);
+    return apiary;
+  }
 
   void saveApiaries({context, apiaries}) {
     for (int i = 0; i < apiaries.length; i++) {
@@ -61,18 +66,22 @@ class Apiaries extends ChangeNotifier {
   }
 
   void saveApiary({context, apiary}) {
-    Provider.of<Hives>(context, listen: false).save(
-        context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
-    Provider.of<Tasks>(context, listen: false)
-        .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
+    if (apiary != null) {
+      Provider.of<Hives>(context, listen: false).save(
+          context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
+      Provider.of<Tasks>(context, listen: false)
+          .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
 
-    final newApiary = Apiary(
-      id: apiary["_id"],
-      label: apiary["label"],
-      location: apiary["location"],
-      beekeeperName: null,
-    );
-    apiary = newApiary;
+      final newApiary = Apiary(
+        id: apiary["_id"],
+        label: apiary["label"],
+        location: apiary["location"],
+        beekeeperName: null,
+      );
+      _apiary = newApiary;
+    } else {
+      _apiary = null;
+    }
     notifyListeners();
   }
 }
