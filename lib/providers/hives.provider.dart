@@ -9,7 +9,7 @@ class Hives extends ChangeNotifier {
 
   void save({apiaryId, context, hives}) {
     _hives[apiaryId] = [];
-    print("here 4");
+
     for (int i = 0; i < hives.length; i++) {
       var hive = hives[i];
 
@@ -25,10 +25,10 @@ class Hives extends ChangeNotifier {
       for (int j = 0; j < hive["diseases"].length; j++) {
         diseases.add(hive["diseases"][j]);
       }
-      print("here 5");
+
       Provider.of<IotDetails>(context, listen: false)
           .save(hiveId: hive["_id"], iotDetails: hive["iotDetails"]);
-      print("here 6");
+
       final newHive = Hive(
         id: hive["_id"],
         label: hive["label"],

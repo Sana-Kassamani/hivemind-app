@@ -12,7 +12,6 @@ class IotDetails extends ChangeNotifier {
 
       // parse date of iotDetail to Jan 01, 2000 format
       String updatedDt = parseDate(date: detail["date"]);
-      print("Detail $i is $detail");
 
       final newDetail = IotDetail(
         id: detail["_id"],
