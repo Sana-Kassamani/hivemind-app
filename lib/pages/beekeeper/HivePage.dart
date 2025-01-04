@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/CenterTitle.dart';
 import 'package:hivemind_app/widgets/general/DatesRow.dart';
@@ -6,6 +8,7 @@ import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
 import 'package:hivemind_app/widgets/general/HiveDetailsTab.dart';
 import 'package:hivemind_app/widgets/general/HiveGrid.dart';
 import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
+import 'package:provider/provider.dart';
 
 class HivePageBeekeeper extends StatefulWidget {
   const HivePageBeekeeper({super.key});
@@ -26,6 +29,10 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? arg =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    String apiaryId = arg?["apiaryId"];
+    String hiveId = arg?["hiveId"];
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,7 +46,12 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
       body: Column(
         children: [
           addVerticalSpace(24),
-          CenterTitle(titleText: "Hive 1 Label"),
+          Consumer<Hives>(
+              builder: (BuildContext context, Hives value, Widget? child) {
+            return CenterTitle(
+                titleText:
+                    value.getById(apiaryId: apiaryId, hiveId: hiveId).label);
+          }),
           addVerticalSpace(24),
           SegmentedTab(
             selectedControl: selectedControl,
