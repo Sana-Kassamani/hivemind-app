@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/main.dart';
+import 'package:hivemind_app/models/hive.model.dart';
 import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
-import 'package:hivemind_app/providers/hive.provider.dart';
+import 'package:hivemind_app/providers/auth.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/apiary.provider.dart';
-
 class HivesList extends StatefulWidget {
-  const HivesList({super.key});
-
+  const HivesList({super.key, required this.apiaryId});
+  final String apiaryId;
+  String get getApiary => apiaryId;
   @override
   State<HivesList> createState() => _HivesListState();
 }
 
 class _HivesListState extends State<HivesList> {
-  final isOwner = ISOWNER;
-  final List<Map<String, String>> hives = [
-    {"label": "Hive #1"},
-    {"label": "Hive #2"},
-    {"label": "Hive #3"},
-    {"label": "Hive #4"},
-  ];
-
   @override
   Widget build(BuildContext context) {
-    String? apiaryId = ModalRoute.of(context)?.settings.arguments as String?;
-
-    print(apiaryId);
+    final userType = Provider.of<Auth>(context, listen: false).user.getUserType;
+    final apiaryId = widget.apiaryId;
     return Expanded(
-      child: Consumer<Apiaries>(
-        builder: (BuildContext context, Apiaries value, Widget? child) {
-          List<Hive> hives =
-              value.apiariesList.firstWhere((a) => a.getId() == apiaryId).hives;
+      child: Consumer<Hives>(
+        builder: (BuildContext context, Hives value, Widget? child) {
+          List<Hive>? hives = value.hives[apiaryId];
           return ListView.builder(
-              itemCount: hives.length,
+              itemCount: hives!.length,
               itemBuilder: (context, index) {
                 return ListItem(
                   data: hives[index],
@@ -45,8 +37,16 @@ class _HivesListState extends State<HivesList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              isOwner ? HivePageOwner() : HivePageBeekeeper()),
+                        builder: (context) => userType == UserTypes.Owner
+                            ? HivePageOwner()
+                            : HivePageBeekeeper(),
+                        settings: RouteSettings(
+                          arguments: {
+                            "hiveId": hives[index].getId,
+                            "apiaryId": apiaryId
+                          },
+                        ),
+                      ),
                     );
                   },
                 );
