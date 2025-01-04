@@ -4,6 +4,7 @@ import 'package:hivemind_app/utils/parseDate.dart';
 
 class IotDetails extends ChangeNotifier {
   final Map<String, List<IotDetail>> _iotDetails = {};
+  Map<String, List<IotDetail>> get iotDetails => _iotDetails;
 
   void save({hiveId, iotDetails}) {
     _iotDetails[hiveId] = [];
