@@ -43,14 +43,29 @@ Widget HiveDetailsCard(
   );
 }
 
-Widget DiseasesCard({context}) {
+Widget diseasesCard({context, diseasesList}) {
+  String diseases = "\n";
+  if (diseasesList.isEmpty) {
+    diseases = "\nNo diseases";
+  } else {
+    StringBuffer buffer = StringBuffer();
+    for (int i = 0; i < diseasesList.length; i++) {
+      if (i == diseasesList.length - 1) {
+        buffer.write(diseasesList[i]);
+      } else {
+        buffer.writeln(diseasesList[i]);
+      }
+    }
+    diseases = buffer.toString();
+  }
   return HiveDetailsCard(
-      context: context,
-      iconColor: ColorManager.DISEASES_COLOR,
-      circleColor: ColorManager.DISEASES_BG,
-      imagePath: "assets/icons/diseases_icon.png",
-      title: "Varroa mites \n hyuj \n uuio",
-      content: "Diseases");
+    context: context,
+    iconColor: ColorManager.DISEASES_COLOR,
+    circleColor: ColorManager.DISEASES_BG,
+    imagePath: "assets/icons/diseases_icon.png",
+    title: diseases,
+    content: "Diseases",
+  );
 }
 
 Widget DateCard(context, title, date) {
