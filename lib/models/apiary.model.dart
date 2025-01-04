@@ -11,6 +11,8 @@ class Apiary {
     required this.beekeeperName,
   });
   String getId() => id;
+  String getLocation() => location;
+  String getLabel() => label;
 }
 
 // export class Apiary {
