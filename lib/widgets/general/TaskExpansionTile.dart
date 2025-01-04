@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/models/task.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 
 class TaskExpansionTileOwner extends StatelessWidget {
   const TaskExpansionTileOwner({super.key, required this.task});
 
-  final task;
+  final Task task;
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       expandedAlignment: Alignment.centerLeft,
-      leading: task["status"] == "Pending"
+      leading: task.status == "Pending"
           ? iconBox(
               Icons.circle_outlined, Theme.of(context).colorScheme.secondary)
           : iconBox(
               Icons.check_circle, Theme.of(context).colorScheme.secondary),
       title: Text(
-        task["title"]!,
+        task.title,
         style: Theme.of(context).textTheme.labelMedium,
       ),
       subtitle: Text(
-        task["date"]!,
+        task.date,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
@@ -31,18 +32,18 @@ class TaskExpansionTileOwner extends StatelessWidget {
 
 class ExpandedTileOwner extends StatelessWidget {
   const ExpandedTileOwner({super.key, required this.task});
-  final task;
+  final Task task;
   @override
   Widget build(BuildContext context) {
-    return task["status"] == "Pending"
+    return task.status == "Pending"
         ? Column(
             spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Status: ${task["status"]!}",
+              Text("Status: ${task.status}",
                   style: Theme.of(context).textTheme.labelMedium),
               Text(
-                task["content"]!,
+                task.content,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ],
@@ -51,14 +52,14 @@ class ExpandedTileOwner extends StatelessWidget {
             spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Status: ${task["status"]!}",
+              Text("Status: ${task.status}",
                   style: Theme.of(context).textTheme.labelMedium),
               Text(
-                task["content"]!,
+                task.content,
                 style: Theme.of(context).textTheme.labelMedium,
               ),
               Text(
-                "Comment: ${task["comment"]}",
+                "Comment: ${task.comment}",
                 style: Theme.of(context).textTheme.labelMedium,
               ),
             ],
@@ -117,8 +118,8 @@ class _ExpandedTileBeekeeperState extends State<ExpandedTileBeekeeper> {
       spacing: 20,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Status: ${widget.task["status"]!}",
-            style: Theme.of(context).textTheme.labelMedium),
+        // Text("Status: ${widget.task["status"]!}",
+        //     style: Theme.of(context).textTheme.labelMedium),
         Text(
           widget.task["content"]!,
           style: Theme.of(context).textTheme.labelMedium,
