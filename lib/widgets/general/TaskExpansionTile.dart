@@ -70,7 +70,7 @@ class ExpandedTileOwner extends StatelessWidget {
 class TaskExpansionTileBeekeeper extends StatelessWidget {
   const TaskExpansionTileBeekeeper({super.key, required this.task});
 
-  final task;
+  final Task task;
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -87,11 +87,11 @@ class TaskExpansionTileBeekeeper extends StatelessWidget {
         ),
       ),
       title: Text(
-        task["title"]!,
+        task.title,
         style: Theme.of(context).textTheme.labelMedium,
       ),
       subtitle: Text(
-        task["date"]!,
+        task.date,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
@@ -104,7 +104,7 @@ class TaskExpansionTileBeekeeper extends StatelessWidget {
 class ExpandedTileBeekeeper extends StatefulWidget {
   const ExpandedTileBeekeeper({super.key, required this.task});
 
-  final task;
+  final Task task;
 
   @override
   State<ExpandedTileBeekeeper> createState() => _ExpandedTileBeekeeperState();
@@ -118,10 +118,8 @@ class _ExpandedTileBeekeeperState extends State<ExpandedTileBeekeeper> {
       spacing: 20,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Text("Status: ${widget.task["status"]!}",
-        //     style: Theme.of(context).textTheme.labelMedium),
         Text(
-          widget.task["content"]!,
+          widget.task.content,
           style: Theme.of(context).textTheme.labelMedium,
         ),
         TextField(
