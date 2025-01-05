@@ -88,4 +88,36 @@ class Apiaries extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Future addApiary({context, apiaryLabel, location, beekeeperId}) async {
+    Map<String, dynamic> data = {
+      "label": apiaryLabel,
+      "location": location.location,
+      "longitude": location.longitude,
+      "latitude": location.latitude,
+      "beekeeperId": beekeeperId
+    };
+    final response = await request(
+      route: '/apiaries',
+      method: RequestMethods.post,
+      data: data,
+    );
+    String username = Provider.of<Beekeepers>(context, listen: false)
+        .findNameById(id: beekeeperId);
+    print('Im here');
+    Apiary newApiary = Apiary(
+      id: jsonDecode(response)["_id"],
+      label: apiaryLabel,
+      location: location.location,
+      longitude: location.longitude.toDouble(),
+      latitude: location.latitude.toDouble(),
+      beekeeperName: username,
+    );
+    Provider.of<Hives>(context, listen: false)
+        .save(context: context, apiaryId: newApiary.id, hives: []);
+    Provider.of<Tasks>(context, listen: false)
+        .save(apiaryId: newApiary.id, tasks: []);
+    _apiaries.add(newApiary);
+    notifyListeners();
+  }
 }
