@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 
 class AddHive extends StatefulWidget {
   const AddHive({super.key});
@@ -11,6 +12,8 @@ class AddHive extends StatefulWidget {
 class _AddHiveState extends State<AddHive> {
   final _globalKey = GlobalKey<FormState>();
   var hiveLabel;
+
+  Future addHive(context) async {}
   @override
   Widget build(BuildContext context) {
     final inputTextStyle =
@@ -51,7 +54,20 @@ class _AddHiveState extends State<AddHive> {
         ),
       ),
       buttonPadding: EdgeInsets.all(45),
-      actions: [],
+      actions: [
+        SizedBox(
+          width: double.infinity,
+          child: FilledBtn(
+              text: "Add",
+              onPress: () async {
+                if (_globalKey.currentState!.validate()) {
+                  _globalKey.currentState!.save();
+                }
+
+                await addHive(context);
+              }),
+        ),
+      ],
     );
   }
 }
