@@ -1,12 +1,16 @@
 class Location {
-  final double latitude;
-  final double longitude;
-  final String location;
+  double latitude;
+  double longitude;
+  String location;
   Location({
     required this.latitude,
     required this.longitude,
     required this.location,
   });
+
+  set setLongitude(double long) => longitude = long;
+  set setLatitude(double lat) => latitude = lat;
+  set setLocation(String loc) => location = loc;
 }
 
 class Apiary {
