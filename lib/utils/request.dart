@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future request(
     {required String route,
     required RequestMethods method,
-    Map<String, String>? data}) async {
+    Map<String, dynamic>? data}) async {
   const baseURL = "http://192.168.0.100:8080";
   var response;
   final prefs = await SharedPreferences.getInstance();

@@ -34,7 +34,7 @@ class Auth extends ChangeNotifier {
   }
 
   Future login({username, password}) async {
-    final data = <String, String>{"username": username, "password": password};
+    final data = <String, dynamic>{"username": username, "password": password};
     try {
       final response = await request(
           route: "/auth", method: RequestMethods.post, data: data);
