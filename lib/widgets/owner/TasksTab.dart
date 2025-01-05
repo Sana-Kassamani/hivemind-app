@@ -23,7 +23,7 @@ class _TasksTabState extends State<TasksTab> {
         return Column(
           children: [
             value.tasks[apiaryId]!.isEmpty
-                ? EmptyState()
+                ? Expanded(child: EmptyState(context: context))
                 : Expanded(
                     child: Column(
                       children: [
