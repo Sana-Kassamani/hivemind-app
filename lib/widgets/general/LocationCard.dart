@@ -61,12 +61,16 @@ class _LocationCardState extends State<LocationCard> {
               children: [
                 iconBox(Icons.location_on_outlined,
                     Theme.of(context).colorScheme.primary),
-                Text(
-                  widget.apiary.getLocation(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium
-                      ?.copyWith(fontWeight: FontWeight.w500),
+                Flexible(
+                  child: Tooltip(
+                    message: widget.apiary.getLocation(),
+                    child: Text(widget.apiary.getLocation(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium
+                            ?.copyWith(fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis),
+                  ),
                 ),
               ],
             ),
