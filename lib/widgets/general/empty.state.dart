@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget EmptyState({context}) {
+Widget EmptyState({required context}) {
   return Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
