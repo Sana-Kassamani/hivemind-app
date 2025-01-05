@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/colors.dart';
 
-class AddDialogue extends StatefulWidget {
-  const AddDialogue({super.key});
+class AddHive extends StatefulWidget {
+  const AddHive({super.key});
 
   @override
-  State<AddDialogue> createState() => _AddDialogueState();
+  State<AddHive> createState() => _AddHiveState();
 }
 
-class _AddDialogueState extends State<AddDialogue> {
+class _AddHiveState extends State<AddHive> {
+  final _globalKey = GlobalKey<FormState>();
+  var hiveLabel;
   @override
   Widget build(BuildContext context) {
+    final inputTextStyle =
+        Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     return AlertDialog(
       insetPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
       actionsAlignment: MainAxisAlignment.center,
@@ -21,7 +25,31 @@ class _AddDialogueState extends State<AddDialogue> {
         "Add Apiary",
         textAlign: TextAlign.center,
       ),
-      content: SizedBox(height: 300, child: Center()),
+      content: SizedBox(
+        height: 300,
+        child: Form(
+          key: _globalKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: InputDecoration(label: Text("Hive Label")),
+                style: inputTextStyle,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Label field cannot be empty";
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  setState(() {
+                    hiveLabel = value!;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       buttonPadding: EdgeInsets.all(45),
       actions: [],
     );
