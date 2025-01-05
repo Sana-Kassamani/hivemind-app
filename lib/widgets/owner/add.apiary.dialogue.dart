@@ -1,45 +1,13 @@
 import 'dart:convert';
 import 'package:hivemind_app/models/apiary.model.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/pages/placesPage.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
-import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-
-class AddDialogue extends StatefulWidget {
-  const AddDialogue({super.key});
-
-  @override
-  State<AddDialogue> createState() => _AddDialogueState();
-}
-
-class _AddDialogueState extends State<AddDialogue> {
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-      actionsAlignment: MainAxisAlignment.center,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      titleTextStyle: Theme.of(context).textTheme.titleLarge,
-      backgroundColor: ColorManager.SCAFFOLD_BG,
-      title: Text(
-        "Add Apiary",
-        textAlign: TextAlign.center,
-      ),
-      content: SizedBox(height: 300, child: AddApiary()),
-      buttonPadding: EdgeInsets.all(45),
-      actions: [],
-    );
-  }
-}
-
-// Widget AddDialogue(context, title, form) {
-//   return
-// }
 
 class AddApiary extends StatefulWidget {
   const AddApiary({super.key});
@@ -58,7 +26,7 @@ class _AddApiaryState extends State<AddApiary> {
   var placeId;
   var apiaryLabel = "";
   var beekeeperId = "";
-  var _location = "";
+  Location location = Location(latitude: 0, longitude: 0, location: "");
 
   // @override
   // void initState() {
@@ -105,7 +73,7 @@ class _AddApiaryState extends State<AddApiary> {
     }
   }
 
-  Future<Location> getLocation(String place_id) async {
+  Future getLocation(String place_id) async {
     const String PLACES_API_KEY = "AIzaSyDdMDAiVG9qJjLqXBY1YrIVFNUgMU0H9Pw";
     try {
       String baseURL =
@@ -116,12 +84,10 @@ class _AddApiaryState extends State<AddApiary> {
       var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print(response.body.toString());
-        Location location = Location(
-            latitude: data["result"]['geometry']["location"]["lat"],
-            longitude: data["result"]['geometry']["location"]["lng"],
-            location: _location);
-
-        return location;
+        location.latitude =
+            data["result"]['geometry']["location"]["lat"].toDouble();
+        location.longitude =
+            data["result"]['geometry']["location"]["lng"].toDouble();
       } else {
         throw Exception('Failed to load location details');
       }
@@ -131,15 +97,46 @@ class _AddApiaryState extends State<AddApiary> {
     }
   }
 
+  Future addApiary(context) async {
+    try {
+      print(location.latitude);
+      print(location.longitude);
+      print(location.location);
+      await Provider.of<Apiaries>(context, listen: false).addApiary(
+          context: context,
+          apiaryLabel: apiaryLabel,
+          location: location,
+          beekeeperId: beekeeperId);
+      print("Apiary Added");
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Add Apiary failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final inputTextStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     print("place list is $_placeList");
 
-    return Column(
-      children: [
-        Form(
+    return AlertDialog(
+      insetPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+      actionsAlignment: MainAxisAlignment.center,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      titleTextStyle: Theme.of(context).textTheme.titleLarge,
+      backgroundColor: ColorManager.SCAFFOLD_BG,
+      title: Text(
+        "Add Apiary",
+        textAlign: TextAlign.center,
+      ),
+      content: SizedBox(
+        height: 300,
+        child: Form(
           key: _globalKey,
           child: Column(
             children: [
@@ -214,7 +211,7 @@ class _AddApiaryState extends State<AddApiary> {
                 debugPrint('You just selected $selection');
                 setState(() {
                   placeId = getIndex(selection);
-                  _location = selection;
+                  location.location = selection;
                   _sessionToken = "";
                 });
                 print(placeId);
@@ -243,6 +240,9 @@ class _AddApiaryState extends State<AddApiary> {
             ],
           ),
         ),
+      ),
+      buttonPadding: EdgeInsets.all(45),
+      actions: [
         SizedBox(
           width: double.infinity,
           child: FilledBtn(
@@ -251,13 +251,8 @@ class _AddApiaryState extends State<AddApiary> {
                 if (_globalKey.currentState!.validate()) {
                   _globalKey.currentState!.save();
                 }
-                final loc = await getLocation(placeId);
-                print("Lat : ${loc.latitude}");
-                print("Lng : ${loc.longitude}");
-                print("loc : ${loc.location}");
-
-                print("Label : $apiaryLabel");
-                print("id beekeeper: $beekeeperId");
+                await getLocation(placeId);
+                await addApiary(context);
               }),
         ),
       ],
