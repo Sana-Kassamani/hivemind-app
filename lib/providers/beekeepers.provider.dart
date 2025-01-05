@@ -32,6 +32,16 @@ class Beekeepers extends ChangeNotifier {
     notifyListeners();
   }
 
+  String findNameById({required String id}) {
+    try {
+      Beekeeper beekeeper = beekeepersList.firstWhere((b) => b.getId == id);
+      return beekeeper.getUsername;
+    } catch (error) {
+      print("Beekeeper not found");
+      rethrow;
+    }
+  }
+
   String findByAssignedApiary({required String id}) {
     try {
       Beekeeper beekeeper =
