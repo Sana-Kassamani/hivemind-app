@@ -57,6 +57,8 @@ class Apiaries extends ChangeNotifier {
         id: apiary["_id"],
         label: apiary["label"],
         location: apiary["location"],
+        latitude: apiary["latitude"].toDouble(),
+        longitude: apiary["longitude"].toDouble(),
         beekeeperName: username,
       );
       _apiaries.add(newApiary);
@@ -76,6 +78,8 @@ class Apiaries extends ChangeNotifier {
         id: apiary["_id"],
         label: apiary["label"],
         location: apiary["location"],
+        latitude: apiary["latitude"].toDouble(),
+        longitude: apiary["longitude"].toDouble(),
         beekeeperName: null,
       );
       _apiary = newApiary;
