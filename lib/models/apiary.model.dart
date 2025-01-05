@@ -1,13 +1,28 @@
+class Location {
+  final double latitude;
+  final double longitude;
+  final String location;
+  Location({
+    required this.latitude,
+    required this.longitude,
+    required this.location,
+  });
+}
+
 class Apiary {
   final String id;
   final String label;
   final String location;
+  final double longitude;
+  final double latitude;
   final String? beekeeperName;
 
   Apiary({
     required this.id,
     required this.label,
     required this.location,
+    required this.longitude,
+    required this.latitude,
     required this.beekeeperName,
   });
   String getId() => id;
