@@ -5,7 +5,7 @@ import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
-import 'package:hivemind_app/widgets/owner/AddDialogue.dart';
+import 'package:hivemind_app/widgets/owner/add.apiary.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class ApiariesPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
     showDialog(
         context: context,
         builder: (context) {
-          return AddDialogue();
+          return AddApiary();
         });
   }
 
