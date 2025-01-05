@@ -20,7 +20,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
     showDialog(
         context: context,
         builder: (context) {
-          return AddDialogue(context, "New Apiary", "form");
+          return AddDialogue();
         });
   }
 
