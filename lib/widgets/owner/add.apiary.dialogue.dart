@@ -122,7 +122,6 @@ class _AddApiaryState extends State<AddApiary> {
   Widget build(BuildContext context) {
     final inputTextStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
-    print("place list is $_placeList");
 
     return AlertDialog(
       insetPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),

@@ -11,9 +11,13 @@ class AddHive extends StatefulWidget {
 
 class _AddHiveState extends State<AddHive> {
   final _globalKey = GlobalKey<FormState>();
-  var hiveLabel;
+  var hiveLabel = "";
+  var nbOfFrames;
 
-  Future addHive(context) async {}
+  Future addHive(context) async {
+    String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
+  }
+
   @override
   Widget build(BuildContext context) {
     final inputTextStyle =
@@ -46,6 +50,24 @@ class _AddHiveState extends State<AddHive> {
                 onSaved: (value) {
                   setState(() {
                     hiveLabel = value!;
+                  });
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(label: Text("Number Of Frames")),
+                style: inputTextStyle,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Number of frames field cannot be empty";
+                  }
+                  if (int.tryParse(value) == null || int.tryParse(value)! < 0) {
+                    return "Invalid number of frames";
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  setState(() {
+                    nbOfFrames = value!;
                   });
                 },
               ),
