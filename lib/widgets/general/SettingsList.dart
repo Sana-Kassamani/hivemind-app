@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
+import 'package:hivemind_app/utils/colors.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({super.key});
@@ -29,6 +30,10 @@ class _SettingsListState extends State<SettingsList> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             trailing: Switch(
+                trackOutlineColor:
+                    WidgetStatePropertyAll(ColorManager.COLOR_SECONDARY),
+                inactiveThumbColor: ColorManager.COLOR_SECONDARY,
+                inactiveTrackColor: ColorManager.SCAFFOLD_BG,
                 value: isDarkMode,
                 onChanged: (value) {
                   setState(() {
@@ -48,6 +53,10 @@ class _SettingsListState extends State<SettingsList> {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             trailing: Switch(
+              trackOutlineColor:
+                  WidgetStatePropertyAll(ColorManager.COLOR_SECONDARY),
+              inactiveThumbColor: ColorManager.COLOR_SECONDARY,
+              inactiveTrackColor: ColorManager.SCAFFOLD_BG,
               value: isSoundOn,
               onChanged: (value) {
                 setState(() {
