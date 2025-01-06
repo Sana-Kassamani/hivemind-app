@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 Widget ClearTextBtn(context, text, onPress) => Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.centerRight,
       child: Padding(
-        padding: EdgeInsets.only(left: 30, bottom: 10),
+        padding: EdgeInsets.only(right: 30, bottom: 10),
         child: TextButton(
           style: ButtonStyle(
               padding: WidgetStatePropertyAll(EdgeInsets.all(0)),
