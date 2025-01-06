@@ -39,8 +39,8 @@ class _HiveGridState extends State<HiveGrid> {
               maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.7,
               // mainAxisExtent: 100,
               childAspectRatio: 1.5,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 20,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
             ),
             itemBuilder: (context, index) {
               return HiveDetailsCard(
