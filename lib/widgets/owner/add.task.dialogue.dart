@@ -14,7 +14,7 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   final _globalKey = GlobalKey<FormState>();
   var title = "";
-  var nbOfFrames;
+  var content = "";
   var errorMessage = "";
 
   @override
@@ -58,6 +58,27 @@ class _AddTaskState extends State<AddTask> {
                   onSaved: (value) {
                     setState(() {
                       title = value!;
+                    });
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(label: Text("Content")),
+                  style: inputTextStyle,
+                  keyboardType: TextInputType.numberWithOptions(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Content field cannot be empty";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      errorMessage = "";
+                    });
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      content = value!;
                     });
                   },
                 ),
