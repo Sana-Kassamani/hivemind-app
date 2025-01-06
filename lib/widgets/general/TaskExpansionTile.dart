@@ -40,8 +40,8 @@ class ExpandedTileOwner extends StatelessWidget {
             spacing: 20,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Status: ${task.status}",
-                  style: Theme.of(context).textTheme.labelMedium),
+              // Text("Status: ${task.status}",
+              //     style: Theme.of(context).textTheme.labelMedium),
               Text(
                 task.content,
                 style: Theme.of(context).textTheme.labelMedium,
