@@ -4,6 +4,7 @@ import 'package:hivemind_app/widgets/general/ClearTextBtn.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/TasksList.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
+import 'package:hivemind_app/widgets/owner/add.task.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class TasksTab extends StatefulWidget {
@@ -14,6 +15,16 @@ class TasksTab extends StatefulWidget {
 }
 
 class _TasksTabState extends State<TasksTab> {
+  void _showDialog(apiaryId) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AddTask(
+            apiaryId: apiaryId,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
@@ -37,7 +48,9 @@ class _TasksTabState extends State<TasksTab> {
             FilledBtn(
               text: "Add a New Task",
               icon: Icon(Icons.add),
-              onPress: () {},
+              onPress: () {
+                _showDialog(apiaryId);
+              },
             )
           ],
         );
