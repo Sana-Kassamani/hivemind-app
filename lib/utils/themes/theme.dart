@@ -6,7 +6,7 @@ class ThemeManager {
     scaffoldBackgroundColor: ColorManager.SCAFFOLD_BG,
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
-        fontSize: 24,
+        fontSize: 21,
         color: ColorManager.COLOR_SECONDARY,
         fontFamily: 'Tomorrow',
         fontWeight: FontWeight.w500,
@@ -14,6 +14,11 @@ class ThemeManager {
       backgroundColor: ColorManager.APPBAR_BG,
     ),
     iconTheme: IconThemeData(size: 24, color: ColorManager.COLOR_SECONDARY),
+    sliderTheme: SliderThemeData(
+        overlappingShapeStrokeColor: Colors.transparent,
+        thumbShape: RoundSliderThumbShape(elevation: 0),
+        overlayColor: Colors.transparent,
+        overlayShape: SliderComponentShape.noOverlay),
     filledButtonTheme: FilledButtonThemeData(
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll(ColorManager.COLOR_PRIMARY),
@@ -70,40 +75,41 @@ class ThemeManager {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 24,
+        fontSize: 18,
         color: ColorManager.COLOR_SECONDARY,
         fontFamily: 'Tomorrow',
         fontWeight: FontWeight.w500,
       ),
       titleMedium: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
+        color: Colors.black,
       ),
       titleSmall: TextStyle(
-        fontSize: 18,
+        color: Colors.black,
+        fontSize: 16,
         fontFamily: 'Tomorrow',
         fontWeight: FontWeight.w400,
       ),
       labelLarge: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-        fontSize: 16,
+        color: Colors.black,
+        fontSize: 14,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w700,
       ),
       labelMedium: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
-        fontSize: 16,
+        color: Colors.black,
+        fontSize: 14,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w600,
       ),
       labelSmall: TextStyle(
-        color: ColorManager.COLOR_SECONDARY,
+        color: Colors.black,
         fontSize: 14,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w500,
       ),
       bodyLarge: TextStyle(
         color: Colors.black,
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'Comme',
         fontWeight: FontWeight.w600,
       ),

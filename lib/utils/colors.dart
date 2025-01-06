@@ -18,7 +18,7 @@ class ColorManager {
   static final COLOR_SECONDARY = ColorManager.convertColor(hexString: "4F1308");
   static final APPBAR_BG = ColorManager.convertColor(hexString: "FBDB5E");
   static final ICON_BG = ColorManager.convertColor(hexString: "FEF6D6");
-  static final SCAFFOLD_BG = ColorManager.convertColor(hexString: "EEEEEE");
+  static final SCAFFOLD_BG = ColorManager.convertColor(hexString: "F7F7F7");
   static final CARD_BG = ColorManager.convertColor(hexString: "FFFFFF");
   static final SUBTITLE_COLOR = ColorManager.convertColor(hexString: "B3B3B3");
   static final INPUT_COLOR = ColorManager.convertColor(hexString: "494747");

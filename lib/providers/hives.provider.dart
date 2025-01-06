@@ -28,7 +28,7 @@ class Hives extends ChangeNotifier {
       if (hive.containsKey('lastHarvestDate')) {
         updatedDt = parseDate(date: hive["lastHarvestDate"]);
       } else {
-        updatedDt = "Not harvested yet";
+        updatedDt = "No harvest yet";
       }
 
       List<String> diseases = [];
@@ -77,7 +77,7 @@ class Hives extends ChangeNotifier {
           label: hiveLabel,
           numberOfFrames: numberOfFrames,
           harvestStatus: hive["harvestStatus"],
-          lastHarvestDate: "Not harvested yet",
+          lastHarvestDate: "No harvest yet",
           diseases: []);
       Provider.of<IotDetails>(context, listen: false)
           .save(hiveId: newHive.getId, iotDetails: []);
