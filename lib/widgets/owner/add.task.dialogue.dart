@@ -13,7 +13,7 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   final _globalKey = GlobalKey<FormState>();
-  var hiveLabel = "";
+  var title = "";
   var nbOfFrames;
   var errorMessage = "";
 
@@ -32,7 +32,49 @@ class _AddTaskState extends State<AddTask> {
         "Add Task",
         textAlign: TextAlign.center,
       ),
-      content: Column(),
+      content: Column(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Form(
+            key: _globalKey,
+            child: Column(
+              spacing: 20,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(label: Text("Task Title")),
+                  style: inputTextStyle,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Title field cannot be empty";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      errorMessage = "";
+                    });
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      title = value!;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+          errorMessage == ""
+              ? SizedBox.shrink()
+              : SizedBox(
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(fontSize: 12, color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+        ],
+      ),
       buttonPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
       actions: [
         FilledBtn(
