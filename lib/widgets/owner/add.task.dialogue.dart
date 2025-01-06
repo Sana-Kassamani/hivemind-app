@@ -17,6 +17,23 @@ class _AddTaskState extends State<AddTask> {
   var content = "";
   var errorMessage = "";
 
+  Future addTask(context) async {
+    try {
+      await Provider.of<Tasks>(context, listen: false).addTask(
+        context: context,
+        apiaryId: widget.apiaryId,
+        title: title,
+        content: content,
+      );
+      print("Task added");
+    } catch (error) {
+      print(error.toString());
+      setState(() {
+        errorMessage = error.toString();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final inputTextStyle =
@@ -42,12 +59,14 @@ class _AddTaskState extends State<AddTask> {
               spacing: 20,
               children: [
                 TextFormField(
+                  maxLength: 20,
                   decoration: InputDecoration(label: Text("Task Title")),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Title field cannot be empty";
                     }
+
                     return null;
                   },
                   onChanged: (value) {
@@ -64,7 +83,6 @@ class _AddTaskState extends State<AddTask> {
                 TextFormField(
                   decoration: InputDecoration(label: Text("Content")),
                   style: inputTextStyle,
-                  keyboardType: TextInputType.numberWithOptions(),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Content field cannot be empty";
@@ -104,7 +122,7 @@ class _AddTaskState extends State<AddTask> {
               if (_globalKey.currentState!.validate()) {
                 _globalKey.currentState!.save();
                 print("pressed");
-                // await (context);
+                await addTask(context);
               }
             }),
       ],
