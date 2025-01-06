@@ -19,7 +19,6 @@ class _AddHiveState extends State<AddHive> {
 
   Future addHive(context) async {
     try {
-      print("APiary id ${widget.apiaryId}");
       await Provider.of<Hives>(context, listen: false).addHive(
           context: context,
           hiveLabel: hiveLabel,
@@ -46,7 +45,7 @@ class _AddHiveState extends State<AddHive> {
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
       backgroundColor: ColorManager.SCAFFOLD_BG,
       title: Text(
-        "Add Apiary",
+        "Add Hive",
         textAlign: TextAlign.center,
       ),
       content: Column(
