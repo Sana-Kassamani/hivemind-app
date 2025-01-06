@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/hive.model.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
+import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
+import 'package:hivemind_app/utils/request.dart';
 import 'package:provider/provider.dart';
 
 class Hives extends ChangeNotifier {
@@ -48,5 +52,41 @@ class Hives extends ChangeNotifier {
       print("New hive ${newHive.toString()}");
     }
     notifyListeners();
+  }
+
+  Future addHive({
+    context,
+    apiaryId,
+    hiveLabel,
+    numberOfFrames,
+  }) async {
+    Map<String, dynamic> data = {
+      "label": hiveLabel,
+      "nbOfFrames": numberOfFrames
+    };
+    try {
+      final response = await request(
+        route: '/hives/$apiaryId',
+        method: RequestMethods.post,
+        data: data,
+      );
+      var hivesLength = jsonDecode(response)["hives"].length;
+      var hive = jsonDecode(response)["hives"][hivesLength - 1];
+      Hive newHive = Hive(
+          id: hive["_id"],
+          label: hiveLabel,
+          numberOfFrames: numberOfFrames,
+          harvestStatus: hive["harvestStatus"],
+          lastHarvestDate: "Not harvested yet",
+          diseases: []);
+      Provider.of<IotDetails>(context, listen: false)
+          .save(hiveId: newHive.getId, iotDetails: []);
+
+      _hives[apiaryId] = [];
+      _hives[apiaryId]!.add(newHive);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 }
