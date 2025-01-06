@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
+import 'package:provider/provider.dart';
 
 class AddHive extends StatefulWidget {
-  const AddHive({super.key});
-
+  const AddHive({super.key, required this.apiaryId});
+  final apiaryId;
   @override
   State<AddHive> createState() => _AddHiveState();
 }
@@ -13,9 +15,23 @@ class _AddHiveState extends State<AddHive> {
   final _globalKey = GlobalKey<FormState>();
   var hiveLabel = "";
   var nbOfFrames;
+  var errorMessage = "";
 
   Future addHive(context) async {
-    String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
+    try {
+      print("APiary id ${widget.apiaryId}");
+      await Provider.of<Hives>(context, listen: false).addHive(
+          context: context,
+          hiveLabel: hiveLabel,
+          numberOfFrames: nbOfFrames,
+          apiaryId: widget.apiaryId);
+      print("Hive added");
+    } catch (error) {
+      print(error.toString());
+      setState(() {
+        errorMessage = error.toString();
+      });
+    }
   }
 
   @override
@@ -23,7 +39,8 @@ class _AddHiveState extends State<AddHive> {
     final inputTextStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+      scrollable: true,
+      contentPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
@@ -32,63 +49,85 @@ class _AddHiveState extends State<AddHive> {
         "Add Apiary",
         textAlign: TextAlign.center,
       ),
-      content: SizedBox(
-        height: 300,
-        child: Form(
-          key: _globalKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(label: Text("Hive Label")),
-                style: inputTextStyle,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Label field cannot be empty";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  setState(() {
-                    hiveLabel = value!;
-                  });
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(label: Text("Number Of Frames")),
-                style: inputTextStyle,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Number of frames field cannot be empty";
-                  }
-                  if (int.tryParse(value) == null || int.tryParse(value)! < 0) {
-                    return "Invalid number of frames";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  setState(() {
-                    nbOfFrames = value!;
-                  });
-                },
-              ),
-            ],
+      content: Column(
+        spacing: 10,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Form(
+            key: _globalKey,
+            child: Column(
+              spacing: 20,
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(label: Text("Hive Label")),
+                  style: inputTextStyle,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Label field cannot be empty";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      errorMessage = "";
+                    });
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      hiveLabel = value!;
+                    });
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(label: Text("Number Of Frames")),
+                  style: inputTextStyle,
+                  keyboardType: TextInputType.numberWithOptions(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Number of frames field cannot be empty";
+                    }
+                    if (int.tryParse(value) == null ||
+                        int.tryParse(value)! < 0) {
+                      return "Invalid number of frames";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      errorMessage = "";
+                    });
+                  },
+                  onSaved: (value) {
+                    setState(() {
+                      nbOfFrames = int.tryParse(value!)!;
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
+          errorMessage == ""
+              ? SizedBox.shrink()
+              : SizedBox(
+                  child: Text(
+                    errorMessage,
+                    style: TextStyle(fontSize: 12, color: Colors.red),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+        ],
       ),
-      buttonPadding: EdgeInsets.all(45),
+      buttonPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
       actions: [
-        SizedBox(
-          width: double.infinity,
-          child: FilledBtn(
-              text: "Add",
-              onPress: () async {
-                if (_globalKey.currentState!.validate()) {
-                  _globalKey.currentState!.save();
-                }
-
+        FilledBtn(
+            text: "Add",
+            onPress: () async {
+              if (_globalKey.currentState!.validate()) {
+                _globalKey.currentState!.save();
+                print("pressed");
                 await addHive(context);
-              }),
-        ),
+              }
+            }),
       ],
     );
   }
