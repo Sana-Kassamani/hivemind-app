@@ -249,9 +249,9 @@ class _AddApiaryState extends State<AddApiary> {
               onPress: () async {
                 if (_globalKey.currentState!.validate()) {
                   _globalKey.currentState!.save();
+                  await getLocation(placeId);
+                  await addApiary(context);
                 }
-                await getLocation(placeId);
-                await addApiary(context);
               }),
         ),
       ],

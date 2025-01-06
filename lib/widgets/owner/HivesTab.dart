@@ -3,6 +3,7 @@ import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/HivesList.dart';
 import 'package:hivemind_app/widgets/general/LocationCard.dart';
+import 'package:hivemind_app/widgets/owner/add.hive.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class HivesTab extends StatefulWidget {
@@ -13,6 +14,16 @@ class HivesTab extends StatefulWidget {
 }
 
 class _HivesTabState extends State<HivesTab> {
+  void _showDialog(apiaryId) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AddHive(
+            apiaryId: apiaryId,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
@@ -29,7 +40,9 @@ class _HivesTabState extends State<HivesTab> {
             FilledBtn(
               text: "Add a New Hive",
               icon: Icon(Icons.add),
-              onPress: () {},
+              onPress: () {
+                _showDialog(apiaryId);
+              },
             )
           ],
         );
