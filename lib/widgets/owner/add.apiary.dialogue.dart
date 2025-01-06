@@ -131,7 +131,6 @@ class _AddApiaryState extends State<AddApiary> {
       backgroundColor: ColorManager.SCAFFOLD_BG,
       title: Text(
         "Add Apiary",
-        textAlign: TextAlign.center,
       ),
       content: SizedBox(
         height: 300,
@@ -240,20 +239,29 @@ class _AddApiaryState extends State<AddApiary> {
           ),
         ),
       ),
-      buttonPadding: EdgeInsets.all(45),
+      buttonPadding: EdgeInsets.all(20),
       actions: [
-        SizedBox(
-          width: double.infinity,
-          child: FilledBtn(
-              text: "Add",
-              onPress: () async {
-                if (_globalKey.currentState!.validate()) {
-                  _globalKey.currentState!.save();
-                  await getLocation(placeId);
-                  await addApiary(context);
-                }
-              }),
-        ),
+        FilledButton(
+            style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+            ),
+            child: Text("Add"),
+            onPressed: () async {
+              if (_globalKey.currentState!.validate()) {
+                _globalKey.currentState!.save();
+                await getLocation(placeId);
+                await addApiary(context);
+              }
+            }),
+        FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        )
       ],
     );
   }

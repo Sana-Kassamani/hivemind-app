@@ -46,7 +46,6 @@ class _AddHiveState extends State<AddHive> {
       backgroundColor: ColorManager.SCAFFOLD_BG,
       title: Text(
         "Add Hive",
-        textAlign: TextAlign.center,
       ),
       content: Column(
         spacing: 10,
@@ -116,17 +115,29 @@ class _AddHiveState extends State<AddHive> {
                 ),
         ],
       ),
-      buttonPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
+      buttonPadding: EdgeInsets.all(20),
       actions: [
-        FilledBtn(
-            text: "Add",
-            onPress: () async {
+        FilledButton(
+            style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+            ),
+            child: Text("Add"),
+            onPressed: () async {
               if (_globalKey.currentState!.validate()) {
                 _globalKey.currentState!.save();
                 print("pressed");
                 await addHive(context);
               }
             }),
+        FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        )
       ],
     );
   }

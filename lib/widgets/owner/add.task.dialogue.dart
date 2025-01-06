@@ -45,10 +45,7 @@ class _AddTaskState extends State<AddTask> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
       backgroundColor: ColorManager.SCAFFOLD_BG,
-      title: Text(
-        "Add Task",
-        textAlign: TextAlign.center,
-      ),
+      title: Text("Add Task"),
       content: Column(
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,17 +111,29 @@ class _AddTaskState extends State<AddTask> {
                 ),
         ],
       ),
-      buttonPadding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
+      buttonPadding: EdgeInsets.all(20),
       actions: [
-        FilledBtn(
-            text: "Add",
-            onPress: () async {
+        FilledButton(
+            style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+            ),
+            child: Text("Add"),
+            onPressed: () async {
               if (_globalKey.currentState!.validate()) {
                 _globalKey.currentState!.save();
                 print("pressed");
                 await addTask(context);
               }
             }),
+        FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        )
       ],
     );
   }
