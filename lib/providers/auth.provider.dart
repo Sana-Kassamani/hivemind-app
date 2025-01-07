@@ -9,6 +9,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Auth extends ChangeNotifier {
   late User user;
 
+  Future setDarkMode({required value}) async {
+    int intValue = value ? 1 : 0;
+    final response = await request(
+      route: "/user-settings/darkmode/$intValue",
+      method: RequestMethods.get,
+    );
+    user.getSettings.darkmode = value;
+    notifyListeners();
+  }
+
+  Future setAlerts({required value}) async {}
+
   void save({loggedUser}) {
     // set userType
     var userType = loggedUser["userType"];
@@ -53,5 +65,14 @@ class Auth extends ChangeNotifier {
     } catch (error) {
       rethrow;
     }
+  }
+
+  Future logout() async {
+    // TODO logout from backend
+
+    final prefs = await SharedPreferences.getInstance();
+
+    // Remove the token value from persistent storage under the 'token' key.
+    await prefs.remove('token');
   }
 }
