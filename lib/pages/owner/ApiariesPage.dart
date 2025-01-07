@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hivemind_app/pages/Owner/ApiaryPage.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
@@ -6,6 +7,7 @@ import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
 import 'package:hivemind_app/widgets/owner/add.apiary.dialogue.dart';
+import 'package:hivemind_app/widgets/owner/delete.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class ApiariesPage extends StatefulWidget {
@@ -24,6 +26,9 @@ class _ApiariesPageState extends State<ApiariesPage> {
         });
   }
 
+  Future deleteApiary() async {
+    // do something
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,20 +45,52 @@ class _ApiariesPageState extends State<ApiariesPage> {
                     ? EmptyState(context: context)
                     : ListView.builder(
                         itemCount: value.apiariesList.length,
-                        itemBuilder: (context, index) => ListItem(
-                          data: value.apiariesList[index],
-                          icon: "assets/icons/apiary_icon.png",
-                          onPress: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ApiaryPageOwner(),
-                                settings: RouteSettings(
-                                  arguments: value.apiariesList[index].getId(),
+                        itemBuilder: (context, index) => Slidable(
+                          startActionPane: ActionPane(
+                            motion: StretchMotion(),
+                            children: [
+                              Theme(
+                                data: Theme.of(context).copyWith(
+                                  outlinedButtonTheme:
+                                      const OutlinedButtonThemeData(
+                                    style: ButtonStyle(
+                                      iconColor:
+                                          WidgetStatePropertyAll(Colors.white),
+                                    ),
+                                  ),
                                 ),
+                                child: SlidableAction(
+                                    icon: Icons.delete,
+                                    backgroundColor: Colors.red,
+                                    onPressed: (context) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return DeleteDialogue(
+                                              item: "apiary",
+                                              onPressDelete: deleteApiary(),
+                                            );
+                                          });
+                                    }),
                               ),
-                            );
-                          },
+                            ],
+                          ),
+                          child: ListItem(
+                            data: value.apiariesList[index],
+                            icon: "assets/icons/apiary_icon.png",
+                            onPress: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ApiaryPageOwner(),
+                                  settings: RouteSettings(
+                                    arguments:
+                                        value.apiariesList[index].getId(),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       );
               },
