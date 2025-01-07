@@ -106,5 +106,9 @@ class Tasks extends ChangeNotifier {
     }
   }
 
-  void clearCompletedTasks({required apiaryId}) {}
+  void clearCompletedTasks({required apiaryId}) {
+    List<Task> tasks = filterPendingTasks(apiaryId: apiaryId);
+    _tasks[apiaryId] = tasks;
+    notifyListeners();
+  }
 }
