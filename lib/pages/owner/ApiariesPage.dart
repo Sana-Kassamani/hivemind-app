@@ -26,9 +26,22 @@ class _ApiariesPageState extends State<ApiariesPage> {
         });
   }
 
-  Future deleteApiary() async {
-    // do something
+  Future deleteApiary(context, apiaryId) async {
+    try {
+      print("in delete");
+      await Provider.of<Apiaries>(context, listen: false)
+          .deleteApiary(context: context, apiaryId: apiaryId);
+      print("apiary deleted");
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Delete Apiary failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +81,10 @@ class _ApiariesPageState extends State<ApiariesPage> {
                                           builder: (context) {
                                             return DeleteDialogue(
                                               item: "apiary",
-                                              onPressDelete: deleteApiary(),
+                                              onPressDelete: () => deleteApiary(
+                                                  context,
+                                                  value.apiariesList[index]
+                                                      .getId()),
                                             );
                                           });
                                     }),
