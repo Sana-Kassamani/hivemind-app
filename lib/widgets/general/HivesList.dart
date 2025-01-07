@@ -10,6 +10,7 @@ import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
+import 'package:hivemind_app/widgets/owner/delete.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class HivesList extends StatefulWidget {
@@ -21,6 +22,22 @@ class HivesList extends StatefulWidget {
 }
 
 class _HivesListState extends State<HivesList> {
+  Future deleteHive(context, apiaryId, hiveId) async {
+    try {
+      print("in delete");
+      await Provider.of<Hives>(context, listen: false)
+          .deleteHive(context: context, apiaryId: apiaryId, hiveId: hiveId);
+      print("hive deleted");
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Delete Hive failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userType = Provider.of<Auth>(context, listen: false).user.getUserType;
@@ -53,8 +70,17 @@ class _HivesListState extends State<HivesList> {
                                       icon: Icons.delete,
                                       backgroundColor: Colors.red,
                                       onPressed: (context) {
-                                        // do something
-                                        print("slided");
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return DeleteDialogue(
+                                                item: "hive",
+                                                onPressDelete: () => deleteHive(
+                                                    context,
+                                                    apiaryId,
+                                                    hives[index].getId),
+                                              );
+                                            });
                                       }),
                                 ),
                               ],
