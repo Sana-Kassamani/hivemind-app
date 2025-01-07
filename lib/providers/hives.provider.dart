@@ -89,4 +89,32 @@ class Hives extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future deleteHive({context, apiaryId, hiveId}) async {
+    try {
+      final response = await request(
+        route: '/hives/$apiaryId/$hiveId',
+        method: RequestMethods.delete,
+      );
+
+      print("here");
+      Provider.of<IotDetails>(context, listen: false).iotDetails.remove(hiveId);
+
+      print("here");
+      Hive hive = getById(apiaryId: apiaryId, hiveId: hiveId);
+      _hives[apiaryId]!.remove(hive);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  void deleteDetailsOfHive({context, apiaryId}) {
+    List<Hive>? hives = _hives[apiaryId];
+    for (int i = 0; i < hives!.length; i++) {
+      Provider.of<IotDetails>(context, listen: false)
+          .iotDetails
+          .remove(hives[i].id);
+    }
+  }
 }
