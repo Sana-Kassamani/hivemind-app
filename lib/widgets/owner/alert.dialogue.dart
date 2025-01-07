@@ -99,6 +99,40 @@ class LogoutDialogue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog();
+    return AlertDialog(
+      scrollable: true,
+      contentPadding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+      actionsAlignment: MainAxisAlignment.center,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      titleTextStyle: Theme.of(context).textTheme.titleLarge,
+      backgroundColor: ColorManager.SCAFFOLD_BG,
+      icon: Icon(
+        Icons.warning,
+        size: 40,
+      ),
+      content: Text("Are you sure you want to logout?"),
+      buttonPadding: EdgeInsets.all(20),
+      actions: [
+        FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+        FilledButton(
+          style: ButtonStyle(
+            minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+          ),
+          onPressed: () async {
+            await Provider.of<Auth>(context, listen: false).logout();
+            Navigator.pushReplacementNamed(context, "/");
+          },
+          child: Text("Logout"),
+        ),
+      ],
+    );
   }
 }
