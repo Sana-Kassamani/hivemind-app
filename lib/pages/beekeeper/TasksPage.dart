@@ -25,7 +25,9 @@ class _TasksPageState extends State<TasksPage> {
         return Consumer<Tasks>(
             builder: (BuildContext context, Tasks value, Widget? child) {
           return apiaryValue.apiary == null ||
-                  value.tasks[apiaryValue.apiary!.getId()]!.isEmpty
+                  value
+                      .filterPendingTasks(apiaryId: apiaryValue.apiary!.getId())
+                      .isEmpty
               ? EmptyState(context: context)
               : Column(
                   children: [
