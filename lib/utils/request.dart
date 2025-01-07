@@ -10,7 +10,7 @@ Future request(
     {required String route,
     required RequestMethods method,
     Map<String, dynamic>? data}) async {
-  const baseURL = "http://192.168.0.100:8080";
+  const baseURL = "http://192.168.0.105:8080";
   var response;
   final prefs = await SharedPreferences.getInstance();
   final savedToken = prefs.getString('token');
@@ -70,7 +70,6 @@ Future request(
           HttpHeaders.authorizationHeader: 'Bearer $savedToken',
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(data),
       );
     } else {
       throw ApiException("Non valid req");
