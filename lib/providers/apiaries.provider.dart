@@ -97,27 +97,53 @@ class Apiaries extends ChangeNotifier {
       "latitude": location.latitude,
       "beekeeperId": beekeeperId
     };
-    final response = await request(
-      route: '/apiaries',
-      method: RequestMethods.post,
-      data: data,
-    );
-    String username = Provider.of<Beekeepers>(context, listen: false)
-        .findNameById(id: beekeeperId);
-    print('Im here');
-    Apiary newApiary = Apiary(
-      id: jsonDecode(response)["_id"],
-      label: apiaryLabel,
-      location: location.location,
-      longitude: location.longitude.toDouble(),
-      latitude: location.latitude.toDouble(),
-      beekeeperName: username,
-    );
-    Provider.of<Hives>(context, listen: false)
-        .save(context: context, apiaryId: newApiary.id, hives: []);
-    Provider.of<Tasks>(context, listen: false)
-        .save(apiaryId: newApiary.id, tasks: []);
-    _apiaries.add(newApiary);
-    notifyListeners();
+    try {
+      final response = await request(
+        route: '/apiaries',
+        method: RequestMethods.post,
+        data: data,
+      );
+      String username = Provider.of<Beekeepers>(context, listen: false)
+          .findNameById(id: beekeeperId);
+      print('Im here');
+      Apiary newApiary = Apiary(
+        id: jsonDecode(response)["_id"],
+        label: apiaryLabel,
+        location: location.location,
+        longitude: location.longitude.toDouble(),
+        latitude: location.latitude.toDouble(),
+        beekeeperName: username,
+      );
+      Provider.of<Hives>(context, listen: false)
+          .save(context: context, apiaryId: newApiary.id, hives: []);
+      Provider.of<Tasks>(context, listen: false)
+          .save(apiaryId: newApiary.id, tasks: []);
+      _apiaries.add(newApiary);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future deleteApiary({context, apiaryId}) async {
+    try {
+      final response = await request(
+        route: '/apiaries/$apiaryId',
+        method: RequestMethods.delete,
+      );
+      Provider.of<Beekeepers>(context, listen: false)
+          .deleteAssignedApiary(apiaryId: apiaryId);
+      print("here");
+      Provider.of<Hives>(context, listen: false)
+          .deleteDetailsOfHive(apiaryId: apiaryId);
+      Provider.of<Hives>(context, listen: false).hives.remove(apiaryId);
+      Provider.of<Tasks>(context, listen: false).tasks.remove(apiaryId);
+      print("here");
+      Apiary apiaryToDelete = _apiaries.firstWhere((a) => a.id == apiaryId);
+      _apiaries.remove(apiaryToDelete);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 }
