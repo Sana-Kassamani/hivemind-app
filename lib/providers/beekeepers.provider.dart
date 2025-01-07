@@ -52,4 +52,11 @@ class Beekeepers extends ChangeNotifier {
       rethrow;
     }
   }
+
+  void deleteAssignedApiary({required apiaryId}) {
+    Beekeeper beekeeper =
+        beekeepersList.firstWhere((b) => b.getassignedApiaryId == apiaryId);
+    print(beekeeper.getUsername);
+    beekeeper.assignedApiaryId = null;
+  }
 }
