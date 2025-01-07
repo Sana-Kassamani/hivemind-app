@@ -85,7 +85,26 @@ class Tasks extends ChangeNotifier {
   }
 
   Future completeTask(
-      {required apiaryId, required taskId, String? comment}) async {}
+      {required apiaryId, required taskId, String? comment}) async {
+    try {
+      Map<String, dynamic> data = {
+        "comment": comment,
+      };
+      final response = await request(
+        route: '/tasks/$apiaryId/$taskId',
+        method: RequestMethods.patch,
+        data: data,
+      );
+      var tasksLength = jsonDecode(response)["tasks"].length;
+      var newTask = jsonDecode(response)["tasks"][tasksLength - 1];
+      Task task = getById(apiaryId: apiaryId, taskId: taskId);
+      task.status = newTask["status"];
+      task.comment = newTask["comment"];
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
 
   void clearCompletedTasks({required apiaryId}) {}
 }
