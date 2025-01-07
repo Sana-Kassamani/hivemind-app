@@ -25,6 +25,11 @@ class _TasksTabState extends State<TasksTab> {
         });
   }
 
+  void clearCompletedTasks({required apiaryId}) {
+    Provider.of<Tasks>(context, listen: false)
+        .clearCompletedTasks(apiaryId: apiaryId);
+  }
+
   @override
   Widget build(BuildContext context) {
     String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
@@ -38,7 +43,8 @@ class _TasksTabState extends State<TasksTab> {
                 : Expanded(
                     child: Column(
                       children: [
-                        ClearTextBtn(context, "Clear Completed", () {}),
+                        ClearTextBtn(context, "Clear Completed",
+                            () => clearCompletedTasks(apiaryId: apiaryId)),
                         TasksListOwner(
                           tasks: value.tasks[apiaryId],
                         ),
