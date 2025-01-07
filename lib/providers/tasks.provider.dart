@@ -10,7 +10,12 @@ class Tasks extends ChangeNotifier {
   final Map<String, List<Task>> _tasks = {};
   Map<String, List<Task>> get tasks => _tasks;
 
-  List<Task> filterPendingTasks({apiaryId}) {
+  Task getById({apiaryId, taskId}) {
+    Task task = _tasks[apiaryId]!.firstWhere((t) => t.id == taskId);
+    return task;
+  }
+
+  List<Task> filterPendingTasks({required apiaryId}) {
     List<Task> list =
         _tasks[apiaryId]!.where((task) => task.status == "Pending").toList();
     return list;
@@ -78,4 +83,9 @@ class Tasks extends ChangeNotifier {
       rethrow;
     }
   }
+
+  Future completeTask(
+      {required apiaryId, required taskId, String? comment}) async {}
+
+  void clearCompletedTasks({required apiaryId}) {}
 }
