@@ -7,7 +7,7 @@ import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
 import 'package:hivemind_app/widgets/owner/add.apiary.dialogue.dart';
-import 'package:hivemind_app/widgets/owner/delete.dialogue.dart';
+import 'package:hivemind_app/widgets/owner/alert.dialogue.dart';
 import 'package:provider/provider.dart';
 
 class ApiariesPage extends StatefulWidget {
