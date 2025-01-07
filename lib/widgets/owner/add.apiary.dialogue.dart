@@ -251,6 +251,7 @@ class _AddApiaryState extends State<AddApiary> {
                 _globalKey.currentState!.save();
                 await getLocation(placeId);
                 await addApiary(context);
+                Navigator.pop(context);
               }
             }),
         FilledButton(

@@ -123,6 +123,7 @@ class _AddTaskState extends State<AddTask> {
                 _globalKey.currentState!.save();
                 print("pressed");
                 await addTask(context);
+                Navigator.pop(context);
               }
             }),
         FilledButton(

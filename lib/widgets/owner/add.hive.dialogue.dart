@@ -127,6 +127,7 @@ class _AddHiveState extends State<AddHive> {
                 _globalKey.currentState!.save();
                 print("pressed");
                 await addHive(context);
+                Navigator.pop(context);
               }
             }),
         FilledButton(
