@@ -31,7 +31,7 @@ class UserSettings {
 class Beekeeper {
   final String id;
   final String username;
-  final String? assignedApiaryId;
+  String? assignedApiaryId;
   Beekeeper(
       {required this.id,
       required this.username,
@@ -39,4 +39,5 @@ class Beekeeper {
   String get getId => id;
   String get getUsername => username;
   String? get getassignedApiaryId => assignedApiaryId;
+  set setSssignedApiaryId(String? apiaryId) => assignedApiaryId = apiaryId;
 }
