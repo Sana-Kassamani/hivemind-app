@@ -19,7 +19,15 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future setAlerts({required value}) async {}
+  Future setAlerts({required value}) async {
+    int intValue = value ? 1 : 0;
+    final response = await request(
+      route: "/user-settings/notifications/$intValue",
+      method: RequestMethods.get,
+    );
+    user.getSettings.alertsOn = value;
+    notifyListeners();
+  }
 
   void save({loggedUser}) {
     // set userType
