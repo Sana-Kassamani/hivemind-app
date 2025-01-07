@@ -2,8 +2,8 @@ class Task {
   final String id;
   final String title;
   final String content;
-  final String status;
-  final String comment;
+  String status;
+  String comment;
   final String date;
 
   Task({
