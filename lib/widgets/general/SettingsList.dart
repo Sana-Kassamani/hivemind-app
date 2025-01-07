@@ -28,7 +28,19 @@ class _SettingsListState extends State<SettingsList> {
     }
   }
 
-  Future changeAlerts(authValue, value) async {}
+  Future changeAlerts(authValue, value) async {
+    try {
+      await authValue.setAlerts(value: value);
+      print("Alerts changed");
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Set alerts failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
