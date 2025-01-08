@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
+import 'package:hivemind_app/widgets/beekeeper/analysis.tab.dart';
 import 'package:hivemind_app/widgets/general/CenterTitle.dart';
 import 'package:hivemind_app/widgets/general/DatesRow.dart';
 import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
@@ -64,7 +65,7 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
           else if (selectedControl == 1)
             Center()
           else if (selectedControl == 2)
-            Center(),
+            AnalysisTab(),
         ],
       ),
     );
