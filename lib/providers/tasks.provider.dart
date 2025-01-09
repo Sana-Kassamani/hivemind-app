@@ -7,8 +7,9 @@ import 'package:hivemind_app/utils/parseDate.dart';
 import 'package:hivemind_app/utils/request.dart';
 
 class Tasks extends ChangeNotifier {
-  final Map<String, List<Task>> _tasks = {};
+  Map<String, List<Task>> _tasks = {};
   Map<String, List<Task>> get tasks => _tasks;
+  set tasks(Map<String, List<Task>> map) => _tasks = map;
 
   Task getById({apiaryId, taskId}) {
     Task task = _tasks[apiaryId]!.firstWhere((t) => t.id == taskId);
@@ -109,6 +110,11 @@ class Tasks extends ChangeNotifier {
   void clearCompletedTasks({required apiaryId}) {
     List<Task> tasks = filterPendingTasks(apiaryId: apiaryId);
     _tasks[apiaryId] = tasks;
+    notifyListeners();
+  }
+
+  void reset() {
+    _tasks = {};
     notifyListeners();
   }
 }
