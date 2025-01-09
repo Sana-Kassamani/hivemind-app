@@ -4,8 +4,11 @@ import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/LoginPage.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
 import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
+import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
 import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
+import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
+import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/pages/placesPage.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
@@ -19,9 +22,21 @@ import 'package:provider/provider.dart';
 
 bool ISOWNER = true;
 void main() {
-  final theme = ThemeManager();
-  runApp(
-    MultiProvider(
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    final theme = ThemeManager();
+    return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
         ChangeNotifierProvider(create: (context) => Apiaries()),
@@ -35,13 +50,15 @@ void main() {
         // home: LoginPage(),
         theme: theme.lightTheme,
         routes: {
-          '/': (context) => LoginPage(),
-          // '/': (context) => GoogleMapSearchPlacesApi(),
-          '/home': (context) => MainScreenOwner(),
+          "/": (context) => LoginPage(),
+          "/home": (context) => MainScreenOwner(),
+          "/apiary": (context) => ApiaryPageOwner(),
+          "/hiveOwner": (context) => HivePageOwner(),
+          "/hiveBeekeeper": (context) => HivePageBeekeeper(),
         },
       ),
-    ),
-  );
+    );
+  }
 }
 
 class MainScreenOwner extends StatefulWidget {
