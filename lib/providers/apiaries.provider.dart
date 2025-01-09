@@ -146,4 +146,10 @@ class Apiaries extends ChangeNotifier {
       rethrow;
     }
   }
+
+  void reset() {
+    _apiaries = [];
+    _apiary = null;
+    notifyListeners();
+  }
 }
