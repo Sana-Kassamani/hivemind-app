@@ -4,6 +4,7 @@ class IotDetail {
   final double temperature;
   final double mass;
   final String date;
+  final DateTime dateTime;
 
   IotDetail({
     required this.id,
@@ -11,6 +12,7 @@ class IotDetail {
     required this.temperature,
     required this.mass,
     required this.date,
+    required this.dateTime,
   });
 }
 // export class HiveDetails {
