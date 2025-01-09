@@ -9,6 +9,7 @@ import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
 import 'package:hivemind_app/widgets/general/HiveDetailsTab.dart';
 import 'package:hivemind_app/widgets/general/HiveGrid.dart';
 import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
+import 'package:hivemind_app/widgets/general/hivehistory.tab.dart';
 import 'package:provider/provider.dart';
 
 class HivePageBeekeeper extends StatefulWidget {
@@ -63,7 +64,7 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
           if (selectedControl == 0)
             HiveDetailsTab()
           else if (selectedControl == 1)
-            Center()
+            HistoryTab()
           else if (selectedControl == 2)
             AnalysisTab(),
         ],

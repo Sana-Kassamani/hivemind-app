@@ -7,6 +7,7 @@ import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
 import 'package:hivemind_app/widgets/general/HiveDetailsTab.dart';
 import 'package:hivemind_app/widgets/general/HiveGrid.dart';
 import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
+import 'package:hivemind_app/widgets/general/hivehistory.tab.dart';
 import 'package:provider/provider.dart';
 
 class HivePageOwner extends StatefulWidget {
@@ -61,7 +62,7 @@ class _HivePageOwnerState extends State<HivePageOwner> {
           if (selectedControl == 0)
             HiveDetailsTab()
           else if (selectedControl == 1)
-            Center(),
+            HistoryTab(),
         ],
       ),
     );
