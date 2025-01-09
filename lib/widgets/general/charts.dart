@@ -108,3 +108,46 @@ class DetailLineChart extends StatelessWidget {
     );
   }
 }
+
+List<FlSpot> getSlots({required type, required details, required hiveId}) {
+  if (type == ChartType.temperature) {
+    return temperatureSlots(details: details, hiveId: hiveId);
+  } else if (type == ChartType.humidity) {
+    return humiditySlots(details: details, hiveId: hiveId);
+  } else if (type == ChartType.mass) {
+    return massSlots(details: details, hiveId: hiveId);
+  } else {
+    return [];
+  }
+}
+
+List<FlSpot> temperatureSlots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].temperature));
+    j++;
+  }
+  return list;
+}
+
+List<FlSpot> humiditySlots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].humidity));
+    j++;
+  }
+
+  return list;
+}
+
+List<FlSpot> massSlots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].mass));
+    j++;
+  }
+  return list;
+}
