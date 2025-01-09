@@ -127,7 +127,8 @@ class LogoutDialogue extends StatelessWidget {
             minimumSize: WidgetStatePropertyAll(Size(100, 40)),
           ),
           onPressed: () async {
-            await Provider.of<Auth>(context, listen: false).logout();
+            await Provider.of<Auth>(context, listen: false)
+                .logout(context: context);
             Navigator.pushReplacementNamed(context, "/");
           },
           child: Text("Logout"),

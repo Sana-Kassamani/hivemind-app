@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  late User? user;
+  late User user;
 
   Future setDarkMode({required value}) async {
     int intValue = value ? 1 : 0;
