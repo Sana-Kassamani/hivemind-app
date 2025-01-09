@@ -38,7 +38,7 @@ class DetailLineChart extends StatelessWidget {
                   isCurved: true,
                   curveSmoothness: 0.5,
                   color: colors.primary,
-                  spots: getSlots(
+                  spots: getSpots(
                       type: chartType,
                       details: detailsValue.iotDetails[hiveId],
                       hiveId: hiveId),
@@ -109,19 +109,19 @@ class DetailLineChart extends StatelessWidget {
   }
 }
 
-List<FlSpot> getSlots({required type, required details, required hiveId}) {
+List<FlSpot> getSpots({required type, required details, required hiveId}) {
   if (type == ChartType.temperature) {
-    return temperatureSlots(details: details, hiveId: hiveId);
+    return temperatureSpots(details: details, hiveId: hiveId);
   } else if (type == ChartType.humidity) {
-    return humiditySlots(details: details, hiveId: hiveId);
+    return humiditySpots(details: details, hiveId: hiveId);
   } else if (type == ChartType.mass) {
-    return massSlots(details: details, hiveId: hiveId);
+    return massSpots(details: details, hiveId: hiveId);
   } else {
     return [];
   }
 }
 
-List<FlSpot> temperatureSlots({required details, required hiveId}) {
+List<FlSpot> temperatureSpots({required details, required hiveId}) {
   List<FlSpot> list = [];
   int j = 0;
   for (int i = details.length - 1; i >= 0; i--) {
@@ -131,7 +131,7 @@ List<FlSpot> temperatureSlots({required details, required hiveId}) {
   return list;
 }
 
-List<FlSpot> humiditySlots({required details, required hiveId}) {
+List<FlSpot> humiditySpots({required details, required hiveId}) {
   List<FlSpot> list = [];
   int j = 0;
   for (int i = details.length - 1; i >= 0; i--) {
@@ -142,7 +142,7 @@ List<FlSpot> humiditySlots({required details, required hiveId}) {
   return list;
 }
 
-List<FlSpot> massSlots({required details, required hiveId}) {
+List<FlSpot> massSpots({required details, required hiveId}) {
   List<FlSpot> list = [];
   int j = 0;
   for (int i = details.length - 1; i >= 0; i--) {

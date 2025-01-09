@@ -7,3 +7,9 @@ String parseDate({date}) {
   String updatedDt = newFormat.format(parseDt);
   return updatedDt;
 }
+
+String graphDate({date}) {
+  var newFormat = DateFormat("d/M/yy");
+  String updatedDt = newFormat.format(date);
+  return updatedDt;
+}
