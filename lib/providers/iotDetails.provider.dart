@@ -3,8 +3,9 @@ import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
 
 class IotDetails extends ChangeNotifier {
-  final Map<String, List<IotDetail>> _iotDetails = {};
+  Map<String, List<IotDetail>> _iotDetails = {};
   Map<String, List<IotDetail>> get iotDetails => _iotDetails;
+  set iotDetails(Map<String, List<IotDetail>> map) => _iotDetails = map;
 
   void save({hiveId, iotDetails}) {
     _iotDetails[hiveId] = [];
@@ -20,12 +21,18 @@ class IotDetails extends ChangeNotifier {
         temperature: detail["temperature"].toDouble(),
         mass: detail["mass"].toDouble(),
         date: updatedDt,
+        dateTime: DateTime.parse(detail["date"]),
       );
 
       _iotDetails[hiveId]!.add(newDetail);
       print("New task ${newDetail.toString()}");
     }
 
+    notifyListeners();
+  }
+
+  void reset() {
+    _iotDetails = {};
     notifyListeners();
   }
 }
