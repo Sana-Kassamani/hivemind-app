@@ -81,6 +81,54 @@ class _HistoryTabState extends State<HistoryTab> {
                     )
                   ],
                 ),
+                if (selectedType == ChartType.temperature)
+                  Column(
+                    children: [
+                      Text(
+                        "Temperature (°C)",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      addVerticalSpace(20),
+                      DetailLineChart(
+                        hiveId: hiveId,
+                        label: "Temperature (°C)",
+                        chartType: ChartType.temperature,
+                        yRange: [20.0, 50.0],
+                      ),
+                    ],
+                  )
+                else if (selectedType == ChartType.humidity)
+                  Column(
+                    children: [
+                      Text(
+                        "Humidity (%)",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      addVerticalSpace(20),
+                      DetailLineChart(
+                        hiveId: hiveId,
+                        label: "Humidity (%)",
+                        chartType: ChartType.humidity,
+                        yRange: [40.0, 80.0],
+                      ),
+                    ],
+                  )
+                else if (selectedType == ChartType.mass)
+                  Column(
+                    children: [
+                      Text(
+                        "Mass (kg)",
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      addVerticalSpace(20),
+                      DetailLineChart(
+                        hiveId: hiveId,
+                        label: "Mass (kg)",
+                        chartType: ChartType.mass,
+                        yRange: [0.0, 90.0],
+                      )
+                    ],
+                  ),
               ],
             ),
           ],
