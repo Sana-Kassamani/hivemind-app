@@ -95,15 +95,10 @@ class _ApiariesPageState extends State<ApiariesPage> {
                             data: value.apiariesList[index],
                             icon: "assets/icons/apiary_icon.png",
                             onPress: () {
-                              Navigator.push(
+                              Navigator.pushNamed(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => ApiaryPageOwner(),
-                                  settings: RouteSettings(
-                                    arguments:
-                                        value.apiariesList[index].getId(),
-                                  ),
-                                ),
+                                "/apiary",
+                                arguments: value.apiariesList[index].getId(),
                               );
                             },
                           ),
