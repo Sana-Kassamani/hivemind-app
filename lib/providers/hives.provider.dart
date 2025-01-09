@@ -9,8 +9,9 @@ import 'package:hivemind_app/utils/request.dart';
 import 'package:provider/provider.dart';
 
 class Hives extends ChangeNotifier {
-  final Map<String, List<Hive>> _hives = {};
+  Map<String, List<Hive>> _hives = {};
   Map<String, List<Hive>> get hives => _hives;
+  set hives(Map<String, List<Hive>> map) => hives = map;
 
   Hive getById({apiaryId, hiveId}) {
     Hive hive = _hives[apiaryId]!.firstWhere((a) => a.id == hiveId);
@@ -116,5 +117,10 @@ class Hives extends ChangeNotifier {
           .iotDetails
           .remove(hives[i].id);
     }
+  }
+
+  void reset() {
+    _hives = {};
+    notifyListeners();
   }
 }
