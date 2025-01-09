@@ -59,4 +59,9 @@ class Beekeepers extends ChangeNotifier {
     print(beekeeper.getUsername);
     beekeeper.assignedApiaryId = null;
   }
+
+  void reset() {
+    _beekeepersList = [];
+    notifyListeners();
+  }
 }
