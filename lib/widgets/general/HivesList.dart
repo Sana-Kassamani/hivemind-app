@@ -40,7 +40,8 @@ class _HivesListState extends State<HivesList> {
 
   @override
   Widget build(BuildContext context) {
-    final userType = Provider.of<Auth>(context, listen: false).user.getUserType;
+    final userType =
+        Provider.of<Auth>(context, listen: false).user?.getUserType;
     final apiaryId = widget.apiaryId;
     return Expanded(
       child: Consumer<Hives>(
@@ -89,17 +90,13 @@ class _HivesListState extends State<HivesList> {
                               data: hives[index],
                               icon: "assets/icons/hive_icon.png",
                               onPress: () {
-                                Navigator.push(
+                                Navigator.pushNamed(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HivePageOwner(),
-                                    settings: RouteSettings(
-                                      arguments: {
-                                        "hiveId": hives[index].getId,
-                                        "apiaryId": apiaryId
-                                      },
-                                    ),
-                                  ),
+                                  "/hiveOwner",
+                                  arguments: {
+                                    "hiveId": hives[index].getId,
+                                    "apiaryId": apiaryId
+                                  },
                                 );
                               },
                             ),
@@ -108,17 +105,13 @@ class _HivesListState extends State<HivesList> {
                             data: hives[index],
                             icon: "assets/icons/hive_icon.png",
                             onPress: () {
-                              Navigator.push(
+                              Navigator.pushNamed(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => HivePageBeekeeper(),
-                                  settings: RouteSettings(
-                                    arguments: {
-                                      "hiveId": hives[index].getId,
-                                      "apiaryId": apiaryId
-                                    },
-                                  ),
-                                ),
+                                "/hiveBeekeeper",
+                                arguments: {
+                                  "hiveId": hives[index].getId,
+                                  "apiaryId": apiaryId
+                                },
                               );
                             },
                           );
