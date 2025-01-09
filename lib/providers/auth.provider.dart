@@ -1,13 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/user.model.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
+import 'package:hivemind_app/providers/beekeepers.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/providers/iotDetails.provider.dart';
+import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/utils/request.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
-  late User user;
+  late User? user;
 
   Future setDarkMode({required value}) async {
     int intValue = value ? 1 : 0;
@@ -15,7 +21,7 @@ class Auth extends ChangeNotifier {
       route: "/user-settings/darkmode/$intValue",
       method: RequestMethods.get,
     );
-    user.getSettings.darkmode = value;
+    user!.getSettings.darkmode = value;
     notifyListeners();
   }
 
@@ -25,7 +31,7 @@ class Auth extends ChangeNotifier {
       route: "/user-settings/notifications/$intValue",
       method: RequestMethods.get,
     );
-    user.getSettings.alertsOn = value;
+    user!.getSettings.alertsOn = value;
     notifyListeners();
   }
 
@@ -75,12 +81,18 @@ class Auth extends ChangeNotifier {
     }
   }
 
-  Future logout() async {
+  Future logout({required context}) async {
     // TODO logout from backend
 
     final prefs = await SharedPreferences.getInstance();
 
     // Remove the token value from persistent storage under the 'token' key.
     await prefs.remove('token');
+
+    Provider.of<Apiaries>(context, listen: false).reset();
+    Provider.of<Beekeepers>(context, listen: false).reset();
+    Provider.of<Hives>(context, listen: false).reset();
+    Provider.of<IotDetails>(context, listen: false).reset();
+    Provider.of<Tasks>(context, listen: false).reset();
   }
 }
