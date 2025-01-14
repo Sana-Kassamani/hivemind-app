@@ -105,6 +105,8 @@ class Apiaries extends ChangeNotifier {
       );
       String username = Provider.of<Beekeepers>(context, listen: false)
           .findNameById(id: beekeeperId);
+      //TODo make beekeeper assigned
+
       print('Im here');
       Apiary newApiary = Apiary(
         id: jsonDecode(response)["_id"],
@@ -114,6 +116,8 @@ class Apiaries extends ChangeNotifier {
         latitude: location.latitude.toDouble(),
         beekeeperName: username,
       );
+      Provider.of<Beekeepers>(context, listen: false)
+          .addAssignedApiary(apiaryId: newApiary.id, userId: beekeeperId);
       Provider.of<Hives>(context, listen: false)
           .save(context: context, apiaryId: newApiary.id, hives: []);
       Provider.of<Tasks>(context, listen: false)
