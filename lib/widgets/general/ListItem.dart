@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/models/alert.model.dart';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/capitalize.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:hivemind_app/utils/parseDate.dart';
 
 class ListItem extends StatelessWidget {
   const ListItem(
@@ -43,7 +45,7 @@ class ListItem extends StatelessWidget {
   }
 }
 
-Widget AlertListItem(context, notification) => ListTile(
+Widget AlertListItem(context, Alert alert) => ListTile(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       tileColor: ColorManager.CARD_BG,
       leading: CircleAvatar(
@@ -54,16 +56,16 @@ Widget AlertListItem(context, notification) => ListTile(
         ),
       ),
       title: Text(
-        notification["title"],
+        alert.title,
         style: Theme.of(context).textTheme.labelMedium,
       ),
       subtitle: Text(
-        notification["message"],
+        alert.message,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       isThreeLine: true,
       trailing: Text(
-        notification["time"],
+        parseDateTime(dateTime: alert.time),
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
