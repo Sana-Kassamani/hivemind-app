@@ -45,6 +45,7 @@ dependencies:
   firebase_core: ^3.10.0
   firebase_messaging: ^15.2.0
   flutter_local_notifications: ^18.0.1
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +83,9 @@ flutter:
     - assets/images/Logo_with_text.png
     - assets/icons/google_icon.png
     - assets/images/empty_pic.png
+    - assets/images/screen1.png
+    - assets/images/screen2.png
+    - assets/images/screen3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -108,8 +112,8 @@ flutter:
       fonts:
         - asset: assets/fonts/Tomorrow-Medium.ttf
           weight: 500
-        # - asset: fonts/TrajanPro_Bold.ttf
-        #   weight: 700
+        - asset: assets/fonts/Tomorrow-Regular.ttf
+          weight: 400
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
