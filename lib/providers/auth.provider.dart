@@ -95,18 +95,34 @@ class Auth extends ChangeNotifier {
     }
   }
 
-  Future signup({username, email, password, confirmPassword, context}) async {
+  Future signup({username, email, password, context}) async {
     try {
       final deviceId = await FirebaseApi.instance.getToken();
+
       final data = <String, dynamic>{
         "username": username,
         "password": password,
         "email": email,
         "deviceId": deviceId
       };
+      print(data);
+      print("Hello 2");
       final response = await request(
-          route: "/auth", method: RequestMethods.post, data: data);
-    } catch (error) {}
+          route: "/auth/signup", method: RequestMethods.post, data: data);
+      print("Hello 3");
+      // set token
+      final token = jsonDecode(response)["token"];
+
+      // Load and obtain the shared preferences for this app.
+      final prefs = await SharedPreferences.getInstance();
+
+      // Save the token value to persistent storage under the 'token' key.
+      await prefs.setString('token', token);
+
+      await save(loggedUser: jsonDecode(response)["user"], context: context);
+    } catch (error) {
+      rethrow;
+    }
   }
 
   Future logout({required context}) async {
