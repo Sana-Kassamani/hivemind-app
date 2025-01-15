@@ -28,14 +28,14 @@ class _LoginPageState extends State<LoginPage> {
   var _username = "";
   var _password = "";
 
-  void login(context) async {
+  Future login(context) async {
     try {
       final response = await Provider.of<Auth>(context, listen: false)
           .login(username: _username, password: _password, context: context);
       if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Owner) {
         await Provider.of<Beekeepers>(context, listen: false).load();
-        Provider.of<Apiaries>(context, listen: false).saveApiaries(
+        await Provider.of<Apiaries>(context, listen: false).saveApiaries(
             context: context, apiaries: response["user"]["apiaries"]);
         Navigator.pushReplacementNamed(
           context,
@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Beekeeper) {
-        Provider.of<Apiaries>(context, listen: false).saveApiary(
+        await Provider.of<Apiaries>(context, listen: false).saveApiary(
             context: context, apiary: response["user"]["assignedApiary"]);
         Navigator.pushReplacementNamed(
           context,
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                                 if (_globalKey.currentState!.validate()) {
                                   _globalKey.currentState!.save();
                                 }
-                                login(context);
+                                await login(context);
                               }),
                           // errorMessage.isNotEmpty
                           //     ? Text(
