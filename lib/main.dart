@@ -1,8 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/firebase_options.dart';
 import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/LoginPage.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
+import 'package:hivemind_app/pages/SignupPage.dart';
 import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
 import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
@@ -10,18 +14,23 @@ import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
 import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
 import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/pages/placesPage.dart';
+import 'package:hivemind_app/providers/alerts.provider.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
+import 'package:hivemind_app/utils/notifications/firebase.api.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:provider/provider.dart';
 
-bool ISOWNER = true;
-void main() {
+final navigatorKey = GlobalKey<NavigatorState>();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(MyApp());
 }
 
@@ -44,17 +53,27 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => Hives()),
         ChangeNotifierProvider(create: (context) => IotDetails()),
         ChangeNotifierProvider(create: (context) => Tasks()),
+        ChangeNotifierProvider(create: (context) => Alerts()),
       ],
       child: MaterialApp(
         title: 'My app', // used by the OS task switcher
         // home: LoginPage(),
         theme: theme.lightTheme,
+        navigatorKey: navigatorKey,
         routes: {
           "/": (context) => LoginPage(),
-          "/home": (context) => MainScreenOwner(),
+          "/signup": (context) => SignupPage(),
+          "/homeOwner": (context) => MainScreenOwner(),
+          "/homeBeekeeper": (context) => MainScreenBeekeeper(),
           "/apiary": (context) => ApiaryPageOwner(),
           "/hiveOwner": (context) => HivePageOwner(),
           "/hiveBeekeeper": (context) => HivePageBeekeeper(),
+          "/alertsOwner": (context) => MainScreenOwner(
+                index: 2,
+              ),
+          "/alertsBeekeeper": (context) => MainScreenBeekeeper(
+                index: 2,
+              ),
         },
       ),
     );
@@ -62,7 +81,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MainScreenOwner extends StatefulWidget {
-  const MainScreenOwner({super.key});
+  const MainScreenOwner({super.key, this.index = 0});
+  final int index;
 
   @override
   State<MainScreenOwner> createState() => _MainScreenOwnerState();
@@ -80,6 +100,15 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
     SettingsPage(),
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      _selectedIndex = widget.index;
+    });
+  }
+
   void _onItemSelected(int index) {
     setState(() {
       _selectedIndex = index;
@@ -88,6 +117,13 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
 
   @override
   Widget build(BuildContext context) {
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
+
     return Scaffold(
         body: _screens[_selectedIndex], // Display the selected screen.
         bottomNavigationBar: NavbarOwner(
@@ -98,7 +134,9 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
 }
 
 class MainScreenBeekeeper extends StatefulWidget {
-  const MainScreenBeekeeper({super.key});
+  const MainScreenBeekeeper({super.key, this.index = 0});
+
+  final int index;
 
   @override
   State<MainScreenBeekeeper> createState() => _MainScreenBeekeeperState();
@@ -114,6 +152,16 @@ class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
     SettingsPage(),
   ];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      _selectedIndex = widget.index;
+    });
+  }
+
   void _onItemSelected(int index) {
     setState(() {
       _selectedIndex = index;
@@ -122,6 +170,16 @@ class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
 
   @override
   Widget build(BuildContext context) {
+    // setState(() {
+    //   _selectedIndex = widget.index;
+    // });
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
+
     return Scaffold(
       body: _screens[_selectedIndex], // Display the selected screen.
       bottomNavigationBar: NavbarBeekeeper(
