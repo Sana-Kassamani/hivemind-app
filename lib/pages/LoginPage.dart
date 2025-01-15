@@ -177,7 +177,12 @@ class _LoginPageState extends State<LoginPage> {
                                     .copyWith(fontWeight: FontWeight.w400),
                               ),
                               InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      "/signup",
+                                    );
+                                  },
                                   child: Text(
                                     "Sign Up",
                                     style: Theme.of(context)
