@@ -120,6 +120,8 @@ class Auth extends ChangeNotifier {
       await prefs.setString('token', token);
 
       await save(loggedUser: jsonDecode(response)["user"], context: context);
+
+      return jsonDecode(response);
     } catch (error) {
       rethrow;
     }
