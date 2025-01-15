@@ -81,7 +81,9 @@ class ThemeManager {
         fontWeight: FontWeight.w500,
       ),
       titleMedium: TextStyle(
-        color: Colors.black,
+        color: ColorManager.COLOR_SECONDARY,
+        fontFamily: 'Tomorrow',
+        fontWeight: FontWeight.w400,
       ),
       titleSmall: TextStyle(
         color: Colors.black,
