@@ -30,7 +30,8 @@ class _DatesRowState extends State<DatesRow> {
             detail: value.iotDetails[hiveId]![0],
           );
           return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             spacing: 12,
             children: [
               for (int i = 0; i < dates.length; i++)

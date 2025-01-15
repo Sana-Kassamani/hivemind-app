@@ -72,7 +72,8 @@ Widget DateCard(context, title, date) {
   return Card(
     color: ColorManager.CARD_BG,
     child: Container(
-      width: (MediaQuery.of(context).size.width - 70) / 2,
+      // width: (MediaQuery.of(context).size.width - 70) / 2,
+      width: (MediaQuery.of(context).size.width * 0.86),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 13),
       child: Column(
           spacing: 10,
