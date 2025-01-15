@@ -28,9 +28,9 @@ class _SettingsListState extends State<SettingsList> {
     }
   }
 
-  Future changeAlerts(authValue, value) async {
+  Future changeAlerts(authValue, value, context) async {
     try {
-      await authValue.setAlerts(value: value);
+      await authValue.setAlerts(value: value, context: context);
       print("Alerts changed");
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -88,7 +88,7 @@ class _SettingsListState extends State<SettingsList> {
                 inactiveTrackColor: ColorManager.SCAFFOLD_BG,
                 value: authValue.user.getSettings.alertsOn,
                 onChanged: (value) async {
-                  await changeAlerts(authValue, value);
+                  await changeAlerts(authValue, value, context);
                 },
               ),
             ),
