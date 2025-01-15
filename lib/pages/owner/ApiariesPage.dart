@@ -81,10 +81,12 @@ class _ApiariesPageState extends State<ApiariesPage> {
                                           builder: (context) {
                                             return DeleteDialogue(
                                               item: "apiary",
-                                              onPressDelete: () => deleteApiary(
-                                                  context,
-                                                  value.apiariesList[index]
-                                                      .getId()),
+                                              onPressDelete: () async {
+                                                await deleteApiary(
+                                                    context,
+                                                    value.apiariesList[index]
+                                                        .getId());
+                                              },
                                             );
                                           });
                                     }),
