@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/utils/colors.dart';
 import 'package:provider/provider.dart';
@@ -6,8 +7,10 @@ import 'package:provider/provider.dart';
 class DeleteDialogue extends StatelessWidget {
   const DeleteDialogue(
       {super.key, required this.item, required this.onPressDelete});
+
   final item;
   final onPressDelete;
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -39,7 +42,7 @@ class DeleteDialogue extends StatelessWidget {
           ),
           onPressed: () async {
             await onPressDelete();
-            Navigator.pop(context);
+            navigatorKey.currentState?.pop();
           },
           child: Text("Delete"),
         ),
@@ -67,7 +70,7 @@ class CompleteTaskDialogue extends StatelessWidget {
         size: 40,
       ),
       content: Text(
-          "Are you sure you want to complete this task having this comment: ${comment ?? "_empty_"}?"),
+          "Are you sure you want to complete this task having this comment: ${(comment == null || comment == "") ? "_empty_" : comment}?"),
       buttonPadding: EdgeInsets.all(20),
       actions: [
         FilledButton(
