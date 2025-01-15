@@ -186,7 +186,7 @@ class _SignupPageState extends State<SignupPage> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      "/",
+                                      "/login",
                                     );
                                   },
                                   child: Text(
