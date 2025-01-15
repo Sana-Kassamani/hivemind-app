@@ -13,3 +13,18 @@ String graphDate({date}) {
   String updatedDt = newFormat.format(date);
   return updatedDt;
 }
+
+String parseDateTime({dateTime}) {
+  final now = DateTime.now();
+  if (now.day == dateTime.day &&
+      now.month == dateTime.month &&
+      now.year == dateTime.year) {
+    var newFormat = DateFormat('HH:mm');
+    String updatedDt = newFormat.format(dateTime);
+    return updatedDt;
+  } else {
+    var newFormat = DateFormat('dd/MM/yy HH:mm');
+    String updatedDt = newFormat.format(dateTime);
+    return updatedDt;
+  }
+}
