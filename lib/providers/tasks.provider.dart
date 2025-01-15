@@ -27,24 +27,25 @@ class Tasks extends ChangeNotifier {
 
     for (int i = 0; i < tasks.length; i++) {
       var task = tasks[i];
+      if (!task["deleted"]) {
+        // parse date of task to Jan 01, 2000 format
+        String updatedDt = parseDate(date: task["date"]);
 
-      // parse date of task to Jan 01, 2000 format
-      String updatedDt = parseDate(date: task["date"]);
+        final newTask = Task(
+          id: task["_id"],
+          title: task["title"],
+          content: task["content"],
+          status: task["status"],
+          comment: task["comment"],
+          date: updatedDt,
+        );
 
-      final newTask = Task(
-        id: task["_id"],
-        title: task["title"],
-        content: task["content"],
-        status: task["status"],
-        comment: task["comment"],
-        date: updatedDt,
-      );
+        _tasks[apiaryId]!.add(newTask);
+        print("New task ${newTask.toString()}");
+      }
 
-      _tasks[apiaryId]!.add(newTask);
-      print("New task ${newTask.toString()}");
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
   Future addTask({
@@ -77,7 +78,6 @@ class Tasks extends ChangeNotifier {
         date: updatedDt,
       );
 
-      _tasks[apiaryId] = [];
       _tasks[apiaryId]!.add(newTask);
       notifyListeners();
     } catch (error) {
@@ -101,16 +101,28 @@ class Tasks extends ChangeNotifier {
       Task task = getById(apiaryId: apiaryId, taskId: taskId);
       task.status = newTask["status"];
       task.comment = newTask["comment"];
+      filterPendingTasks(apiaryId: apiaryId);
       notifyListeners();
     } catch (error) {
       rethrow;
     }
   }
 
-  void clearCompletedTasks({required apiaryId}) {
-    List<Task> tasks = filterPendingTasks(apiaryId: apiaryId);
-    _tasks[apiaryId] = tasks;
-    notifyListeners();
+  void clearCompletedTasks({required apiaryId}) async {
+    try {
+      Map<String, dynamic> data = {};
+      final response = await request(
+        route: '/tasks/$apiaryId',
+        method: RequestMethods.delete,
+        data: data,
+      );
+
+      List<Task> tasks = filterPendingTasks(apiaryId: apiaryId);
+      _tasks[apiaryId] = tasks;
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 
   void reset() {

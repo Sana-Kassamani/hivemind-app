@@ -83,7 +83,6 @@ class Hives extends ChangeNotifier {
       Provider.of<IotDetails>(context, listen: false)
           .save(hiveId: newHive.getId, iotDetails: []);
 
-      _hives[apiaryId] = [];
       _hives[apiaryId]!.add(newHive);
       notifyListeners();
     } catch (error) {
