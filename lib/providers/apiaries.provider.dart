@@ -17,6 +17,10 @@ class Apiaries extends ChangeNotifier {
   Apiary? get apiary => _apiary;
   void setApiariesList(apiaries) => _apiaries = apiaries;
 
+  int getApiariesCount() {
+    int totalSize = _apiaries.length;
+    return totalSize;
+  }
   // Future loadApiary({context, apiaryId}) async {
   //   try {
   //     final response =

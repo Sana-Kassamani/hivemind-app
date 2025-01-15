@@ -13,6 +13,11 @@ class Hives extends ChangeNotifier {
   Map<String, List<Hive>> get hives => _hives;
   set hives(Map<String, List<Hive>> map) => hives = map;
 
+  int getHivesCount() {
+    int count = _hives.values.fold(0, (sum, list) => sum + list.length);
+    return count;
+  }
+
   Hive getById({apiaryId, hiveId}) {
     Hive hive = _hives[apiaryId]!.firstWhere((a) => a.id == hiveId);
     return hive;

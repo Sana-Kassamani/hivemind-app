@@ -1,13 +1,27 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/user.model.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/request.dart';
+import 'package:provider/provider.dart';
 
 class Beekeepers extends ChangeNotifier {
   List<Beekeeper> _beekeepersList = [];
 
   List<Beekeeper> get beekeepersList => _beekeepersList;
+
+  int getBeekeepersCount({context, apiaries}) {
+    int count = 0;
+
+    for (var beekeeper in beekeepersList) {
+      if (beekeeper.assignedApiaryId != null &&
+          apiaries.contains(beekeeper.assignedApiaryId)) {
+        count += 1;
+      }
+    }
+    return count;
+  }
 
   Future load() async {
     try {
