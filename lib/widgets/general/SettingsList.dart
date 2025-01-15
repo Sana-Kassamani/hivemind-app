@@ -54,17 +54,26 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.dark_mode_outlined,
                 size: 30,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.black,
               ),
               title: Text(
                 "Dark Mode",
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               trailing: Switch(
-                  trackOutlineColor:
-                      WidgetStatePropertyAll(ColorManager.COLOR_SECONDARY),
-                  inactiveThumbColor: ColorManager.COLOR_SECONDARY,
+                  trackOutlineColor: WidgetStateColor.resolveWith(
+                    (final Set<WidgetState> states) {
+                      if (states.contains(WidgetState.selected)) {
+                        return Theme.of(context).colorScheme.primary;
+                      }
+
+                      return Colors.grey;
+                    },
+                  ),
+                  inactiveThumbColor: Colors.grey[350],
                   inactiveTrackColor: ColorManager.SCAFFOLD_BG,
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  activeTrackColor: ColorManager.SCAFFOLD_BG,
                   value: authValue.user.getSettings.darkmode,
                   onChanged: (value) async {
                     await changeDarkMode(authValue, value);
@@ -75,17 +84,26 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.volume_up,
                 size: 30,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.black,
               ),
               title: Text(
                 "Alerts",
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               trailing: Switch(
-                trackOutlineColor:
-                    WidgetStatePropertyAll(ColorManager.COLOR_SECONDARY),
-                inactiveThumbColor: ColorManager.COLOR_SECONDARY,
+                trackOutlineColor: WidgetStateColor.resolveWith(
+                  (final Set<WidgetState> states) {
+                    if (states.contains(WidgetState.selected)) {
+                      return Theme.of(context).colorScheme.primary;
+                    }
+
+                    return Colors.grey;
+                  },
+                ),
+                inactiveThumbColor: Colors.grey[350],
                 inactiveTrackColor: ColorManager.SCAFFOLD_BG,
+                activeColor: Theme.of(context).colorScheme.primary,
+                activeTrackColor: ColorManager.SCAFFOLD_BG,
                 value: authValue.user.getSettings.alertsOn,
                 onChanged: (value) async {
                   await changeAlerts(authValue, value, context);
@@ -105,7 +123,7 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.logout,
                 size: 30,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.black,
               ),
               title: Text(
                 "Logout",
