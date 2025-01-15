@@ -20,6 +20,7 @@ class Apiary {
   final double longitude;
   final double latitude;
   final String? beekeeperName;
+  String? weather;
 
   Apiary({
     required this.id,
@@ -28,6 +29,7 @@ class Apiary {
     required this.longitude,
     required this.latitude,
     required this.beekeeperName,
+    this.weather,
   });
   String getId() => id;
   String getLocation() => location;
