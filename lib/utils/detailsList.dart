@@ -25,20 +25,20 @@ List<Map<String, dynamic>> detailsList({hive, detail}) {
       "circleColor": ColorManager.MASS_BG,
       "imagePath": "assets/icons/mass_icon.png",
     },
-    {
-      "title": "Weather",
-      "content": "Sunny",
-      "iconColor": ColorManager.WEATHER_COLOR,
-      "circleColor": ColorManager.WEATHER_BG,
-      "imagePath": "assets/icons/weather_icon.png",
-    },
-    {
-      "title": "Harvest Status",
-      "content": hive.harvestStatus ? "Ready" : "Pending",
-      "iconColor": ColorManager.HONEY_COLOR,
-      "circleColor": ColorManager.HONEY_BG,
-      "imagePath": "assets/icons/honey_icon.png",
-    },
+    // {
+    //   "title": "Weather",
+    //   "content": "Sunny",
+    //   "iconColor": ColorManager.WEATHER_COLOR,
+    //   "circleColor": ColorManager.WEATHER_BG,
+    //   "imagePath": "assets/icons/weather_icon.png",
+    // },
+    // {
+    //   "title": "Harvest Status",
+    //   "content": hive.harvestStatus ? "Ready" : "Pending",
+    //   "iconColor": ColorManager.HONEY_COLOR,
+    //   "circleColor": ColorManager.HONEY_BG,
+    //   "imagePath": "assets/icons/honey_icon.png",
+    // },
     {
       "title": "Number of Frames",
       "content": hive.numberOfFrames.toString(),
@@ -51,7 +51,7 @@ List<Map<String, dynamic>> detailsList({hive, detail}) {
 
 List<Map<String, String>> datesList({hive, detail}) {
   return [
-    {"title": "Last harvested on", "date": hive.lastHarvestDate},
-    {"title": "Last inspected on", "date": detail.date}
+    // {"title": "Last harvested on", "date": hive.lastHarvestDate},
+    {"title": "Inspected on", "date": detail.date}
   ];
 }
