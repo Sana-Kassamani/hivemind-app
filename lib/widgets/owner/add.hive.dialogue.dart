@@ -57,7 +57,11 @@ class _AddHiveState extends State<AddHive> {
               spacing: 20,
               children: [
                 TextFormField(
-                  decoration: InputDecoration(label: Text("Hive Label")),
+                  decoration: InputDecoration(
+                      label: Text(
+                    "Hive Label",
+                    style: inputTextStyle,
+                  )),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -77,12 +81,16 @@ class _AddHiveState extends State<AddHive> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(label: Text("Number Of Frames")),
+                  decoration: InputDecoration(
+                      label: Text(
+                    "Number Of Frames",
+                    style: inputTextStyle,
+                  )),
                   style: inputTextStyle,
                   keyboardType: TextInputType.numberWithOptions(),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Number of frames field cannot be empty";
+                      return "Frames number field cannot be empty";
                     }
                     if (int.tryParse(value) == null ||
                         int.tryParse(value)! < 0) {
@@ -118,6 +126,15 @@ class _AddHiveState extends State<AddHive> {
       buttonPadding: EdgeInsets.all(20),
       actions: [
         FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+        FilledButton(
             style: ButtonStyle(
               minimumSize: WidgetStatePropertyAll(Size(100, 40)),
             ),
@@ -130,15 +147,6 @@ class _AddHiveState extends State<AddHive> {
                 Navigator.pop(context);
               }
             }),
-        FilledButton(
-          style: ButtonStyle(
-              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
-              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        )
       ],
     );
   }

@@ -69,7 +69,7 @@ class _AddApiaryState extends State<AddApiary> {
         throw Exception('Failed to load predictions');
       }
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 
@@ -139,7 +139,12 @@ class _AddApiaryState extends State<AddApiary> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(label: Text("Apiary Label")),
+                decoration: InputDecoration(
+                  label: Text(
+                    "Apiary Label",
+                    style: inputTextStyle,
+                  ),
+                ),
                 style: inputTextStyle,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -156,7 +161,11 @@ class _AddApiaryState extends State<AddApiary> {
               Consumer<Beekeepers>(builder:
                   (BuildContext context, Beekeepers value, Widget? child) {
                 return DropdownButtonFormField(
-                  decoration: InputDecoration(label: Text("Beekeeper Name")),
+                  decoration: InputDecoration(
+                      label: Text(
+                    "Beekeeper Name",
+                    style: inputTextStyle,
+                  )),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null) {
@@ -172,8 +181,7 @@ class _AddApiaryState extends State<AddApiary> {
                       child: Text(
                         b.getUsername,
                         style: free
-                            ? inputTextStyle.copyWith(
-                                color: ColorManager.COLOR_SECONDARY)
+                            ? inputTextStyle.copyWith(color: Colors.black)
                             : inputTextStyle.copyWith(color: Colors.grey),
                       ),
                     );
@@ -193,14 +201,15 @@ class _AddApiaryState extends State<AddApiary> {
               // ),
               Autocomplete<String>(
                   optionsBuilder: (TextEditingValue textEditingValue) async {
-                print("heyyyy");
                 if (_sessionToken == "") {
                   setState(() {
                     _sessionToken = uuid.v4();
                   });
                 }
+
                 await getSuggestion(textEditingValue.text);
-                if (_placeList.isEmpty || textEditingValue.text.isEmpty) {
+
+                if (_placeList.isEmpty) {
                   return const Iterable<String>.empty();
                 }
                 return Iterable.generate(
@@ -216,6 +225,7 @@ class _AddApiaryState extends State<AddApiary> {
               }, fieldViewBuilder: (context, textEditingController, focusNode,
                       onFieldSubmitted) {
                 return TextFormField(
+                  style: inputTextStyle,
                   controller: textEditingController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -225,7 +235,10 @@ class _AddApiaryState extends State<AddApiary> {
                   },
                   focusNode: focusNode,
                   decoration: InputDecoration(
-                    labelText: "Search location",
+                    label: Text(
+                      "Search location",
+                      style: inputTextStyle,
+                    ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.cancel),
                       onPressed: () {
@@ -242,6 +255,15 @@ class _AddApiaryState extends State<AddApiary> {
       buttonPadding: EdgeInsets.all(20),
       actions: [
         FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+        FilledButton(
             style: ButtonStyle(
               minimumSize: WidgetStatePropertyAll(Size(100, 40)),
             ),
@@ -254,15 +276,6 @@ class _AddApiaryState extends State<AddApiary> {
                 Navigator.pop(context);
               }
             }),
-        FilledButton(
-          style: ButtonStyle(
-              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
-              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        )
       ],
     );
   }

@@ -53,11 +53,15 @@ class _AddTaskState extends State<AddTask> {
           Form(
             key: _globalKey,
             child: Column(
-              spacing: 20,
+              spacing: 8,
               children: [
                 TextFormField(
                   maxLength: 20,
-                  decoration: InputDecoration(label: Text("Task Title")),
+                  decoration: InputDecoration(
+                      label: Text(
+                    "Task Title",
+                    style: inputTextStyle,
+                  )),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -78,7 +82,11 @@ class _AddTaskState extends State<AddTask> {
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(label: Text("Content")),
+                  decoration: InputDecoration(
+                      label: Text(
+                    "Content",
+                    style: inputTextStyle,
+                  )),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -114,6 +122,15 @@ class _AddTaskState extends State<AddTask> {
       buttonPadding: EdgeInsets.all(20),
       actions: [
         FilledButton(
+          style: ButtonStyle(
+              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
+              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text("Cancel"),
+        ),
+        FilledButton(
             style: ButtonStyle(
               minimumSize: WidgetStatePropertyAll(Size(100, 40)),
             ),
@@ -126,15 +143,6 @@ class _AddTaskState extends State<AddTask> {
                 Navigator.pop(context);
               }
             }),
-        FilledButton(
-          style: ButtonStyle(
-              minimumSize: WidgetStatePropertyAll(Size(100, 40)),
-              backgroundColor: WidgetStatePropertyAll(Colors.grey[200])),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text("Cancel"),
-        )
       ],
     );
   }
