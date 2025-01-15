@@ -97,12 +97,12 @@ class _HistoryTabState extends State<HistoryTab> {
                             "Temperature (°C)",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          addVerticalSpace(20),
+                          addVerticalSpace(10),
                           DetailLineChart(
                             hiveId: hiveId,
                             label: "Temperature (°C)",
                             chartType: ChartType.temperature,
-                            yRange: [20.0, 50.0],
+                            yRange: [10.0, 50.0],
                           ),
                         ],
                       )
@@ -118,7 +118,7 @@ class _HistoryTabState extends State<HistoryTab> {
                             hiveId: hiveId,
                             label: "Humidity (%)",
                             chartType: ChartType.humidity,
-                            yRange: [40.0, 80.0],
+                            yRange: [0.0, 90.0],
                           ),
                         ],
                       )
