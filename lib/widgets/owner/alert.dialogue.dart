@@ -132,7 +132,12 @@ class LogoutDialogue extends StatelessWidget {
           onPressed: () async {
             await Provider.of<Auth>(context, listen: false)
                 .logout(context: context);
-            Navigator.pushReplacementNamed(context, "/");
+            // Remove all previous routes
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              "/login",
+              (Route<dynamic> route) => false,
+            );
           },
           child: Text("Logout"),
         ),
