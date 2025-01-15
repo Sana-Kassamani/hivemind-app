@@ -30,7 +30,6 @@ class DetailLineChart extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.55,
         child: Consumer<IotDetails>(builder:
             (BuildContext context, IotDetails detailsValue, Widget? child) {
-          print(detailsValue.iotDetails[hiveId]![1].date);
           return LineChart(
             LineChartData(
               lineBarsData: [

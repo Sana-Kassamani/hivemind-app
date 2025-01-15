@@ -4,7 +4,9 @@ import 'package:hivemind_app/widgets/general/ListItem.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
 
 class AlertsList extends StatefulWidget {
-  const AlertsList({super.key});
+  const AlertsList({super.key, required this.alerts});
+
+  final alerts;
 
   @override
   State<AlertsList> createState() => _AlertsListState();
@@ -13,45 +15,16 @@ class AlertsList extends StatefulWidget {
 class _AlertsListState extends State<AlertsList> {
   @override
   Widget build(BuildContext context) {
-    const List<Map<String, String>> alerts = [
-      {
-        "title": "Temperature high",
-        "message": "Check hive #3 for temperature",
-        "time": "15:09"
-      },
-      {
-        "title": "Temperature high",
-        "message": "Check hive #3 for temperature",
-        "time": "15:09"
-      },
-      {
-        "title": "Temperature high",
-        "message": "Check hive #3 for temperature",
-        "time": "15:09"
-      },
-      {
-        "title": "Temperature high",
-        "message": "Check hive #3 for temperature",
-        "time": "15:09"
-      },
-      {
-        "title": "Temperature high",
-        "message": "Check hive #3 for temperature",
-        "time": "15:09"
-      },
-    ];
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 30, right: 30),
-        child: alerts.isEmpty
-            ? EmptyState(context: context)
-            : ListView.separated(
-                itemCount: alerts.length,
-                itemBuilder: (context, index) {
-                  return AlertListItem(context, alerts[index]);
-                },
-                separatorBuilder: (context, index) => addVerticalSpace(10),
-              ),
+        child: ListView.separated(
+          itemCount: widget.alerts.length,
+          itemBuilder: (context, index) {
+            return AlertListItem(context, widget.alerts[index]);
+          },
+          separatorBuilder: (context, index) => addVerticalSpace(10),
+        ),
       ),
     );
   }
