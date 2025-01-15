@@ -75,7 +75,6 @@ class _GoogleMapSearchPlacesApiState extends State<GoogleMapSearchPlacesApi> {
       String request =
           '$baseURL?fields=geometry&place_id=$place_id&key=$PLACES_API_KEY';
       var response = await http.get(Uri.parse(request));
-      var data = json.decode(response.body);
       if (response.statusCode == 200) {
         print(response.body.toString());
         setState(() {

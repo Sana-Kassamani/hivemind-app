@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
-import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/general/SettingsList.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -25,6 +24,5 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       // bottomNavigationBar: NavbarOwner(),
     );
-    ;
   }
 }
