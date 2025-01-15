@@ -7,11 +7,11 @@ import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:provider/provider.dart';
 
 // make sure app is still running in bg
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await FirebaseApi.instance.setupFlutterNotifications();
-  await FirebaseApi.instance.showNotification(message);
-}
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await FirebaseApi.instance.setupFlutterNotifications();
+//   await FirebaseApi.instance.showNotification(message);
+// }
 
 class FirebaseApi {
   FirebaseApi._();
@@ -23,7 +23,8 @@ class FirebaseApi {
   bool _isFlutterLocalNotificationsInitialized = false;
 
   Future<void> initialize({context}) async {
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
     // request permission
     await requestPermission();
 
@@ -36,7 +37,7 @@ class FirebaseApi {
   }
 
   Future<void> allowNotifications({context}) async {
-    await FirebaseApi.instance.initialize();
+    await FirebaseApi.instance.initialize(context: context);
   }
 
   Future<String?> getToken() async {
@@ -57,6 +58,60 @@ class FirebaseApi {
       criticalAlert: false,
     );
     print("Permission status :${settings.authorizationStatus}");
+  }
+
+  Future<void> setupMessageHandlers(context) async {
+    //foreground message
+    FirebaseMessaging.onMessage.listen((message) {
+      showNotification(message);
+      _handleMessage(message, context);
+    });
+
+    //background message
+    FirebaseMessaging.onMessageOpenedApp
+        .listen((message) => _handleMessage(message, context));
+
+    // opened app
+    // final initialMessage = await _firebaseMessaging.getInitialMessage();
+    // if (initialMessage != null) {
+    //   _handleMessage(initialMessage, context);
+    // }
+  }
+
+  Future<void> showNotification(RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+    AndroidNotification? android = message.notification?.android;
+
+    if (notification != null && android != null) {
+      _localNotifications.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel', // id
+            'High Importance Notifications', // title
+            channelDescription:
+                'This channel is used for important notifications.', // description
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: "@mipmap/ic_launcher",
+          ),
+          iOS: const DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
+        ),
+        payload: message.data.toString(),
+      );
+    }
+  }
+
+  void _handleMessage(RemoteMessage message, context) {
+    // save message in provider
+    print("Hello from handleMessage");
+    Provider.of<Alerts>(context, listen: false).showAlerts(message: message);
   }
 
   Future<void> setupFlutterNotifications() async {
@@ -102,65 +157,14 @@ class FirebaseApi {
 
     _isFlutterLocalNotificationsInitialized = true;
   }
+}
 
-  Future<void> showNotification(RemoteMessage message) async {
-    RemoteNotification? notification = message.notification;
-    AndroidNotification? android = message.notification?.android;
-
-    if (notification != null && android != null) {
-      _localNotifications.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            'high_importance_channel', // id
-            'High Importance Notifications', // title
-            channelDescription:
-                'This channel is used for important notifications.', // description
-            importance: Importance.high,
-            priority: Priority.high,
-            icon: "@mipmap/ic_launcher",
-          ),
-          iOS: const DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-          ),
-        ),
-        payload: message.data.toString(),
-      );
-    }
-  }
-
-  Future<void> setupMessageHandlers(context) async {
-    //foreground message
-    FirebaseMessaging.onMessage.listen((message) {
-      showNotification(message);
-      _handleMessage(message, context);
-    });
-
-    //background message
-    FirebaseMessaging.onMessageOpenedApp
-        .listen((message) => _handleMessage(message, context));
-
-    // opened app
-    final initialMessage = await _firebaseMessaging.getInitialMessage();
-    if (initialMessage != null) {
-      _handleMessage(initialMessage, context);
-    }
-  }
-
-  void _handleMessage(RemoteMessage message, context) {
-    // save message in provider
-    if (Provider.of<Auth>(context, listen: false).user.getUserType ==
-        UserTypes.Owner) {
-      navigatorKey.currentState?.pushNamed("/alertsOwner");
-    } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
-        UserTypes.Beekeeper) {
-      navigatorKey.currentState?.pushNamed("/alertsBeekeeper");
-    } else {}
-
-    Provider.of<Alerts>(context, listen: false).showAlerts(message: message);
-  }
+void navigateToAlertsPage({context}) {
+  if (Provider.of<Auth>(context, listen: false).user.getUserType ==
+      UserTypes.Owner) {
+    navigatorKey.currentState?.pushNamed("/alertsOwner");
+  } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
+      UserTypes.Beekeeper) {
+    navigatorKey.currentState?.pushNamed("/alertsBeekeeper");
+  } else {}
 }
