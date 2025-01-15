@@ -62,6 +62,8 @@ class _LocationCardState extends State<LocationCard> {
                     Theme.of(context).colorScheme.primary),
                 Flexible(
                   child: Tooltip(
+                    verticalOffset: 40,
+                    margin: EdgeInsets.all(10),
                     message: widget.apiary.getLocation(),
                     child: Text(widget.apiary.getLocation(),
                         style: Theme.of(context)
