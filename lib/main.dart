@@ -5,6 +5,7 @@ import 'package:hivemind_app/firebase_options.dart';
 import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/LoginPage.dart';
+import 'package:hivemind_app/pages/OnboardingScreens.dart';
 import 'package:hivemind_app/pages/SettingsPage.dart';
 import 'package:hivemind_app/pages/SignupPage.dart';
 import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
@@ -12,6 +13,7 @@ import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
 import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
 import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
+import 'package:hivemind_app/pages/owner/DashboardPage.dart';
 import 'package:hivemind_app/pages/owner/HivePage.dart';
 import 'package:hivemind_app/pages/placesPage.dart';
 import 'package:hivemind_app/providers/alerts.provider.dart';
@@ -61,7 +63,8 @@ class _MyAppState extends State<MyApp> {
         theme: theme.lightTheme,
         navigatorKey: navigatorKey,
         routes: {
-          "/": (context) => LoginPage(),
+          "/": (context) => OnBoardingScreens(),
+          "/login": (context) => LoginPage(),
           "/signup": (context) => SignupPage(),
           "/homeOwner": (context) => MainScreenOwner(),
           "/homeBeekeeper": (context) => MainScreenBeekeeper(),
@@ -93,9 +96,7 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
 
   final List<Widget> _screens = [
     ApiariesPage(),
-    Center(
-      child: Text("DashBoard"),
-    ),
+    Dashboard(),
     AlertsPage(),
     SettingsPage(),
   ];
