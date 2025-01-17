@@ -3,6 +3,11 @@
         android:label="hivemind_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDdMDAiVG9qJjLqXBY1YrIVFNUgMU0H9Pw"/>
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
