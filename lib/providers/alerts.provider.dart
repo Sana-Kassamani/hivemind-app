@@ -57,6 +57,7 @@ class Alerts extends ChangeNotifier {
         message: message.notification?.body,
         time: message["time"],
       );
+      print("hey  $newAlert");
       _alerts.add(newAlert);
       notifyListeners();
     }

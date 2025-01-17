@@ -111,7 +111,7 @@ class FirebaseApi {
   void _handleMessage(RemoteMessage message, context) {
     // save message in provider
     print("Hello from handleMessage");
-    Provider.of<Alerts>(context, listen: false).showAlerts(message: message);
+    Provider.of<Alerts>(context, listen: false).add(message: message);
   }
 
   Future<void> setupFlutterNotifications() async {
