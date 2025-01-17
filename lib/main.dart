@@ -26,6 +26,7 @@ import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/notifications/firebase.api.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
+import 'package:hivemind_app/widgets/owner/maps.dart';
 import 'package:provider/provider.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -96,7 +97,7 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
 
   final List<Widget> _screens = [
     ApiariesPage(),
-    Dashboard(),
+    ApiariesMap(),
     AlertsPage(),
     SettingsPage(),
   ];
