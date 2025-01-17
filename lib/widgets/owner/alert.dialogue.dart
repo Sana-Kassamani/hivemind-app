@@ -41,7 +41,7 @@ class DeleteDialogue extends StatelessWidget {
             minimumSize: WidgetStatePropertyAll(Size(100, 40)),
           ),
           onPressed: () async {
-            await onPressDelete();
+            await onPressDelete(context);
             navigatorKey.currentState?.pop();
           },
           child: Text("Delete"),
