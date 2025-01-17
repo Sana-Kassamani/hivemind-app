@@ -5,6 +5,7 @@ import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
 import 'package:hivemind_app/widgets/general/charts.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
+import 'package:hivemind_app/widgets/general/lineChart.dart';
 import 'package:provider/provider.dart';
 
 enum ChartType { temperature, humidity, mass }
@@ -98,12 +99,13 @@ class _HistoryTabState extends State<HistoryTab> {
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           addVerticalSpace(10),
-                          DetailLineChart(
-                            hiveId: hiveId,
-                            label: "Temperature (°C)",
-                            chartType: ChartType.temperature,
-                            yRange: [10.0, 50.0],
-                          ),
+                          LineChartSample12(hiveId: hiveId)
+                          // DetailLineChart(
+                          //   hiveId: hiveId,
+                          //   label: "Temperature (°C)",
+                          //   chartType: ChartType.temperature,
+                          //   yRange: [10.0, 50.0],
+                          // ),
                         ],
                       )
                     else if (selectedType == ChartType.humidity)
