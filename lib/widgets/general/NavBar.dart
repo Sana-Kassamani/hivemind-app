@@ -17,19 +17,23 @@ class NavbarOwner extends StatelessWidget {
       indicatorColor: ColorManager.ICON_BG,
       destinations: [
         NavigationDestination(
-          icon: Icon(Icons.hive),
+          icon: Icon(Icons.hive_outlined),
+          selectedIcon: Icon(Icons.hive),
           label: "Apiary",
         ),
         NavigationDestination(
-          icon: Icon(Icons.bar_chart),
-          label: "Dashboard",
+          icon: Icon(Icons.map_outlined),
+          selectedIcon: Icon(Icons.map),
+          label: "Map",
         ),
         NavigationDestination(
           icon: Icon(Icons.notifications_active_outlined),
+          selectedIcon: Icon(Icons.notifications_active),
           label: "Alerts",
         ),
         NavigationDestination(
           icon: Icon(Icons.settings_outlined),
+          selectedIcon: Icon(Icons.settings),
           label: "Settings",
         ),
       ],
@@ -55,19 +59,23 @@ class NavbarBeekeeper extends StatelessWidget {
         indicatorColor: ColorManager.ICON_BG,
         destinations: [
           NavigationDestination(
-            icon: Icon(Icons.hive),
+            icon: Icon(Icons.hive_outlined),
+            selectedIcon: Icon(Icons.hive),
             label: "Hives",
           ),
           NavigationDestination(
             icon: Icon(Icons.assignment_outlined),
+            selectedIcon: Icon(Icons.assessment),
             label: "Tasks",
           ),
           NavigationDestination(
             icon: Icon(Icons.notifications_active_outlined),
+            selectedIcon: Icon(Icons.notifications_active),
             label: "Alerts",
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
+            selectedIcon: Icon(Icons.settings),
             label: "Settings",
           ),
         ],
