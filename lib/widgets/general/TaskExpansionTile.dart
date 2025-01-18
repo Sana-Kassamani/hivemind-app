@@ -3,6 +3,8 @@ import 'package:hivemind_app/models/task.model.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
+import 'package:hivemind_app/utils/capitalize.dart';
+import 'package:hivemind_app/utils/parseDate.dart';
 import 'package:hivemind_app/widgets/owner/alert.dialogue.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +12,24 @@ class TaskExpansionTileOwner extends StatelessWidget {
   const TaskExpansionTileOwner({super.key, required this.task});
 
   final Task task;
+
+  Future completeTask(
+      {required taskId, required context, required apiaryId}) async {
+    try {
+      await Provider.of<Tasks>(context, listen: false)
+          .completeTask(apiaryId: apiaryId, taskId: taskId);
+      print("ApiaryId $apiaryId");
+      print("task completed");
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Complete Task failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
