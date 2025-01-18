@@ -216,60 +216,15 @@ class TaskExpansionTileBeekeeper extends StatefulWidget {
 
 class _TaskExpansionTileBeekeeperState
     extends State<TaskExpansionTileBeekeeper> {
-  String? comment;
-  void setComment(String _comment) {
-    setState(() {
-      comment = _comment;
-    });
-  }
-
-  Future completeTask(
-      {required taskId, required context, String? comment}) async {
-    try {
-      final apiaryId =
-          Provider.of<Apiaries>(context, listen: false).apiary!.getId();
-      await Provider.of<Tasks>(context, listen: false)
-          .completeTask(apiaryId: apiaryId, taskId: taskId, comment: comment);
-      print("ApiaryId $apiaryId");
-      print("task completed");
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Delete Hive failed: ${error.toString()}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       expandedAlignment: Alignment.centerLeft,
-      leading: IconButton(
-        onPressed: () async {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return CompleteTaskDialogue(
-                  onPressComplete: () => completeTask(
-                    taskId: widget.task.id,
-                    context: context,
-                    comment: comment,
-                  ),
-                  comment: comment,
-                );
-              });
-        },
-        icon: Icon(
-          Icons.circle_outlined,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-        selectedIcon: Icon(
-          Icons.check_circle,
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
+      leading: widget.task.status == "Pending"
+          ? iconBox(
+              Icons.circle_outlined, Theme.of(context).colorScheme.secondary)
+          : iconBox(
+              Icons.check_circle, Theme.of(context).colorScheme.secondary),
       title: Text(
         widget.task.title,
         style: Theme.of(context).textTheme.labelMedium,
@@ -279,49 +234,48 @@ class _TaskExpansionTileBeekeeperState
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
-        ExpandedTileBeekeeper(
-            task: widget.task, comment: comment, setComment: setComment),
+        ExpandedTile(task: widget.task),
       ],
     );
   }
 }
 
-class ExpandedTileBeekeeper extends StatefulWidget {
-  ExpandedTileBeekeeper(
-      {super.key,
-      required this.task,
-      required this.comment,
-      required this.setComment});
-  String? comment;
-  final Task task;
-  final setComment;
+// class ExpandedTileBeekeeper extends StatefulWidget {
+//   ExpandedTileBeekeeper(
+//       {super.key,
+//       required this.task,
+//       required this.comment,
+//       required this.setComment});
+//   String? comment;
+//   final Task task;
+//   final setComment;
 
-  @override
-  State<ExpandedTileBeekeeper> createState() => _ExpandedTileBeekeeperState();
-}
+//   @override
+//   State<ExpandedTileBeekeeper> createState() => _ExpandedTileBeekeeperState();
+// }
 
-class _ExpandedTileBeekeeperState extends State<ExpandedTileBeekeeper> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      spacing: 20,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.task.content,
-          style: Theme.of(context).textTheme.labelMedium,
-        ),
-        TextField(
-          style: Theme.of(context).textTheme.labelSmall,
-          decoration: InputDecoration(
-            label:
-                Text("Comment", style: Theme.of(context).textTheme.labelSmall),
-          ),
-          onChanged: (value) {
-            widget.setComment(value);
-          },
-        ),
-      ],
-    );
-  }
-}
+// class _ExpandedTileBeekeeperState extends State<ExpandedTileBeekeeper> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       spacing: 20,
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Text(
+//           widget.task.content,
+//           style: Theme.of(context).textTheme.labelMedium,
+//         ),
+//         TextField(
+//           style: Theme.of(context).textTheme.labelSmall,
+//           decoration: InputDecoration(
+//             label:
+//                 Text("Comment", style: Theme.of(context).textTheme.labelSmall),
+//           ),
+//           onChanged: (value) {
+//             widget.setComment(value);
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }
