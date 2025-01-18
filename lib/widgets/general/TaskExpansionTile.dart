@@ -32,13 +32,32 @@ class TaskExpansionTileOwner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String apiaryId = ModalRoute.of(context)!.settings.arguments as String;
     return ExpansionTile(
       expandedAlignment: Alignment.centerLeft,
       leading: task.status == "Pending"
-          ? iconBox(
-              Icons.circle_outlined, Theme.of(context).colorScheme.secondary)
-          : iconBox(
-              Icons.check_circle, Theme.of(context).colorScheme.secondary),
+          ? IconButton(
+              padding: EdgeInsets.all(5),
+              onPressed: () async {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CompleteTaskDialogue(
+                          onPressComplete: () => completeTask(
+                              taskId: task.id,
+                              context: context,
+                              apiaryId: apiaryId));
+                    });
+              },
+              icon: Icon(
+                Icons.circle_outlined,
+                color: Theme.of(context).colorScheme.secondary,
+              ))
+          : IconButton(
+              disabledColor: Theme.of(context).colorScheme.secondary,
+              icon: Icon(Icons.check_circle),
+              onPressed: null,
+            ),
       title: Text(
         task.title,
         style: Theme.of(context).textTheme.labelMedium,
@@ -48,7 +67,7 @@ class TaskExpansionTileOwner extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       children: [
-        ExpandedTileOwner(task: task),
+        ExpandedTile(task: task),
       ],
     );
   }
