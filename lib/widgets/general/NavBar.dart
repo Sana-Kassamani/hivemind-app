@@ -65,7 +65,7 @@ class NavbarBeekeeper extends StatelessWidget {
           ),
           NavigationDestination(
             icon: Icon(Icons.assignment_outlined),
-            selectedIcon: Icon(Icons.assessment),
+            selectedIcon: Icon(Icons.assignment),
             label: "Tasks",
           ),
           NavigationDestination(
