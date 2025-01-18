@@ -52,9 +52,7 @@ class DeleteDialogue extends StatelessWidget {
 }
 
 class CompleteTaskDialogue extends StatelessWidget {
-  const CompleteTaskDialogue(
-      {super.key, required this.comment, required this.onPressComplete});
-  final comment;
+  const CompleteTaskDialogue({super.key, required this.onPressComplete});
   final onPressComplete;
   @override
   Widget build(BuildContext context) {
@@ -69,8 +67,7 @@ class CompleteTaskDialogue extends StatelessWidget {
         Icons.warning,
         size: 40,
       ),
-      content: Text(
-          "Are you sure you want to complete this task having this comment: ${(comment == null || comment == "") ? "_empty_" : comment}?"),
+      content: Text("Are you sure you want to complete this task?"),
       buttonPadding: EdgeInsets.all(20),
       actions: [
         FilledButton(
