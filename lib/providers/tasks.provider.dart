@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/task.model.dart';
+import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
 import 'package:hivemind_app/utils/request.dart';
+import 'package:provider/provider.dart';
 
 class Tasks extends ChangeNotifier {
   Map<String, List<Task>> _tasks = {};
@@ -22,7 +24,9 @@ class Tasks extends ChangeNotifier {
     return list;
   }
 
-  void save({apiaryId, tasks}) {
+  void save({apiaryId, tasks, context}) {
+    print(tasks);
+    final currentUserId = Provider.of<Auth>(context, listen: false).user.getId;
     _tasks[apiaryId] = [];
 
     for (int i = 0; i < tasks.length; i++) {
@@ -31,12 +35,31 @@ class Tasks extends ChangeNotifier {
         // parse date of task to Jan 01, 2000 format
         String updatedDt = parseDate(date: task["date"]);
 
+        List<Comment> comments = [];
+        final savedComments = task["comments"];
+        for (int j = 0; j < savedComments.length; j++) {
+          var comment = savedComments[j];
+          var name = "";
+          if (comment["userId"]["_id"] == currentUserId) {
+            name = "You";
+          } else {
+            name = comment["userId"]["username"];
+          }
+
+          final newComment = Comment(
+            id: comment["_id"],
+            content: comment["content"],
+            userName: name,
+            date: DateTime.parse(comment["date"]),
+          );
+          comments.insert(0, newComment);
+        }
         final newTask = Task(
           id: task["_id"],
           title: task["title"],
           content: task["content"],
           status: task["status"],
-          comment: task["comment"],
+          comments: comments,
           date: updatedDt,
         );
 
@@ -74,7 +97,7 @@ class Tasks extends ChangeNotifier {
         title: title,
         content: content,
         status: task["status"],
-        comment: task["comment"],
+        comments: [],
         date: updatedDt,
       );
 
@@ -85,12 +108,9 @@ class Tasks extends ChangeNotifier {
     }
   }
 
-  Future completeTask(
-      {required apiaryId, required taskId, String? comment}) async {
+  Future completeTask({required apiaryId, required taskId}) async {
     try {
-      Map<String, dynamic> data = {
-        "comment": comment,
-      };
+      Map<String, dynamic> data = {};
       final response = await request(
         route: '/tasks/$apiaryId/$taskId',
         method: RequestMethods.patch,
@@ -100,8 +120,45 @@ class Tasks extends ChangeNotifier {
       var newTask = jsonDecode(response)["tasks"][tasksLength - 1];
       Task task = getById(apiaryId: apiaryId, taskId: taskId);
       task.status = newTask["status"];
-      task.comment = newTask["comment"];
-      filterPendingTasks(apiaryId: apiaryId);
+
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future addComment(
+      {required apiaryId, required taskId, required comment}) async {
+    try {
+      Map<String, dynamic> data = {"comment": comment};
+      final response = await request(
+        route: '/tasks/$apiaryId/$taskId',
+        method: RequestMethods.put,
+        data: data,
+      );
+      var updatedTask;
+      for (var task in jsonDecode(response)["tasks"]) {
+        if (task["_id"] == taskId) {
+          updatedTask = task;
+          break;
+        }
+      }
+
+      var commentsLength = updatedTask["comments"].length;
+
+      var newComment = updatedTask["comments"][commentsLength - 1];
+
+      Task task = getById(apiaryId: apiaryId, taskId: taskId);
+
+      var name = "You";
+
+      final addedComment = Comment(
+        id: newComment["_id"],
+        content: newComment["content"],
+        userName: name,
+        date: DateTime.parse(newComment["date"]),
+      );
+      task.comments.insert(0, addedComment);
       notifyListeners();
     } catch (error) {
       rethrow;
