@@ -73,40 +73,134 @@ class TaskExpansionTileOwner extends StatelessWidget {
   }
 }
 
-class ExpandedTileOwner extends StatelessWidget {
-  const ExpandedTileOwner({super.key, required this.task});
+class ExpandedTile extends StatefulWidget {
+  const ExpandedTile({super.key, required this.task});
   final Task task;
+
+  @override
+  State<ExpandedTile> createState() => _ExpandedTileState();
+}
+
+class _ExpandedTileState extends State<ExpandedTile> {
+  var comment = "";
+  final _controller = TextEditingController();
+
+  Future addComment({required taskId}) async {
+    String? assignedApiary =
+        Provider.of<Apiaries>(context, listen: false).apiary?.getId();
+    String apiaryId =
+        assignedApiary ?? ModalRoute.of(context)!.settings.arguments as String;
+    print("TaskId $taskId and apiaryId $apiaryId");
+    try {
+      await Provider.of<Tasks>(context, listen: false)
+          .addComment(apiaryId: apiaryId, taskId: taskId, comment: comment);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Add comment failed: ${error.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return task.status == "Pending"
-        ? Column(
-            spacing: 20,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text("Status: ${task.status}",
-              //     style: Theme.of(context).textTheme.labelMedium),
-              Text(
-                task.content,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ],
-          )
-        : Column(
-            spacing: 20,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Text("Status: ${task.status}",
-              //     style: Theme.of(context).textTheme.labelMedium),
-              Text(
-                task.content,
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-              Text(
-                "Comment: ${task.comment}",
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-            ],
-          );
+    return Column(
+      spacing: 20,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Text("Status: ${task.status}",
+        //     style: Theme.of(context).textTheme.labelMedium),
+        Text(
+          widget.task.content,
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
+        Divider(),
+        Column(
+          spacing: 10,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Comments",
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+            widget.task.status == "Pending"
+                ? TextField(
+                    controller: _controller,
+                    style: Theme.of(context).textTheme.labelSmall,
+                    decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 3, horizontal: 10),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: () async {
+                            if (_controller.text.isEmpty) {
+                            } else {
+                              await addComment(taskId: widget.task.id);
+                              _controller.clear();
+                            }
+                          },
+                        ),
+                        label: Text("Add a comment",
+                            style: Theme.of(context).textTheme.labelSmall),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: Colors.blueGrey,
+                              width: 1.0,
+                            ))),
+                    onChanged: (value) {
+                      setState(() {
+                        comment = value;
+                      });
+                    },
+                  )
+                : SizedBox.shrink(),
+            widget.task.comments.isEmpty
+                ? Text("No comments")
+                : Column(
+                    spacing: 10,
+                    children: widget.task.comments.map((comment) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 10,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                capitalize(comment.userName),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(fontSize: 12),
+                              ),
+                              Text(
+                                parseDateTime(dateTime: comment.date),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontSize: 11),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            comment.content,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(fontSize: 12),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+          ],
+        ),
+      ],
+    );
   }
 }
 
