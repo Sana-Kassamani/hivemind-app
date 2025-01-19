@@ -87,6 +87,13 @@ flutter:
     - assets/images/screen1.png
     - assets/images/screen2.png
     - assets/images/screen3.png
+    - assets/images/addApiary.png
+    - assets/images/addHive.png
+    - assets/images/addTask.png
+    - assets/images/bg.jpg
+    - assets/images/apiary.png
+    - assets/images/honey.png
+    - assets/images/honeycomb.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
