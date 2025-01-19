@@ -18,7 +18,7 @@ Widget imageBox(String imagePath, Color? color) {
   );
 }
 
-Widget iconBox(IconData icon, Color color) {
+Widget iconBox(IconData icon, Color? color) {
   return SizedBox(
       width: 24,
       height: 24,

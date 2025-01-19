@@ -5,7 +5,7 @@ import 'package:hivemind_app/utils/colors.dart';
 Widget HiveDetailsCard(
     {context, iconColor, circleColor, imagePath, title, content}) {
   return Card(
-    color: ColorManager.CARD_BG,
+    color: Theme.of(context).cardColor,
     child: Container(
       width: MediaQuery.of(context).size.width * 0.4,
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 13),
@@ -70,7 +70,7 @@ Widget diseasesCard({context, diseasesList}) {
 
 Widget DateCard(context, title, date) {
   return Card(
-    color: ColorManager.CARD_BG,
+    color: Theme.of(context).cardColor,
     child: Container(
       // width: (MediaQuery.of(context).size.width - 70) / 2,
       width: (MediaQuery.of(context).size.width * 0.86),
