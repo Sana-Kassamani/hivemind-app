@@ -43,7 +43,7 @@ class _AddHiveState extends State<AddHive> {
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
-      backgroundColor: ColorManager.SCAFFOLD_BG,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         "Add Hive",
       ),
