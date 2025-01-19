@@ -54,7 +54,7 @@ class _HivesListState extends State<HivesList> {
                   itemBuilder: (context, index) {
                     return userType == UserTypes.Owner
                         ? Slidable(
-                            startActionPane: ActionPane(
+                            endActionPane: ActionPane(
                               motion: StretchMotion(),
                               children: [
                                 Theme(

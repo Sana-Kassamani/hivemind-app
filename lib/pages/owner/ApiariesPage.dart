@@ -59,7 +59,7 @@ class _ApiariesPageState extends State<ApiariesPage> {
                     : ListView.builder(
                         itemCount: value.apiariesList.length,
                         itemBuilder: (context, index) => Slidable(
-                          startActionPane: ActionPane(
+                          endActionPane: ActionPane(
                             motion: StretchMotion(),
                             children: [
                               Theme(
