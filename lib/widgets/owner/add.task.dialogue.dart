@@ -50,6 +50,13 @@ class _AddTaskState extends State<AddTask> {
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          SizedBox(
+            width: 150,
+            child: Image.asset(
+              "assets/images/addTask.png",
+              fit: BoxFit.contain,
+            ),
+          ),
           Form(
             key: _globalKey,
             child: Column(
