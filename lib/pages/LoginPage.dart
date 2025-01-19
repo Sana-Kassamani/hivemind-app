@@ -17,12 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _borderStyle = OutlineInputBorder(
-    borderSide: BorderSide(
-      color: ColorManager.INPUT_COLOR,
-      width: 1,
-    ),
-  );
   final _globalKey = GlobalKey<FormState>();
   var errorMessage = "";
   var _username = "";
@@ -37,17 +31,20 @@ class _LoginPageState extends State<LoginPage> {
         await Provider.of<Beekeepers>(context, listen: false).load();
         await Provider.of<Apiaries>(context, listen: false).saveApiaries(
             context: context, apiaries: response["user"]["apiaries"]);
-        Navigator.pushReplacementNamed(
+
+        Navigator.pushNamedAndRemoveUntil(
           context,
           "/homeOwner",
+          (Route<dynamic> route) => false,
         );
       } else if (Provider.of<Auth>(context, listen: false).user.getUserType ==
           UserTypes.Beekeeper) {
         await Provider.of<Apiaries>(context, listen: false).saveApiary(
             context: context, apiary: response["user"]["assignedApiary"]);
-        Navigator.pushReplacementNamed(
+        Navigator.pushNamedAndRemoveUntil(
           context,
           "/homeBeekeeper",
+          (Route<dynamic> route) => false,
         );
       }
     } catch (error) {
@@ -67,6 +64,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _borderStyle = OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Theme.of(context).colorScheme.tertiaryFixed,
+        width: 1,
+      ),
+    );
     final inputTextStyle =
         Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14);
     return Scaffold(
@@ -151,8 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                               onPress: () async {
                                 if (_globalKey.currentState!.validate()) {
                                   _globalKey.currentState!.save();
+                                  await login(context);
                                 }
-                                await login(context);
                               }),
                           // errorMessage.isNotEmpty
                           //     ? Text(
