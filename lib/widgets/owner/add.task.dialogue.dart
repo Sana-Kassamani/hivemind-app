@@ -44,7 +44,7 @@ class _AddTaskState extends State<AddTask> {
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
-      backgroundColor: ColorManager.SCAFFOLD_BG,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text("Add Task"),
       content: Column(
         spacing: 10,
@@ -58,10 +58,11 @@ class _AddTaskState extends State<AddTask> {
                 TextFormField(
                   maxLength: 20,
                   decoration: InputDecoration(
+                      helperStyle: inputTextStyle,
                       label: Text(
-                    "Task Title",
-                    style: inputTextStyle,
-                  )),
+                        "Task Title",
+                        style: inputTextStyle,
+                      )),
                   style: inputTextStyle,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
