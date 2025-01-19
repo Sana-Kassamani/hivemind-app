@@ -36,7 +36,10 @@ class _HivePageOwnerState extends State<HivePageOwner> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },

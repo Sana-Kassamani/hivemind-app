@@ -12,7 +12,7 @@ class OnBoardingScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.WEATHER_BG,
+      backgroundColor: Theme.of(context).colorScheme.primaryFixed,
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -38,7 +38,10 @@ class _HivePageBeekeeperState extends State<HivePageBeekeeper> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
