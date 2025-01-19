@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
+import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
@@ -132,135 +133,151 @@ class _AddApiaryState extends State<AddApiary> {
       title: Text(
         "Add Apiary",
       ),
-      content: SizedBox(
-        height: 300,
-        child: Form(
-          key: _globalKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(
-                  label: Text(
-                    "Apiary Label",
-                    style: inputTextStyle,
-                  ),
-                ),
-                style: inputTextStyle,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Label field cannot be empty";
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  setState(() {
-                    apiaryLabel = value!;
-                  });
-                },
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 150,
+              child: Image.asset(
+                "assets/images/addApiary.png",
+                fit: BoxFit.contain,
               ),
-              Consumer<Beekeepers>(builder:
-                  (BuildContext context, Beekeepers value, Widget? child) {
-                return DropdownButtonFormField(
-                  dropdownColor: Theme.of(context).cardColor,
-                  decoration: InputDecoration(
-                      label: Text(
-                    "Beekeeper Name",
-                    style: inputTextStyle,
-                  )),
-                  style: inputTextStyle,
-                  validator: (value) {
-                    if (value == null) {
-                      return "Choose a beekeeper";
-                    }
-                    return null;
-                  },
-                  items: value.beekeepersList.map((b) {
-                    bool free = b.assignedApiaryId == null ? true : false;
-                    return DropdownMenuItem(
-                      enabled: free,
-                      value: b.getId,
-                      child: Text(
-                        b.getUsername,
-                        style: free
-                            ? inputTextStyle.copyWith(
-                                color: Theme.of(context).colorScheme.tertiary)
-                            : inputTextStyle.copyWith(color: Colors.grey),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    print(value);
-                  },
-                  onSaved: (value) {
-                    setState(() {
-                      beekeeperId = value!;
-                    });
-                  },
-                );
-              }),
-              // Autocomplete(
-              //   optionsBuilder: (TextEditingValue textEditingValue) {},
-              // ),
-              Theme(
-                data: Theme.of(context).copyWith(
-                    textTheme: TextTheme(
-                        bodyMedium:
-                            TextStyle(color: Colors.black, fontSize: 11))),
-                child: Autocomplete<String>(
-                    optionsBuilder: (TextEditingValue textEditingValue) async {
-                  if (_sessionToken == "") {
-                    setState(() {
-                      _sessionToken = uuid.v4();
-                    });
-                  }
-
-                  await getSuggestion(textEditingValue.text);
-
-                  if (_placeList.isEmpty) {
-                    return const Iterable<String>.empty();
-                  }
-                  return Iterable.generate(
-                      _placeList.length, (p) => _placeList[p]["description"]);
-                }, onSelected: (String selection) {
-                  debugPrint('You just selected $selection');
-                  setState(() {
-                    placeId = getIndex(selection);
-                    location.location = selection;
-                    _sessionToken = "";
-                  });
-                  print(placeId);
-                }, fieldViewBuilder: (context, textEditingController, focusNode,
-                        onFieldSubmitted) {
-                  return TextFormField(
-                    style: inputTextStyle,
-                    controller: textEditingController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Location field cannot be empty";
-                      }
-                      return null;
-                    },
-                    focusNode: focusNode,
-                    decoration: InputDecoration(
-                      label: Text(
-                        "Search location",
-                        style: inputTextStyle,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.cancel,
-                          color: Theme.of(context).colorScheme.tertiary,
+            ),
+            SizedBox(
+              height: 300,
+              child: Form(
+                key: _globalKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        label: Text(
+                          "Apiary Label",
+                          style: inputTextStyle,
                         ),
-                        onPressed: () {
-                          textEditingController.clear();
-                        },
                       ),
+                      style: inputTextStyle,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Label field cannot be empty";
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        setState(() {
+                          apiaryLabel = value!;
+                        });
+                      },
                     ),
-                  );
-                }),
-              )
-            ],
-          ),
+                    Consumer<Beekeepers>(builder: (BuildContext context,
+                        Beekeepers value, Widget? child) {
+                      return DropdownButtonFormField(
+                        dropdownColor: Theme.of(context).cardColor,
+                        decoration: InputDecoration(
+                            label: Text(
+                          "Beekeeper Name",
+                          style: inputTextStyle,
+                        )),
+                        style: inputTextStyle,
+                        validator: (value) {
+                          if (value == null) {
+                            return "Choose a beekeeper";
+                          }
+                          return null;
+                        },
+                        items: value.beekeepersList.map((b) {
+                          bool free = b.assignedApiaryId == null ? true : false;
+                          return DropdownMenuItem(
+                            enabled: free,
+                            value: b.getId,
+                            child: Text(
+                              b.getUsername,
+                              style: free
+                                  ? inputTextStyle.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary)
+                                  : inputTextStyle.copyWith(color: Colors.grey),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          print(value);
+                        },
+                        onSaved: (value) {
+                          setState(() {
+                            beekeeperId = value!;
+                          });
+                        },
+                      );
+                    }),
+                    // Autocomplete(
+                    //   optionsBuilder: (TextEditingValue textEditingValue) {},
+                    // ),
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                          textTheme: TextTheme(
+                              bodyMedium: TextStyle(
+                                  color: Colors.black, fontSize: 11))),
+                      child: Autocomplete<String>(optionsBuilder:
+                          (TextEditingValue textEditingValue) async {
+                        if (_sessionToken == "") {
+                          setState(() {
+                            _sessionToken = uuid.v4();
+                          });
+                        }
+
+                        await getSuggestion(textEditingValue.text);
+
+                        if (_placeList.isEmpty) {
+                          return const Iterable<String>.empty();
+                        }
+                        return Iterable.generate(_placeList.length,
+                            (p) => _placeList[p]["description"]);
+                      }, onSelected: (String selection) {
+                        debugPrint('You just selected $selection');
+                        setState(() {
+                          placeId = getIndex(selection);
+                          location.location = selection;
+                          _sessionToken = "";
+                        });
+                        print(placeId);
+                      }, fieldViewBuilder: (context, textEditingController,
+                          focusNode, onFieldSubmitted) {
+                        return TextFormField(
+                          style: inputTextStyle,
+                          controller: textEditingController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Location field cannot be empty";
+                            }
+                            return null;
+                          },
+                          focusNode: focusNode,
+                          decoration: InputDecoration(
+                            label: Text(
+                              "Search location",
+                              style: inputTextStyle,
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.cancel,
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                              onPressed: () {
+                                textEditingController.clear();
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       buttonPadding: EdgeInsets.all(20),
