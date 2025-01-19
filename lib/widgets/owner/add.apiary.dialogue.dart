@@ -128,7 +128,7 @@ class _AddApiaryState extends State<AddApiary> {
       actionsAlignment: MainAxisAlignment.center,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
-      backgroundColor: ColorManager.SCAFFOLD_BG,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         "Add Apiary",
       ),
@@ -161,6 +161,7 @@ class _AddApiaryState extends State<AddApiary> {
               Consumer<Beekeepers>(builder:
                   (BuildContext context, Beekeepers value, Widget? child) {
                 return DropdownButtonFormField(
+                  dropdownColor: Theme.of(context).cardColor,
                   decoration: InputDecoration(
                       label: Text(
                     "Beekeeper Name",
@@ -181,7 +182,8 @@ class _AddApiaryState extends State<AddApiary> {
                       child: Text(
                         b.getUsername,
                         style: free
-                            ? inputTextStyle.copyWith(color: Colors.black)
+                            ? inputTextStyle.copyWith(
+                                color: Theme.of(context).colorScheme.tertiary)
                             : inputTextStyle.copyWith(color: Colors.grey),
                       ),
                     );
@@ -199,55 +201,64 @@ class _AddApiaryState extends State<AddApiary> {
               // Autocomplete(
               //   optionsBuilder: (TextEditingValue textEditingValue) {},
               // ),
-              Autocomplete<String>(
-                  optionsBuilder: (TextEditingValue textEditingValue) async {
-                if (_sessionToken == "") {
+              Theme(
+                data: Theme.of(context).copyWith(
+                    textTheme: TextTheme(
+                        bodyMedium:
+                            TextStyle(color: Colors.black, fontSize: 11))),
+                child: Autocomplete<String>(
+                    optionsBuilder: (TextEditingValue textEditingValue) async {
+                  if (_sessionToken == "") {
+                    setState(() {
+                      _sessionToken = uuid.v4();
+                    });
+                  }
+
+                  await getSuggestion(textEditingValue.text);
+
+                  if (_placeList.isEmpty) {
+                    return const Iterable<String>.empty();
+                  }
+                  return Iterable.generate(
+                      _placeList.length, (p) => _placeList[p]["description"]);
+                }, onSelected: (String selection) {
+                  debugPrint('You just selected $selection');
                   setState(() {
-                    _sessionToken = uuid.v4();
+                    placeId = getIndex(selection);
+                    location.location = selection;
+                    _sessionToken = "";
                   });
-                }
-
-                await getSuggestion(textEditingValue.text);
-
-                if (_placeList.isEmpty) {
-                  return const Iterable<String>.empty();
-                }
-                return Iterable.generate(
-                    _placeList.length, (p) => _placeList[p]["description"]);
-              }, onSelected: (String selection) {
-                debugPrint('You just selected $selection');
-                setState(() {
-                  placeId = getIndex(selection);
-                  location.location = selection;
-                  _sessionToken = "";
-                });
-                print(placeId);
-              }, fieldViewBuilder: (context, textEditingController, focusNode,
-                      onFieldSubmitted) {
-                return TextFormField(
-                  style: inputTextStyle,
-                  controller: textEditingController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Location field cannot be empty";
-                    }
-                    return null;
-                  },
-                  focusNode: focusNode,
-                  decoration: InputDecoration(
-                    label: Text(
-                      "Search location",
-                      style: inputTextStyle,
+                  print(placeId);
+                }, fieldViewBuilder: (context, textEditingController, focusNode,
+                        onFieldSubmitted) {
+                  return TextFormField(
+                    style: inputTextStyle,
+                    controller: textEditingController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Location field cannot be empty";
+                      }
+                      return null;
+                    },
+                    focusNode: focusNode,
+                    decoration: InputDecoration(
+                      label: Text(
+                        "Search location",
+                        style: inputTextStyle,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
+                        onPressed: () {
+                          textEditingController.clear();
+                        },
+                      ),
                     ),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.cancel),
-                      onPressed: () {
-                        textEditingController.clear();
-                      },
-                    ),
-                  ),
-                );
-              })
+                  );
+                }),
+              )
             ],
           ),
         ),
