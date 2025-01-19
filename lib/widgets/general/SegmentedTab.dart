@@ -13,8 +13,10 @@ class SegmentedTab extends StatelessWidget {
   final onValueChanged;
   @override
   Widget build(BuildContext context) {
-    final style =
-        Theme.of(context).textTheme.labelMedium!.copyWith(color: Colors.amber);
+    final style = Theme.of(context)
+        .textTheme
+        .labelMedium!
+        .copyWith(color: Theme.of(context).tabBarTheme.labelColor);
     final double width = (tabs.isNotEmpty
         ? (MediaQuery.of(context).size.width * 0.5) / tabs.length
         : 0);
@@ -26,8 +28,8 @@ class SegmentedTab extends StatelessWidget {
           for (int i = 0; i < tabs.length; i++)
             i: buildSegment(style, tabs[i], width),
         },
-        backgroundColor: Colors.white,
-        thumbColor: ColorManager.ICON_BG,
+        backgroundColor: Theme.of(context).cardColor,
+        thumbColor: Theme.of(context).colorScheme.primaryFixed,
         onValueChanged: onValueChanged,
         proportionalWidth: true,
       ),
