@@ -51,6 +51,13 @@ class _AddHiveState extends State<AddHive> {
         spacing: 10,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          SizedBox(
+            width: 150,
+            child: Image.asset(
+              "assets/images/addHive.png",
+              fit: BoxFit.contain,
+            ),
+          ),
           Form(
             key: _globalKey,
             child: Column(
