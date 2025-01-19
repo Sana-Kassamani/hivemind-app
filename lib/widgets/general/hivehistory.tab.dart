@@ -2,13 +2,12 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
+import 'package:hivemind_app/utils/enums/ChartType.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
 import 'package:hivemind_app/widgets/general/charts.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
 import 'package:hivemind_app/widgets/general/lineChart.dart';
 import 'package:provider/provider.dart';
-
-enum ChartType { temperature, humidity, mass }
 
 class HistoryTab extends StatefulWidget {
   const HistoryTab({super.key});
@@ -41,55 +40,71 @@ class _HistoryTabState extends State<HistoryTab> {
                 Column(
                   spacing: 24,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Radio(
-                              toggleable: true,
-                              value: ChartType.temperature,
-                              groupValue: selectedType,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedType = value!;
-                                });
-                              },
-                            ),
-                            Text("Temperature"),
-                          ],
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        radioTheme: RadioThemeData(
+                          fillColor: WidgetStateProperty.resolveWith((states) {
+                            // active
+                            if (states.contains(WidgetState.selected)) {
+                              return Theme.of(context).colorScheme.primary;
+                            }
+                            // inactive
+                            return Theme.of(context).colorScheme.tertiary;
+                          }),
                         ),
-                        Row(
-                          children: [
-                            Radio(
-                              toggleable: true,
-                              value: ChartType.humidity,
-                              groupValue: selectedType,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedType = value!;
-                                });
-                              },
-                            ),
-                            Text("Humidity"),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Radio(
-                              toggleable: true,
-                              value: ChartType.mass,
-                              groupValue: selectedType,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedType = value!;
-                                });
-                              },
-                            ),
-                            Text("Mass"),
-                          ],
-                        )
-                      ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Radio(
+                                overlayColor: WidgetStatePropertyAll(
+                                    Theme.of(context).colorScheme.tertiary),
+                                toggleable: true,
+                                value: ChartType.temperature,
+                                groupValue: selectedType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedType = value!;
+                                  });
+                                },
+                              ),
+                              Text("Temperature"),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                toggleable: true,
+                                value: ChartType.humidity,
+                                groupValue: selectedType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedType = value!;
+                                  });
+                                },
+                              ),
+                              Text("Humidity"),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Radio(
+                                toggleable: true,
+                                value: ChartType.mass,
+                                groupValue: selectedType,
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedType = value!;
+                                  });
+                                },
+                              ),
+                              Text("Mass"),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     if (selectedType == ChartType.temperature)
                       Column(
@@ -99,13 +114,12 @@ class _HistoryTabState extends State<HistoryTab> {
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           addVerticalSpace(10),
-                          LineChartSample12(hiveId: hiveId)
-                          // DetailLineChart(
-                          //   hiveId: hiveId,
-                          //   label: "Temperature (°C)",
-                          //   chartType: ChartType.temperature,
-                          //   yRange: [10.0, 50.0],
-                          // ),
+                          CustomLineChart(
+                            hiveId: hiveId,
+                            chartType: ChartType.temperature,
+                            yRange: [10.0, 50.0],
+                            unit: "°C",
+                          )
                         ],
                       )
                     else if (selectedType == ChartType.humidity)
@@ -116,12 +130,12 @@ class _HistoryTabState extends State<HistoryTab> {
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           addVerticalSpace(20),
-                          DetailLineChart(
+                          CustomLineChart(
                             hiveId: hiveId,
-                            label: "Humidity (%)",
                             chartType: ChartType.humidity,
                             yRange: [0.0, 90.0],
-                          ),
+                            unit: "%",
+                          )
                         ],
                       )
                     else if (selectedType == ChartType.mass)
@@ -132,12 +146,12 @@ class _HistoryTabState extends State<HistoryTab> {
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           addVerticalSpace(20),
-                          DetailLineChart(
+                          CustomLineChart(
                             hiveId: hiveId,
-                            label: "Mass (kg)",
                             chartType: ChartType.mass,
-                            yRange: [0.0, 90.0],
-                          )
+                            yRange: [-5.0, 90.0],
+                            unit: "kg",
+                          ),
                         ],
                       ),
                   ],
