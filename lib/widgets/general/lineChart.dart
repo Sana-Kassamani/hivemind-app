@@ -1,42 +1,36 @@
 import 'dart:convert';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:hivemind_app/utils/enums/ChartType.dart';
 import 'package:provider/provider.dart';
 
-class LineChartSample12 extends StatefulWidget {
-  const LineChartSample12({super.key, required this.hiveId});
-
+class CustomLineChart extends StatefulWidget {
+  const CustomLineChart(
+      {super.key,
+      required this.hiveId,
+      required this.chartType,
+      required this.yRange,
+      this.unit});
+  final chartType;
   final hiveId;
-
+  final yRange;
+  final unit;
   @override
-  State<LineChartSample12> createState() => _LineChartSample12State();
+  State<CustomLineChart> createState() => _CustomLineChartState();
 }
 
-class _LineChartSample12State extends State<LineChartSample12> {
-  List<(DateTime, double)>? _bitcoinPriceHistory;
+class _CustomLineChartState extends State<CustomLineChart> {
+  List<(DateTime, double)>? _details;
   late TransformationController _transformationController;
-  bool _isPanEnabled = true;
-  bool _isScaleEnabled = true;
 
   @override
   void initState() {
     _transformationController = TransformationController();
     super.initState();
   }
-
-  // void _reloadData() {
-  //   setState(() {
-  //     Map<String, List<IotDetail>> detailsMap =
-  //         Provider.of<IotDetails>(context).iotDetails;
-  //     _bitcoinPriceHistory = detailsMap[widget.hiveId]!.map((detail) {
-  //       return (detail.dateTime, detail.temperature);
-  //     }).toList();
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +39,9 @@ class _LineChartSample12State extends State<LineChartSample12> {
       LayoutBuilder(builder: (context, constraints) {
         return Consumer<IotDetails>(builder:
             (BuildContext context, IotDetails detailsValue, Widget? child) {
-          _bitcoinPriceHistory = detailsValue.iotDetails[widget.hiveId]!
-              .map((detail) {
-                return (detail.dateTime, detail.temperature);
-              })
-              .toList()
-              .reversed
-              .toList();
+          _details = fill(
+              details: detailsValue.iotDetails[widget.hiveId],
+              type: widget.chartType);
 
           return AspectRatio(
             aspectRatio: 1,
@@ -65,14 +55,14 @@ class _LineChartSample12State extends State<LineChartSample12> {
                   scaleAxis: FlScaleAxis.horizontal,
                   minScale: 2.0,
                   maxScale: 25.0,
-                  panEnabled: _isPanEnabled,
-                  scaleEnabled: _isScaleEnabled,
+                  panEnabled: true,
+                  scaleEnabled: true,
                   transformationController: _transformationController,
                 ),
                 LineChartData(
                   lineBarsData: [
                     LineChartBarData(
-                      spots: _bitcoinPriceHistory?.asMap().entries.map((e) {
+                      spots: _details?.asMap().entries.map((e) {
                             final index = e.key;
                             final item = e.value;
                             final value = item.$2;
@@ -100,8 +90,13 @@ class _LineChartSample12State extends State<LineChartSample12> {
                       ),
                     ),
                   ],
-                  minY: 10,
-                  maxY: 45,
+                  minY: widget.yRange[0],
+                  maxY: widget.yRange[1],
+                  borderData: FlBorderData(
+                    show: true,
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.tertiary),
+                  ),
                   lineTouchData: LineTouchData(
                     touchSpotThreshold: 5,
                     getTouchLineStart: (_, __) => -double.infinity,
@@ -132,12 +127,11 @@ class _LineChartSample12State extends State<LineChartSample12> {
                     touchTooltipData: LineTouchTooltipData(
                       getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                         return touchedBarSpots.map((barSpot) {
-                          final date =
-                              _bitcoinPriceHistory![barSpot.x.toInt()].$1;
+                          final date = _details![barSpot.x.toInt()].$1;
                           return LineTooltipItem(
                             '',
-                            const TextStyle(
-                              color: Colors.black,
+                            TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
                               fontWeight: FontWeight.bold,
                             ),
                             children: [
@@ -151,7 +145,7 @@ class _LineChartSample12State extends State<LineChartSample12> {
                                 ),
                               ),
                               TextSpan(
-                                text: '\n${barSpot.y} °C',
+                                text: '\n${barSpot.y} ${widget.unit}',
                                 style: const TextStyle(
                                   color: Color.fromARGB(255, 209, 190, 24),
                                   fontWeight: FontWeight.bold,
@@ -190,7 +184,7 @@ class _LineChartSample12State extends State<LineChartSample12> {
                         minIncluded: true,
                         maxIncluded: false,
                         getTitlesWidget: (double value, TitleMeta meta) {
-                          final date = _bitcoinPriceHistory![value.toInt()].$1;
+                          final date = _details![value.toInt()].$1;
                           return SideTitleWidget(
                             space: 29,
                             meta: meta,
@@ -198,8 +192,8 @@ class _LineChartSample12State extends State<LineChartSample12> {
                               angle: -45 * 3.14 / 180,
                               child: Text(
                                 '${date.month}/${date.day} \t ${date.hour}:${date.minute}',
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.tertiary,
                                   fontSize: 10,
                                   fontWeight: FontWeight.normal,
                                 ),
@@ -227,140 +221,89 @@ class _LineChartSample12State extends State<LineChartSample12> {
   }
 }
 
-// class _ChartTitle extends StatelessWidget {
-//   const _ChartTitle();
+List<(DateTime, double)>? fillTemperature({required details}) {
+  List<(DateTime, double)>? tempList = [];
+  // .map((detail) {
+  //   return (detail.dateTime, detail.temperature);
+  // })
+  // .toList()
+  // .reversed
+  // .toList();
+  for (int i = details.length - 1; i >= 0; i--) {
+    tempList.add((details[i].dateTime, details[i].temperature));
+  }
+  return tempList;
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         SizedBox(height: 14),
-//         Text(
-//           'Bitcoin Price History',
-//           style: TextStyle(
-//             color: Colors.yellow,
-//             fontWeight: FontWeight.bold,
-//             fontSize: 18,
-//           ),
-//         ),
-//         Text(
-//           '2023/12/19 - 2024/12/17',
-//           style: TextStyle(
-//             color: Colors.green,
-//             fontWeight: FontWeight.bold,
-//             fontSize: 14,
-//           ),
-//         ),
-//         SizedBox(height: 14),
-//       ],
-//     );
-//   }
-// }
+List<(DateTime, double)>? fillHumidity({required details}) {
+  List<(DateTime, double)>? humidList = [];
+  // .map((detail) {
+  //   return (detail.dateTime, detail.humidity);
+  // })
+  // .toList()
+  // .reversed
+  // .toList();
+  for (int i = details.length - 1; i >= 0; i--) {
+    humidList.add((details[i].dateTime, details[i].humidity));
+  }
 
-// class _TransformationButtons extends StatelessWidget {
-//   const _TransformationButtons({
-//     required this.controller,
-//   });
+  return humidList;
+}
 
-//   final TransformationController controller;
+List<(DateTime, double)>? fillMass({required details}) {
+  List<(DateTime, double)>? massList = [];
+  // .map((detail) {
+  //   return (detail.dateTime, detail.mass);
+  // })
+  // .toList()
+  // .reversed
+  // .toList();
+  for (int i = details.length - 1; i >= 0; i--) {
+    massList.add((details[i].dateTime, details[i].mass));
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Tooltip(
-//           message: 'Zoom in',
-//           child: IconButton(
-//             icon: const Icon(
-//               Icons.add,
-//               size: 16,
-//             ),
-//             onPressed: _transformationZoomIn,
-//           ),
-//         ),
-//         Row(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             Tooltip(
-//               message: 'Move left',
-//               child: IconButton(
-//                 icon: const Icon(
-//                   Icons.arrow_back_ios,
-//                   size: 16,
-//                 ),
-//                 onPressed: _transformationMoveLeft,
-//               ),
-//             ),
-//             Tooltip(
-//               message: 'Reset zoom',
-//               child: IconButton(
-//                 icon: const Icon(
-//                   Icons.refresh,
-//                   size: 16,
-//                 ),
-//                 onPressed: _transformationReset,
-//               ),
-//             ),
-//             Tooltip(
-//               message: 'Move right',
-//               child: IconButton(
-//                 icon: const Icon(
-//                   Icons.arrow_forward_ios,
-//                   size: 16,
-//                 ),
-//                 onPressed: _transformationMoveRight,
-//               ),
-//             ),
-//           ],
-//         ),
-//         Tooltip(
-//           message: 'Zoom out',
-//           child: IconButton(
-//             icon: const Icon(
-//               Icons.minimize,
-//               size: 16,
-//             ),
-//             onPressed: _transformationZoomOut,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
+  return massList;
+}
 
-//   void _transformationReset() {
-//     controller.value = Matrix4.identity();
-//   }
+List<(DateTime, double)>? fill({required type, required details}) {
+  if (type == ChartType.temperature) {
+    return fillTemperature(details: details);
+  } else if (type == ChartType.humidity) {
+    return fillHumidity(details: details);
+  } else if (type == ChartType.mass) {
+    return fillMass(details: details);
+  } else {
+    return [];
+  }
+}
 
-//   void _transformationZoomIn() {
-//     controller.value *= Matrix4.diagonal3Values(
-//       1.1,
-//       1.1,
-//       1,
-//     );
-//   }
+List<FlSpot> temperatureSpots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].temperature));
+    j++;
+  }
+  return list;
+}
 
-//   void _transformationMoveLeft() {
-//     controller.value *= Matrix4.translationValues(
-//       20,
-//       0,
-//       0,
-//     );
-//   }
+List<FlSpot> humiditySpots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].humidity));
+    j++;
+  }
 
-//   void _transformationMoveRight() {
-//     controller.value *= Matrix4.translationValues(
-//       -20,
-//       0,
-//       0,
-//     );
-//   }
+  return list;
+}
 
-//   void _transformationZoomOut() {
-//     controller.value *= Matrix4.diagonal3Values(
-//       0.9,
-//       0.9,
-//       1,
-//     );
-//   }
-// }
+List<FlSpot> massSpots({required details, required hiveId}) {
+  List<FlSpot> list = [];
+  int j = 0;
+  for (int i = details.length - 1; i >= 0; i--) {
+    list.add(FlSpot(j.toDouble(), details[i].mass));
+    j++;
+  }
+  return list;
+}
