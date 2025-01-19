@@ -36,4 +36,11 @@ class ColorManager {
   static final FRAME_BG = ColorManager.convertColor(hexString: "EECCC4");
   static final DISEASES_COLOR = ColorManager.convertColor(hexString: "000000");
   static final DISEASES_BG = ColorManager.convertColor(hexString: "B3B3B3");
+  static final Dark_Scaffold = ColorManager.convertColor(hexString: "412F2B");
+  static final Dark_Card = ColorManager.convertColor(hexString: "713E35");
+  static final Dark_AppBarText = ColorManager.convertColor(hexString: "D3D9DC");
+  static final Dark_MainText = ColorManager.convertColor(hexString: "FFFFFF");
+  static final Dark_SecText = ColorManager.convertColor(hexString: "D9D9D9");
+  static final Dark_ICONBG = ColorManager.convertColor(hexString: "412F2B");
+  static final Dark_Icon = ColorManager.convertColor(hexString: "FFFFFF");
 }
