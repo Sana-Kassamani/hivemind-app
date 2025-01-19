@@ -23,6 +23,7 @@ import 'package:hivemind_app/providers/beekeepers.provider.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
+import 'package:hivemind_app/providers/theme.provider.dart';
 import 'package:hivemind_app/utils/notifications/firebase.api.dart';
 import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
@@ -57,29 +58,33 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (context) => IotDetails()),
         ChangeNotifierProvider(create: (context) => Tasks()),
         ChangeNotifierProvider(create: (context) => Alerts()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        title: 'My app', // used by the OS task switcher
-        // home: LoginPage(),
-        theme: theme.lightTheme,
-        navigatorKey: navigatorKey,
-        routes: {
-          "/": (context) => OnBoardingScreens(),
-          "/login": (context) => LoginPage(),
-          "/signup": (context) => SignupPage(),
-          "/homeOwner": (context) => MainScreenOwner(),
-          "/homeBeekeeper": (context) => MainScreenBeekeeper(),
-          "/apiary": (context) => ApiaryPageOwner(),
-          "/hiveOwner": (context) => HivePageOwner(),
-          "/hiveBeekeeper": (context) => HivePageBeekeeper(),
-          "/alertsOwner": (context) => MainScreenOwner(
-                index: 2,
-              ),
-          "/alertsBeekeeper": (context) => MainScreenBeekeeper(
-                index: 2,
-              ),
-        },
-      ),
+      child: Consumer<ThemeProvider>(
+          builder: (BuildContext context, ThemeProvider value, Widget? child) {
+        return MaterialApp(
+          title: 'My app', // used by the OS task switcher
+          // home: LoginPage(),
+          theme: Provider.of<ThemeProvider>(context).themeData,
+          navigatorKey: navigatorKey,
+          routes: {
+            "/": (context) => OnBoardingScreens(),
+            "/login": (context) => LoginPage(),
+            "/signup": (context) => SignupPage(),
+            "/homeOwner": (context) => MainScreenOwner(),
+            "/homeBeekeeper": (context) => MainScreenBeekeeper(),
+            "/apiary": (context) => ApiaryPageOwner(),
+            "/hiveOwner": (context) => HivePageOwner(),
+            "/hiveBeekeeper": (context) => HivePageBeekeeper(),
+            "/alertsOwner": (context) => MainScreenOwner(
+                  index: 2,
+                ),
+            "/alertsBeekeeper": (context) => MainScreenBeekeeper(
+                  index: 2,
+                ),
+          },
+        );
+      }),
     );
   }
 }
