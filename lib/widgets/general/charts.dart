@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/utils/colors.dart';
+import 'package:hivemind_app/utils/enums/ChartType.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
-import 'package:hivemind_app/widgets/general/hivehistory.tab.dart';
 import 'package:provider/provider.dart';
 
 class DetailLineChart extends StatelessWidget {

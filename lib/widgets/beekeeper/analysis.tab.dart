@@ -14,6 +14,7 @@ class AnalysisTab extends StatefulWidget {
 class _AnalysisTabState extends State<AnalysisTab> {
   File? _selectedImage;
   String? result;
+  bool isLoading = false;
 
   Future _pickImageFromGallery() async {
     final returnedImage =
@@ -26,12 +27,16 @@ class _AnalysisTabState extends State<AnalysisTab> {
           'POST', Uri.parse("http://192.168.0.100:5000/upload"));
       request.files
           .add(await http.MultipartFile.fromPath('image', returnedImage!.path));
-
+      setState(() {
+        isLoading = true;
+        result = null;
+      });
       var response = await request.send();
       var responseBody = await response.stream.bytesToString();
       if (response.statusCode == 200) {
         print("Image uploaded successfully!");
         setState(() {
+          isLoading = false;
           result = responseBody;
         });
       } else {
@@ -71,11 +76,23 @@ class _AnalysisTabState extends State<AnalysisTab> {
                     ),
                   )
                 : Text("Please select an image."),
+            isLoading ? CircularProgressIndicator() : SizedBox.shrink(),
             result != null
                 ? Card(
+                    color: Theme.of(context).cardColor,
                     child: Padding(
                       padding: EdgeInsets.all(20),
-                      child: Text(result!),
+                      child: Row(
+                        spacing: 10,
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.smart_toy_outlined),
+                          Text("AI Response: ${result!.trim()}",
+                              style: Theme.of(context).textTheme.labelMedium),
+                        ],
+                      ),
                     ),
                   )
                 : SizedBox.shrink()
