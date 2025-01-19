@@ -13,8 +13,8 @@ class NavbarOwner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
-      backgroundColor: ColorManager.CARD_BG,
-      indicatorColor: ColorManager.ICON_BG,
+      backgroundColor: Theme.of(context).cardColor,
+      indicatorColor: Theme.of(context).colorScheme.primaryFixed,
       destinations: [
         NavigationDestination(
           icon: Icon(Icons.hive_outlined),
@@ -55,8 +55,7 @@ class NavbarBeekeeper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
-        backgroundColor: ColorManager.CARD_BG,
-        indicatorColor: ColorManager.ICON_BG,
+        backgroundColor: Theme.of(context).navigationBarTheme.backgroundColor,
         destinations: [
           NavigationDestination(
             icon: Icon(Icons.hive_outlined),
