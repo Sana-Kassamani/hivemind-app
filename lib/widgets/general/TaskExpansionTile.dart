@@ -134,7 +134,10 @@ class _ExpandedTileState extends State<ExpandedTile> {
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                         suffixIcon: IconButton(
-                          icon: Icon(Icons.send),
+                          icon: Icon(
+                            Icons.send,
+                            color: Theme.of(context).colorScheme.tertiaryFixed,
+                          ),
                           onPressed: () async {
                             if (_controller.text.isEmpty) {
                             } else {
@@ -148,7 +151,8 @@ class _ExpandedTileState extends State<ExpandedTile> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             borderSide: BorderSide(
-                              color: Colors.blueGrey,
+                              color:
+                                  Theme.of(context).colorScheme.tertiaryFixed,
                               width: 1.0,
                             ))),
                     onChanged: (value) {
@@ -161,7 +165,7 @@ class _ExpandedTileState extends State<ExpandedTile> {
             widget.task.comments.isEmpty
                 ? Text("No comments")
                 : Column(
-                    spacing: 10,
+                    spacing: 25,
                     children: widget.task.comments.map((comment) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,7 +186,9 @@ class _ExpandedTileState extends State<ExpandedTile> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
-                                    .copyWith(fontSize: 11),
+                                    .copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
@@ -191,7 +197,8 @@ class _ExpandedTileState extends State<ExpandedTile> {
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
-                                .copyWith(fontSize: 12),
+                                .copyWith(
+                                    fontSize: 12, fontWeight: FontWeight.w400),
                           ),
                         ],
                       );
