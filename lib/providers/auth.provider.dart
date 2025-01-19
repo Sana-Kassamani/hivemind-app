@@ -7,23 +7,30 @@ import 'package:hivemind_app/providers/beekeepers.provider.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
+import 'package:hivemind_app/providers/theme.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/utils/notifications/firebase.api.dart';
 import 'package:hivemind_app/utils/request.dart';
+import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends ChangeNotifier {
   late User user;
 
-  Future setDarkMode({required value}) async {
+  Future setDarkMode({required value, context}) async {
     int intValue = value ? 1 : 0;
     final response = await request(
       route: "/user-settings/darkmode/$intValue",
       method: RequestMethods.get,
     );
     user.getSettings.darkmode = value;
+    if (value) {
+      Provider.of<ThemeProvider>(context, listen: false).setDark();
+    } else {
+      Provider.of<ThemeProvider>(context, listen: false).setLight();
+    }
     notifyListeners();
   }
 
@@ -53,6 +60,11 @@ class Auth extends ChangeNotifier {
       darkmode: loggedUser["settings"]["darkMode"],
       alertsOn: loggedUser["settings"]["allowNotifications"],
     );
+    if (settings.darkmode) {
+      Provider.of<ThemeProvider>(context, listen: false).setDark();
+    } else {
+      Provider.of<ThemeProvider>(context, listen: false).setLight();
+    }
 
     await Provider.of<Alerts>(context, listen: false)
         .setAllowAlerts(settings.alertsOn);
