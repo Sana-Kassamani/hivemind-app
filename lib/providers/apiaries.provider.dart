@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class Apiaries extends ChangeNotifier {
   List<Apiary> _apiaries = [];
-  late Apiary? _apiary;
+  Apiary? _apiary;
 
   List<Apiary> get apiariesList => _apiaries;
   Apiary? get apiary => _apiary;
@@ -76,8 +76,8 @@ class Apiaries extends ChangeNotifier {
         var apiary = apiaries[i];
         Provider.of<Hives>(context, listen: false).save(
             context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
-        Provider.of<Tasks>(context, listen: false)
-            .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
+        Provider.of<Tasks>(context, listen: false).save(
+            apiaryId: apiary["_id"], tasks: apiary["tasks"], context: context);
         String username = Provider.of<Beekeepers>(context, listen: false)
             .findByAssignedApiary(id: apiary["_id"]);
 
@@ -106,8 +106,8 @@ class Apiaries extends ChangeNotifier {
       if (apiary != null) {
         Provider.of<Hives>(context, listen: false).save(
             context: context, apiaryId: apiary["_id"], hives: apiary["hives"]);
-        Provider.of<Tasks>(context, listen: false)
-            .save(apiaryId: apiary["_id"], tasks: apiary["tasks"]);
+        Provider.of<Tasks>(context, listen: false).save(
+            apiaryId: apiary["_id"], tasks: apiary["tasks"], context: context);
 
         final newApiary = Apiary(
           id: apiary["_id"],
@@ -162,7 +162,7 @@ class Apiaries extends ChangeNotifier {
       Provider.of<Hives>(context, listen: false)
           .save(context: context, apiaryId: newApiary.id, hives: []);
       Provider.of<Tasks>(context, listen: false)
-          .save(apiaryId: newApiary.id, tasks: []);
+          .save(apiaryId: newApiary.id, tasks: [], context: context);
       final weather =
           await getWeather(lat: newApiary.latitude, lng: newApiary.longitude);
       newApiary.weather = weather;
@@ -183,7 +183,7 @@ class Apiaries extends ChangeNotifier {
           .deleteAssignedApiary(apiaryId: apiaryId);
       print("here");
       Provider.of<Hives>(context, listen: false)
-          .deleteDetailsOfHive(apiaryId: apiaryId);
+          .deleteDetailsOfHive(apiaryId: apiaryId, context: context);
       Provider.of<Hives>(context, listen: false).hives.remove(apiaryId);
       Provider.of<Tasks>(context, listen: false).tasks.remove(apiaryId);
       print("here");
