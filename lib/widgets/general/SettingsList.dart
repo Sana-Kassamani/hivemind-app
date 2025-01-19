@@ -14,9 +14,9 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  Future changeDarkMode(authValue, value) async {
+  Future changeDarkMode(authValue, value, context) async {
     try {
-      await authValue.setDarkMode(value: value);
+      await authValue.setDarkMode(value: value, context: context);
       print("Dark mode changed");
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -54,7 +54,7 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.dark_mode_outlined,
                 size: 30,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               title: Text(
                 "Dark Mode",
@@ -71,12 +71,12 @@ class _SettingsListState extends State<SettingsList> {
                     },
                   ),
                   inactiveThumbColor: Colors.grey[350],
-                  inactiveTrackColor: ColorManager.SCAFFOLD_BG,
+                  inactiveTrackColor: Theme.of(context).scaffoldBackgroundColor,
                   activeColor: Theme.of(context).colorScheme.primary,
-                  activeTrackColor: ColorManager.SCAFFOLD_BG,
+                  activeTrackColor: Theme.of(context).scaffoldBackgroundColor,
                   value: authValue.user.getSettings.darkmode,
                   onChanged: (value) async {
-                    await changeDarkMode(authValue, value);
+                    await changeDarkMode(authValue, value, context);
                   }),
             ),
             addVerticalSpace(10),
@@ -84,7 +84,7 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.volume_up,
                 size: 30,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               title: Text(
                 "Alerts",
@@ -101,9 +101,9 @@ class _SettingsListState extends State<SettingsList> {
                   },
                 ),
                 inactiveThumbColor: Colors.grey[350],
-                inactiveTrackColor: ColorManager.SCAFFOLD_BG,
+                inactiveTrackColor: Theme.of(context).scaffoldBackgroundColor,
                 activeColor: Theme.of(context).colorScheme.primary,
-                activeTrackColor: ColorManager.SCAFFOLD_BG,
+                activeTrackColor: Theme.of(context).scaffoldBackgroundColor,
                 value: authValue.user.getSettings.alertsOn,
                 onChanged: (value) async {
                   await changeAlerts(authValue, value, context);
@@ -123,7 +123,7 @@ class _SettingsListState extends State<SettingsList> {
               leading: Icon(
                 Icons.logout,
                 size: 30,
-                color: Colors.black,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               title: Text(
                 "Logout",
