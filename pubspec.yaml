@@ -102,6 +102,8 @@ flutter:
   fonts:
     - family: Comme
       fonts:
+        - asset: assets/fonts/Comme-Regular.ttf
+          weight: 400
         - asset: assets/fonts/Comme-Medium.ttf
           weight: 500
         - asset: assets/fonts/Comme-SemiBold.ttf
