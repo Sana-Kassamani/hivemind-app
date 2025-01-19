@@ -18,12 +18,12 @@ class ListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: ColorManager.CARD_BG,
+      tileColor: Theme.of(context).cardColor,
       leading: CircleAvatar(
-        backgroundColor: ColorManager.ICON_BG,
+        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
         child: imageBox(
           icon,
-          ColorManager.COLOR_PRIMARY,
+          Theme.of(context).iconTheme.color,
         ),
       ),
       title: Text(
@@ -47,12 +47,12 @@ class ListItem extends StatelessWidget {
 
 Widget AlertListItem(context, Alert alert) => ListTile(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      tileColor: ColorManager.CARD_BG,
+      tileColor: Theme.of(context).cardColor,
       leading: CircleAvatar(
-        backgroundColor: ColorManager.ICON_BG,
+        backgroundColor: Theme.of(context).colorScheme.primaryFixed,
         child: iconBox(
           Icons.notifications_on_outlined,
-          ColorManager.COLOR_PRIMARY,
+          Theme.of(context).iconTheme.color,
         ),
       ),
       title: Text(
