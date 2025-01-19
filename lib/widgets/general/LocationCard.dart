@@ -48,7 +48,7 @@ class _LocationCardState extends State<LocationCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: ColorManager.CARD_BG,
+      color: Theme.of(context).cardColor,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
         padding: EdgeInsets.all(10),
@@ -59,7 +59,7 @@ class _LocationCardState extends State<LocationCard> {
               spacing: 10,
               children: [
                 iconBox(Icons.location_on_outlined,
-                    Theme.of(context).colorScheme.primary),
+                    Theme.of(context).iconTheme.color),
                 Flexible(
                   child: Tooltip(
                     verticalOffset: 40,
@@ -78,8 +78,7 @@ class _LocationCardState extends State<LocationCard> {
             Row(
               spacing: 10,
               children: [
-                iconBox(
-                    Icons.cloud_queue, Theme.of(context).colorScheme.primary),
+                iconBox(Icons.cloud_queue, Theme.of(context).iconTheme.color),
                 Text(
                   widget.apiary.weather!,
                   style: Theme.of(context)
