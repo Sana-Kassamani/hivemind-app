@@ -116,7 +116,6 @@ class _ApiariesPageState extends State<ApiariesPage> {
           ),
         ],
       ),
-      // bottomNavigationBar: NavbarOwner(),
     );
   }
 }

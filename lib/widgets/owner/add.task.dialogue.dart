@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
-import 'package:hivemind_app/utils/colors.dart';
-import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';
 
 class AddTask extends StatefulWidget {

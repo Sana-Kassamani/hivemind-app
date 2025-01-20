@@ -13,11 +13,6 @@ class ApiariesMap extends StatefulWidget {
 class _ApiariesMapState extends State<ApiariesMap> {
   late GoogleMapController mapController;
   final Map<String, Marker> _markers = {};
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
 
   void getMarkers({required apiaries}) {
     setState(() {

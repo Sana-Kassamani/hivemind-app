@@ -43,7 +43,6 @@ class _ApiaryPageBeekeeperState extends State<ApiaryPageBeekeeper> {
                 ],
               );
       }),
-      // bottomNavigationBar: NavbarBeekeeper(),
     );
   }
 }

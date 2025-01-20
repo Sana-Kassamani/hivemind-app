@@ -40,8 +40,6 @@ class Alerts extends ChangeNotifier {
   }
 
   void add({message}) {
-    print(
-        "-------------------------------------------In Provider----------------------------------------");
     print(message.notification?.title);
     print(message.notification?.body);
     print(message?.data["time"]);
@@ -66,12 +64,6 @@ class Alerts extends ChangeNotifier {
   Future markRead({context}) async {
     final userId = Provider.of<Auth>(context, listen: false).user.getId;
     try {
-      // List<String> alertIds = [];
-      // for (var alert in alerts) {
-      //   print(alert.id);
-      //   alertIds.add(alert.id);
-      // }
-      // Map<String, String> data = {"id": alertIds.toString()};
       Map<String, dynamic> data = {};
       final response = await request(
         route: '/notifications/$userId',
@@ -87,8 +79,6 @@ class Alerts extends ChangeNotifier {
   }
 
   void showAlerts({required message}) {
-    print(
-        "-------------------------------------------In Provider----------------------------------------");
     print(message.notification?.title);
     print(message.notification?.body);
     print(message?.data["time"]);

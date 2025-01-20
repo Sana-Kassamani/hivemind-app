@@ -8,6 +8,7 @@ import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/request.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Apiaries extends ChangeNotifier {
   List<Apiary> _apiaries = [];
@@ -21,30 +22,9 @@ class Apiaries extends ChangeNotifier {
     int totalSize = _apiaries.length;
     return totalSize;
   }
-  // Future loadApiary({context, apiaryId}) async {
-  //   try {
-  //     final response =
-  //         await request(route: "/apiaries/owner", method: RequestMethods.get);
 
-  //     saveApiary(apiary: jsonDecode(response)["apiaries"], context: context);
-  //   } catch (error) {
-  //     rethrow;
-  //   }
-  // }
-
-  // Future loadApiaries({context}) async {
-  //   try {
-  //     final response =
-  //         await request(route: "/apiaries/owner", method: RequestMethods.get);
-
-  //     saveApiaries(
-  //         apiaries: jsonDecode(response)["apiaries"], context: context);
-  //   } catch (error) {
-  //     rethrow;
-  //   }
-  // }
   Future<String?> getWeather({lat, lng}) async {
-    const String API_KEY = "e1374b46eeca4be471688468a060334f";
+    final String? API_KEY = dotenv.env['OPEN_WEATHER_KEY'];
     try {
       String baseURL = 'https://api.openweathermap.org/data/2.5/weather';
       String request =

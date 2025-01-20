@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/firebase_options.dart';
-import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/pages/AlertsPage.dart';
 import 'package:hivemind_app/pages/LoginPage.dart';
 import 'package:hivemind_app/pages/OnboardingScreens.dart';
@@ -13,9 +11,7 @@ import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
 import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
 import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
 import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
-import 'package:hivemind_app/pages/owner/DashboardPage.dart';
 import 'package:hivemind_app/pages/owner/HivePage.dart';
-import 'package:hivemind_app/pages/placesPage.dart';
 import 'package:hivemind_app/providers/alerts.provider.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
@@ -25,7 +21,6 @@ import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/providers/theme.provider.dart';
 import 'package:hivemind_app/utils/notifications/firebase.api.dart';
-import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/owner/maps.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +44,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeManager();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
@@ -183,10 +177,6 @@ class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
 
   @override
   Widget build(BuildContext context) {
-    // setState(() {
-    //   _selectedIndex = widget.index;
-    // });
-
     return Scaffold(
       body: _screens[_selectedIndex], // Display the selected screen.
       bottomNavigationBar: NavbarBeekeeper(

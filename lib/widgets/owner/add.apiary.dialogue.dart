@@ -1,13 +1,10 @@
 import 'dart:convert';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
-import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/capitalize.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
-import 'package:hivemind_app/utils/colors.dart';
-import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,19 +28,6 @@ class _AddApiaryState extends State<AddApiary> {
   var beekeeperId = "";
   Location location = Location(latitude: 0, longitude: 0, location: "");
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-  // _onChanged() {
-  //   if (_sessionToken == null) {
-  //     setState(() {
-  //       _sessionToken = uuid.v4();
-  //     });
-  //   }
-  //   // getSuggestion(_controller.text);
-  // }
   dynamic getIndex(String desc) {
     return _placeList.firstWhere((p) => p["description"] == desc)["place_id"];
   }

@@ -132,19 +132,6 @@ class _LoginPageState extends State<LoginPage> {
                           _password = value!;
                         },
                       ),
-                      // addVerticalSpace(10),
-                      // InkWell(
-                      //   onTap: () {},
-                      //   child: Text(
-                      //     "Forget Password?",
-                      //     style: Theme.of(context)
-                      //         .textTheme
-                      //         .labelLarge!
-                      //         .copyWith(
-                      //             color: Colors.amber[600],
-                      //             fontWeight: FontWeight.w400),
-                      //   ),
-                      // ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -157,16 +144,6 @@ class _LoginPageState extends State<LoginPage> {
                                   await login(context);
                                 }
                               }),
-                          // errorMessage.isNotEmpty
-                          //     ? Text(
-                          //         errorMessage,
-                          //         style: Theme.of(context)
-                          //             .textTheme
-                          //             .labelLarge!
-                          //             .copyWith(color: Colors.red),
-                          //         textAlign: TextAlign.center,
-                          //       )
-                          //     : SizedBox.shrink(),
                           Row(
                             spacing: 10,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -199,53 +176,10 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         ],
                       ),
-                      // addVerticalSpace(20),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Expanded(
-                      //       child: Divider(
-                      //         endIndent: 10,
-                      //         color: Colors.black,
-                      //         thickness: 1.0,
-                      //         height: 2.0,
-                      //       ),
-                      //     ),
-                      //     Text("Or"),
-                      //     Expanded(
-                      //       child: Divider(
-                      //         color: Colors.black,
-                      //         thickness: 1.0,
-                      //         height: 2,
-                      //         indent: 10,
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
               ),
-              // addVerticalSpace(20),
-              // SizedBox(
-              //   width: MediaQuery.of(context).size.width * 0.8,
-              //   child: OutlinedButton.icon(
-              //     iconAlignment: IconAlignment.start,
-              //     style: ButtonStyle(
-              //       shape: WidgetStatePropertyAll(
-              //         RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(8)),
-              //       ),
-              //     ),
-              //     icon: imageBox("assets/icons/google_icon.png", null),
-              //     label: Text(
-              //       "Login with Google",
-              //       style: Theme.of(context).textTheme.labelLarge,
-              //       textAlign: TextAlign.end,
-              //     ),
-              //     onPressed: () {},
-              //   ),
-              // )
             ],
           ),
         ),

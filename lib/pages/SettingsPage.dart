@@ -22,7 +22,6 @@ class _SettingsPageState extends State<SettingsPage> {
           SettingsList(),
         ],
       ),
-      // bottomNavigationBar: NavbarOwner(),
     );
   }
 }

@@ -20,30 +20,7 @@ class _LocationCardState extends State<LocationCard> {
   @override
   void initState() {
     super.initState();
-    // getWeather(lat: widget.apiary.latitude, lng: widget.apiary.longitude);
   }
-
-  // Future getWeather({lat, lng}) async {
-  //   const String API_KEY = "e1374b46eeca4be471688468a060334f";
-  //   try {
-  //     String baseURL = 'https://api.openweathermap.org/data/2.5/weather';
-  //     String request =
-  //         '$baseURL?lat=$lat&lon=$lng&exclude=minutely,hourly,daily,alerts&appid=$API_KEY';
-  //     var response = await http.get(Uri.parse(request));
-  //     var data = jsonDecode(response.body);
-  //     print(response.body.toString());
-  //     if (response.statusCode == 200) {
-  //       print(response.body.toString());
-  //       setState(() {
-  //         weather = data["weather"][0]["main"];
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load weather');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

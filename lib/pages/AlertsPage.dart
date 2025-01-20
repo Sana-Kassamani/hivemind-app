@@ -50,8 +50,6 @@ class _AlertsPageState extends State<AlertsPage> {
                     )
                   ],
                 );
-        })
-        // bottomNavigationBar: NavbarOwner(),
-        );
+        }));
   }
 }
