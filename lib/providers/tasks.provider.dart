@@ -116,10 +116,16 @@ class Tasks extends ChangeNotifier {
         method: RequestMethods.patch,
         data: data,
       );
-      var tasksLength = jsonDecode(response)["tasks"].length;
-      var newTask = jsonDecode(response)["tasks"][tasksLength - 1];
+
+      var updatedTask;
+      for (var task in jsonDecode(response)["tasks"]) {
+        if (task["_id"] == taskId) {
+          updatedTask = task;
+          break;
+        }
+      }
       Task task = getById(apiaryId: apiaryId, taskId: taskId);
-      task.status = newTask["status"];
+      task.status = updatedTask["status"];
 
       notifyListeners();
     } catch (error) {
