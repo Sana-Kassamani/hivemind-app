@@ -6,7 +6,7 @@ import 'package:hivemind_app/providers/alerts.provider.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:provider/provider.dart';
 
-// make sure app is still running in bg
+// // make sure app is still running in bg
 // @pragma('vm:entry-point')
 // Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 //   await FirebaseApi.instance.setupFlutterNotifications();
@@ -68,14 +68,13 @@ class FirebaseApi {
     });
 
     //background message
-    FirebaseMessaging.onMessageOpenedApp
-        .listen((message) => _handleMessage(message, context));
+    FirebaseMessaging.onMessageOpenedApp.listen((message) => {});
 
     // opened app
-    // final initialMessage = await _firebaseMessaging.getInitialMessage();
-    // if (initialMessage != null) {
-    //   _handleMessage(initialMessage, context);
-    // }
+    final initialMessage = await _firebaseMessaging.getInitialMessage();
+    if (initialMessage != null) {
+      // _handleMessage(initialMessage, context);
+    }
   }
 
   Future<void> showNotification(RemoteMessage message) async {
