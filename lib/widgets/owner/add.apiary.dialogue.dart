@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
+import 'package:hivemind_app/utils/capitalize.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
@@ -9,6 +10,7 @@ import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AddApiary extends StatefulWidget {
   const AddApiary({super.key});
@@ -50,7 +52,7 @@ class _AddApiaryState extends State<AddApiary> {
     if (input.length < 3) {
       return;
     }
-    const String PLACES_API_KEY = "AIzaSyDdMDAiVG9qJjLqXBY1YrIVFNUgMU0H9Pw";
+    final String? PLACES_API_KEY = dotenv.env['GOOGLE_API_KEY'];
     print("session token $_sessionToken");
     try {
       String baseURL =
@@ -75,7 +77,7 @@ class _AddApiaryState extends State<AddApiary> {
   }
 
   Future getLocation(String place_id) async {
-    const String PLACES_API_KEY = "AIzaSyDdMDAiVG9qJjLqXBY1YrIVFNUgMU0H9Pw";
+    final String? PLACES_API_KEY = dotenv.env['GOOGLE_API_KEY'];
     try {
       String baseURL =
           'https://maps.googleapis.com/maps/api/place/details/json';
@@ -192,7 +194,7 @@ class _AddApiaryState extends State<AddApiary> {
                             enabled: free,
                             value: b.getId,
                             child: Text(
-                              b.getUsername,
+                              capitalize(b.getUsername),
                               style: free
                                   ? inputTextStyle.copyWith(
                                       color: Theme.of(context)
