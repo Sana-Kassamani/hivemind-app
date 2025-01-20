@@ -52,13 +52,13 @@ class Alerts extends ChangeNotifier {
       DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
       print(dateTime);
       final newAlert = Alert(
-        id: message["_id"],
+        // id: message["_id"],
         title: message.notification?.title,
         message: message.notification?.body,
-        time: message["time"],
+        time: dateTime,
       );
       print("hey  $newAlert");
-      _alerts.add(newAlert);
+      _alerts.insert(0, newAlert);
       notifyListeners();
     }
   }
