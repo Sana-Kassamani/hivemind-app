@@ -1,11 +1,11 @@
 class Alert {
-  final String id;
+  final String? id;
   final String title;
   final String message;
   final DateTime time;
 
   Alert({
-    required this.id,
+    this.id,
     required this.title,
     required this.message,
     required this.time,
