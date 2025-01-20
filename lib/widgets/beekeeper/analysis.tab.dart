@@ -1,8 +1,10 @@
 import 'dart:io';
-import 'package:http/http.dart' as http;
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AnalysisTab extends StatefulWidget {
   const AnalysisTab({super.key});
@@ -16,39 +18,40 @@ class _AnalysisTabState extends State<AnalysisTab> {
   String? result;
   bool isLoading = false;
 
-  Future _pickImageFromGallery() async {
+  Future _pickImageFromGallery({required hiveId, required apiaryId}) async {
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       _selectedImage = File(returnedImage!.path);
     });
     try {
-      var request = http.MultipartRequest(
-          'POST', Uri.parse("http://192.168.0.100:5000/upload"));
-      request.files
-          .add(await http.MultipartFile.fromPath('image', returnedImage!.path));
       setState(() {
         isLoading = true;
         result = null;
       });
-      var response = await request.send();
-      var responseBody = await response.stream.bytesToString();
-      if (response.statusCode == 200) {
-        print("Image uploaded successfully!");
-        setState(() {
-          isLoading = false;
-          result = responseBody;
-        });
-      } else {
-        print("Image upload failed: ${response.statusCode}");
-      }
+      final response = await Provider.of<Hives>(context, listen: false).predict(
+          imagePath: returnedImage!.path, hiveId: hiveId, apiaryId: apiaryId);
+      setState(() {
+        isLoading = false;
+        result = response;
+      });
     } catch (e) {
       print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Add Apiary failed: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? arg =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+    String hiveId = arg?["hiveId"];
+    String apiaryId = arg?["apiaryId"];
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30),
@@ -56,14 +59,14 @@ class _AnalysisTabState extends State<AnalysisTab> {
           spacing: 24,
           children: [
             Text(
-              "AI will analyze uploaded media for pests or unusual activity.",
+              "AI will analyze uploaded media for pests detection.",
               style: Theme.of(context).textTheme.labelMedium,
               textAlign: TextAlign.center,
             ),
             FilledBtn(
               text: "Upload Image",
               onPress: () {
-                _pickImageFromGallery();
+                _pickImageFromGallery(hiveId: hiveId, apiaryId: apiaryId);
               },
               icon: Icon(Icons.add_photo_alternate_outlined),
             ),
