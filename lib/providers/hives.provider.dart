@@ -1,5 +1,7 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/hive.model.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
@@ -120,6 +122,44 @@ class Hives extends ChangeNotifier {
       Provider.of<IotDetails>(context, listen: false)
           .iotDetails
           .remove(hives[i].id);
+    }
+  }
+
+  void addDiseased({apiaryId, hiveId}) {
+    Hive hive = getById(apiaryId: apiaryId, hiveId: hiveId);
+    hive.diseases.add("Varroe Mites");
+    notifyListeners();
+  }
+
+  Future<String> predict(
+      {required imagePath, required hiveId, required apiaryId}) async {
+    try {
+      var request = http.MultipartRequest(
+          'POST', Uri.parse("${dotenv.env['URL']}/upload"));
+      request.files.add(await http.MultipartFile.fromPath('image', imagePath));
+      request.fields['hiveId'] = hiveId;
+      request.fields['apiaryId'] = apiaryId;
+
+      final prefs = await SharedPreferences.getInstance();
+      final savedToken = prefs.getString('token');
+      request.headers['Authorization'] = 'Bearer $savedToken';
+      request.headers['Content-Type'] = 'multipart/form-data';
+
+      var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        var result = jsonDecode(responseBody)["result"];
+        if (result.trim() == "Diseased") {
+          addDiseased(hiveId: hiveId, apiaryId: apiaryId);
+        }
+        return jsonDecode(responseBody)["result"];
+      } else {
+        print("Image upload failed: ${response.statusCode} ${response.stream}");
+        throw Exception("Image Prediction failed");
+      }
+    } catch (e) {
+      print("Error: $e");
+      rethrow;
     }
   }
 
