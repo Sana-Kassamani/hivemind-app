@@ -5,12 +5,13 @@ import 'package:hivemind_app/utils/apiException.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future request(
     {required String route,
     required RequestMethods method,
     Map<String, dynamic>? data}) async {
-  const baseURL = "http://192.168.0.105:8080";
+  final baseURL = dotenv.env['URL'];
   var response;
   final prefs = await SharedPreferences.getInstance();
   final savedToken = prefs.getString('token');

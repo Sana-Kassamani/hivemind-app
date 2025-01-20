@@ -29,12 +29,13 @@ import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/owner/maps.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
@@ -63,6 +64,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<ThemeProvider>(
           builder: (BuildContext context, ThemeProvider value, Widget? child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'My app', // used by the OS task switcher
           // home: LoginPage(),
           theme: Provider.of<ThemeProvider>(context).themeData,
@@ -111,6 +113,12 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
     setState(() {
       _selectedIndex = widget.index;
     });
@@ -124,13 +132,6 @@ class _MainScreenOwnerState extends State<MainScreenOwner> {
 
   @override
   Widget build(BuildContext context) {
-    final allowAlerts =
-        Provider.of<Alerts>(context, listen: false).getPermission;
-    print("Allowed alerts $allowAlerts");
-    if (allowAlerts) {
-      FirebaseApi.instance.allowNotifications(context: context);
-    }
-
     return Scaffold(
         body: _screens[_selectedIndex], // Display the selected screen.
         bottomNavigationBar: NavbarOwner(
@@ -163,7 +164,12 @@ class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
     setState(() {
       _selectedIndex = widget.index;
     });
@@ -180,12 +186,6 @@ class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
     // setState(() {
     //   _selectedIndex = widget.index;
     // });
-    final allowAlerts =
-        Provider.of<Alerts>(context, listen: false).getPermission;
-    print("Allowed alerts $allowAlerts");
-    if (allowAlerts) {
-      FirebaseApi.instance.allowNotifications(context: context);
-    }
 
     return Scaffold(
       body: _screens[_selectedIndex], // Display the selected screen.
