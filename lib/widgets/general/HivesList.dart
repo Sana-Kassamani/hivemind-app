@@ -76,10 +76,11 @@ class _HivesListState extends State<HivesList> {
                                             builder: (context) {
                                               return DeleteDialogue(
                                                 item: "hive",
-                                                onPressDelete: () => deleteHive(
-                                                    context,
-                                                    apiaryId,
-                                                    hives[index].getId),
+                                                onPressDelete: (context) =>
+                                                    deleteHive(
+                                                        context,
+                                                        apiaryId,
+                                                        hives[index].getId),
                                               );
                                             });
                                       }),
