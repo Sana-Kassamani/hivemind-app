@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 class DeleteDialogue extends StatelessWidget {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
-
 import 'package:hivemind_app/utils/detailsList.dart';
-
 import 'package:hivemind_app/widgets/general/HiveDetailsCard.dart';
 import 'package:provider/provider.dart';
 
