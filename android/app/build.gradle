@@ -11,6 +11,7 @@ plugins {
 dependencies {
   coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
+apply plugin: 'me.philio.dotenv'
 
 android {
     namespace = "com.example.hivemind_app"
@@ -37,6 +38,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Load the environment variable
+        resValue "string", "google_maps_api_key", dotenv.env['GOOGLE_API_KEY']
     }
      compileOptions {
     // Flag to enable support for the new language APIs
