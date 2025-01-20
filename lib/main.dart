@@ -1,125 +1,188 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hivemind_app/firebase_options.dart';
+import 'package:hivemind_app/pages/AlertsPage.dart';
+import 'package:hivemind_app/pages/LoginPage.dart';
+import 'package:hivemind_app/pages/OnboardingScreens.dart';
+import 'package:hivemind_app/pages/SettingsPage.dart';
+import 'package:hivemind_app/pages/SignupPage.dart';
+import 'package:hivemind_app/pages/beekeeper/ApiaryPage.dart';
+import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
+import 'package:hivemind_app/pages/beekeeper/TasksPage.dart';
+import 'package:hivemind_app/pages/owner/ApiariesPage.dart';
+import 'package:hivemind_app/pages/owner/ApiaryPage.dart';
+import 'package:hivemind_app/pages/owner/HivePage.dart';
+import 'package:hivemind_app/providers/alerts.provider.dart';
+import 'package:hivemind_app/providers/apiaries.provider.dart';
+import 'package:hivemind_app/providers/auth.provider.dart';
+import 'package:hivemind_app/providers/beekeepers.provider.dart';
+import 'package:hivemind_app/providers/hives.provider.dart';
+import 'package:hivemind_app/providers/iotDetails.provider.dart';
+import 'package:hivemind_app/providers/tasks.provider.dart';
+import 'package:hivemind_app/providers/theme.provider.dart';
+import 'package:hivemind_app/utils/notifications/firebase.api.dart';
+import 'package:hivemind_app/widgets/general/NavBar.dart';
+import 'package:hivemind_app/widgets/owner/maps.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  runApp(const MyApp());
+final navigatorKey = GlobalKey<NavigatorState>();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: ".env");
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (context) => Apiaries()),
+        ChangeNotifierProvider(create: (context) => Beekeepers()),
+        ChangeNotifierProvider(create: (context) => Hives()),
+        ChangeNotifierProvider(create: (context) => IotDetails()),
+        ChangeNotifierProvider(create: (context) => Tasks()),
+        ChangeNotifierProvider(create: (context) => Alerts()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: Consumer<ThemeProvider>(
+          builder: (BuildContext context, ThemeProvider value, Widget? child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'My app', // used by the OS task switcher
+          // home: LoginPage(),
+          theme: Provider.of<ThemeProvider>(context).themeData,
+          navigatorKey: navigatorKey,
+          routes: {
+            "/": (context) => OnBoardingScreens(),
+            "/login": (context) => LoginPage(),
+            "/signup": (context) => SignupPage(),
+            "/homeOwner": (context) => MainScreenOwner(),
+            "/homeBeekeeper": (context) => MainScreenBeekeeper(),
+            "/apiary": (context) => ApiaryPageOwner(),
+            "/hiveOwner": (context) => HivePageOwner(),
+            "/hiveBeekeeper": (context) => HivePageBeekeeper(),
+            "/alertsOwner": (context) => MainScreenOwner(
+                  index: 2,
+                ),
+            "/alertsBeekeeper": (context) => MainScreenBeekeeper(
+                  index: 2,
+                ),
+          },
+        );
+      }),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MainScreenOwner extends StatefulWidget {
+  const MainScreenOwner({super.key, this.index = 0});
+  final int index;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainScreenOwner> createState() => _MainScreenOwnerState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MainScreenOwnerState extends State<MainScreenOwner> {
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  final List<Widget> _screens = [
+    ApiariesPage(),
+    ApiariesMap(),
+    AlertsPage(),
+    SettingsPage(),
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _selectedIndex = widget.index;
+    });
+  }
+
+  void _onItemSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        body: _screens[_selectedIndex], // Display the selected screen.
+        bottomNavigationBar: NavbarOwner(
+          selectedIndex: _selectedIndex,
+          onItemSelected: _onItemSelected,
+        ));
+  }
+}
+
+class MainScreenBeekeeper extends StatefulWidget {
+  const MainScreenBeekeeper({super.key, this.index = 0});
+
+  final int index;
+
+  @override
+  State<MainScreenBeekeeper> createState() => _MainScreenBeekeeperState();
+}
+
+class _MainScreenBeekeeperState extends State<MainScreenBeekeeper> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    ApiaryPageBeekeeper(),
+    TasksPage(),
+    AlertsPage(),
+    SettingsPage(),
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final allowAlerts =
+        Provider.of<Alerts>(context, listen: false).getPermission;
+    print("Allowed alerts $allowAlerts");
+    if (allowAlerts) {
+      FirebaseApi.instance.allowNotifications(context: context);
+    }
+    setState(() {
+      _selectedIndex = widget.index;
+    });
+  }
+
+  void _onItemSelected(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_selectedIndex], // Display the selected screen.
+      bottomNavigationBar: NavbarBeekeeper(
+        selectedIndex: _selectedIndex,
+        onItemSelected: _onItemSelected,
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

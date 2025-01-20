@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "493809663603",
+    "project_id": "hivemindnotifications",
+    "storage_bucket": "hivemindnotifications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493809663603:android:a448a68b9b1f880de4b406",
+        "android_client_info": {
+          "package_name": "com.example.hivemind_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB2j8sA66rP77vkSqdpaWgoaojykjAjh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
