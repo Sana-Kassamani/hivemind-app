@@ -3,7 +3,6 @@ import 'package:hivemind_app/providers/alerts.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/widgets/general/AlertsList.dart';
 import 'package:hivemind_app/widgets/general/ClearTextBtn.dart';
-import 'package:hivemind_app/widgets/general/NavBar.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
 import 'package:provider/provider.dart';
 

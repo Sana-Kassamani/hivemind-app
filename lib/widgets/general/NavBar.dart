@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/utils/colors.dart';
 
 class NavbarOwner extends StatelessWidget {
   const NavbarOwner({
