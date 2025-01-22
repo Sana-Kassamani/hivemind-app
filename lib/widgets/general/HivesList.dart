@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/models/hive.model.dart';
-import 'package:hivemind_app/pages/beekeeper/HivePage.dart';
-import 'package:hivemind_app/pages/owner/HivePage.dart';
-import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/providers/hives.provider.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
@@ -40,8 +36,7 @@ class _HivesListState extends State<HivesList> {
 
   @override
   Widget build(BuildContext context) {
-    final userType =
-        Provider.of<Auth>(context, listen: false).user?.getUserType;
+    final userType = Provider.of<Auth>(context, listen: false).user.getUserType;
     final apiaryId = widget.apiaryId;
     return Expanded(
       child: Consumer<Hives>(

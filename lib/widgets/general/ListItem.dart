@@ -3,7 +3,6 @@ import 'package:hivemind_app/models/alert.model.dart';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/utils/capitalize.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/utils/parseDate.dart';
 
 class ListItem extends StatelessWidget {

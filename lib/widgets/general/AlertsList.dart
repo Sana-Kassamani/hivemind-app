@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
 import 'package:hivemind_app/widgets/general/ListItem.dart';
-import 'package:hivemind_app/widgets/general/empty.state.dart';
 
 class AlertsList extends StatefulWidget {
   const AlertsList({super.key, required this.alerts});

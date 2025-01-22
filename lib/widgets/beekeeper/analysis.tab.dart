@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:hivemind_app/providers/hives.provider.dart';
-import 'package:hivemind_app/providers/iotDetails.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:image_picker/image_picker.dart';

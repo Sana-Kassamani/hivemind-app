@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

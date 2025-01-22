@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/widgets/owner/alert.dialogue.dart';
 import 'package:provider/provider.dart';
 

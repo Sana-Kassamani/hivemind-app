@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/utils/colors.dart';
 
 class SegmentedTab extends StatelessWidget {
   const SegmentedTab(

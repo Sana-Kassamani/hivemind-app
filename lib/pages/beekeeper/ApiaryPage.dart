@@ -4,11 +4,7 @@ import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/CenterTitle.dart';
 import 'package:hivemind_app/widgets/general/HivesList.dart';
 import 'package:hivemind_app/widgets/general/LocationCard.dart';
-import 'package:hivemind_app/widgets/general/NavBar.dart';
-import 'package:hivemind_app/widgets/general/SegmentedTab.dart';
 import 'package:hivemind_app/widgets/general/empty.state.dart';
-import 'package:hivemind_app/widgets/owner/HivesTab.dart';
-import 'package:hivemind_app/widgets/owner/TasksTab.dart';
 import 'package:provider/provider.dart';
 
 class ApiaryPageBeekeeper extends StatefulWidget {

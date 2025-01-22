@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/apiary.model.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
-import 'package:hivemind_app/utils/colors.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class LocationCard extends StatefulWidget {
   const LocationCard({super.key, required this.apiary});

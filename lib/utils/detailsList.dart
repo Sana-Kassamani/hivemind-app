@@ -1,5 +1,3 @@
-import 'package:hivemind_app/models/hive.model.dart';
-import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/utils/colors.dart';
 
 List<Map<String, dynamic>> detailsList({hive, detail}) {

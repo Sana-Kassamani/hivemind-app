@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/main.dart';
-import 'package:hivemind_app/providers/tasks.provider.dart';
 import 'package:hivemind_app/utils/helperWidgets.dart';
 import 'package:hivemind_app/widgets/general/TaskExpansionTile.dart';
-import 'package:hivemind_app/widgets/general/empty.state.dart';
-import 'package:provider/provider.dart';
 
 class TasksListOwner extends StatelessWidget {
   const TasksListOwner({super.key, required this.tasks});

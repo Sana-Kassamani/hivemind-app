@@ -1,9 +1,6 @@
-import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/models/iotDetail.model.dart';
 import 'package:hivemind_app/providers/iotDetails.provider.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/utils/enums/ChartType.dart';
 import 'package:provider/provider.dart';
 

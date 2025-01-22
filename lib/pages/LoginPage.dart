@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hivemind_app/main.dart';
 import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
 import 'package:hivemind_app/providers/beekeepers.provider.dart';
 import 'package:hivemind_app/utils/HelperWidgets.dart';
-import 'package:hivemind_app/utils/colors.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/widgets/general/FilledBtn.dart';
 import 'package:provider/provider.dart';

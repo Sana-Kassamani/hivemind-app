@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/user.model.dart';
-import 'package:hivemind_app/providers/apiaries.provider.dart';
 import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/request.dart';
-import 'package:provider/provider.dart';
 
 class Beekeepers extends ChangeNotifier {
   List<Beekeeper> _beekeepersList = [];
@@ -51,7 +49,6 @@ class Beekeepers extends ChangeNotifier {
       Beekeeper beekeeper = beekeepersList.firstWhere((b) => b.getId == id);
       return beekeeper.getUsername;
     } catch (error) {
-      print("Beekeeper not found");
       rethrow;
     }
   }
@@ -62,7 +59,6 @@ class Beekeepers extends ChangeNotifier {
           beekeepersList.firstWhere((b) => b.getassignedApiaryId == id);
       return beekeeper.getUsername;
     } catch (error) {
-      print("Beekeeper not found");
       rethrow;
     }
   }
@@ -75,7 +71,6 @@ class Beekeepers extends ChangeNotifier {
   void deleteAssignedApiary({required apiaryId}) {
     Beekeeper beekeeper =
         beekeepersList.firstWhere((b) => b.getassignedApiaryId == apiaryId);
-    print(beekeeper.getUsername);
     beekeeper.assignedApiaryId = null;
   }
 

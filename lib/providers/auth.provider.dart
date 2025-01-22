@@ -12,7 +12,6 @@ import 'package:hivemind_app/utils/enums/RequestMethods.dart';
 import 'package:hivemind_app/utils/enums/UserTypes.dart';
 import 'package:hivemind_app/utils/notifications/firebase.api.dart';
 import 'package:hivemind_app/utils/request.dart';
-import 'package:hivemind_app/utils/themes/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

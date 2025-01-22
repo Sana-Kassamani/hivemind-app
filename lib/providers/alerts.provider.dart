@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hivemind_app/models/alert.model.dart';
 import 'package:hivemind_app/providers/auth.provider.dart';
